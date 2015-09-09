@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<!-- plugin.xml file written by dynaTrace Client 6.2.0 -->
+<plugin>
+  <extension point="com.dynatrace.diagnostics.pdk.pluginconfig" id="com.dynatrace.plugin.nginx" name="NGINX Plus Monitoring Plugin">
+    <information>
+      <category value="" />
+      <displayname value="NGINX Plus Monitoring Plugin" />
+      <description value="This plugin captures NGINX Plus metrics." />
+      <supportlevel value="unsupported" />
+    </information>
+    <configuration>
+    	<property key="UpstreamsServerFilter" label="Upstreams Server Filter" type="string" description="If 'Upstream server' splitting is set, dynamic measures will be presented only for servers matching pattern, eg. '127.0.0.1:9309'. By default all servers will be listed." default="" multiline="false"/>
+    	<property key="StreamFilter" label="Stream Filter" type="string" description="If 'Stream server' splitting is set, dynamic measures will be presented only for servers matching pattern, eg. '127.0.0.1:9309'. By default all servers will be listed." default="" multiline="false"/>
+    </configuration>
+  </extension>
+  <extension point="com.dynatrace.diagnostics.pdk.monitor" id="com.dynatrace.plugin.nginx.monitor" name="NGINX Plus Monitor">
+    <plugin configid="com.dynatrace.plugin.nginx" class="com.dynatrace.plugin.nginx.NginxPlusMonitor" />
+  </extension>
+  <extension point="com.dynatrace.diagnostics.pdk.monitormetricgroup" id="com.dynatrace.plugin.nginx.monitor.requests" name="NGINX Plus Monitor Requests">
+    <metricgroup monitorid="com.dynatrace.plugin.nginx.monitor">
+      <metric defaultrate="purepath" name="Total" unit="number" description="The total number of client requests" />
+      <metric defaultrate="purepath" name="Current" unit="number" description="The current number of client requests" />
+      <metric defaultrate="purepath" name="Requests" unit="number" description="The average number of client requests per second" />
+    </metricgroup>
+  </extension>
+  <extension point="com.dynatrace.diagnostics.pdk.monitormetricgroup" id="com.dynatrace.plugin.nginx.monitor.serverzones" name="NGINX Plus Monitor Server Zones">
+    <metricgroup monitorid="com.dynatrace.plugin.nginx.monitor">
+      <metric defaultrate="purepath" name="Processing" unit="number" description="The number of client requests that are currently being processed" />
+      <metric defaultrate="purepath" name="Requests" unit="number" description="The total number of client requests received from clients" />
+      <metric defaultrate="purepath" name="Requests Rate"  unit="number" description="The current rate of client requests forwarded to specific server zone" />
+      <metric defaultrate="purepath" name="Responses" unit="number" description="The number of responses sent to clients." />
+      <metric defaultrate="purepath" name="Responses Rate" unit="number" description="The current rate of responses obtained from specific server zone" />
+      <metric defaultrate="purepath" name="Received" unit="number" description="The total number of bytes received from clients" />
+      <metric defaultrate="purepath" name="Received Rate" unit="number" description="The current rate of bytes received from specific server zone" />
+      <metric defaultrate="purepath" name="Sent" unit="number" description="The total number of bytes sent to clients from all server zones" />
+      <metric defaultrate="purepath" name="Sent Rate" unit="number" description="The current rate of bytes sent to clients from specific server zone" />
+      <metric defaultrate="purepath" name="1xx Responses" unit="number" description="The number of responses with status codes 1xx from all server zones" />
+      <metric defaultrate="purepath" name="1xx Responses Rate" unit="number" description="The current rate of responses with status codes 1xx from specific server zone" />
+      <metric defaultrate="purepath" name="2xx Responses" unit="number" description="The number of responses with status codes 2xx from all server zones" />
+      <metric defaultrate="purepath" name="2xx Responses Rate" unit="number" description="The number of responses with status codes 2xx from all server zones" />
+      <metric defaultrate="purepath" name="3xx Responses" unit="number" description="The number of responses with status codes 3xx from all server zones" />
+      <metric defaultrate="purepath" name="3xx Responses Rate" unit="number" description="The current rate of responses with status codes 3xx from specific server zone" />
+      <metric defaultrate="purepath" name="4xx Responses" unit="number" description="The number of responses with status codes 4xx from all server zones" />
+      <metric defaultrate="purepath" name="4xx Responses Rate" unit="number" description="The number of responses with status codes 4xx from all server zones" />
+      <metric defaultrate="purepath" name="5xx Responses" unit="number" description="The number of responses with status codes 5xx from all server zones" />
+	  <metric defaultrate="purepath" name="5xx Responses Rate" unit="number" description="The current rate of responses with status codes 5xx from specific server zone" />
+    </metricgroup>
+  </extension>
+  <extension point="com.dynatrace.diagnostics.pdk.monitormetricgroup" id="com.dynatrace.plugin.nginx.monitor.upstreams" name="NGINX Plus Monitor Upstreams">
+    <metricgroup monitorid="com.dynatrace.plugin.nginx.monitor">
+      <metric defaultrate="purepath" name="Active" unit="number" description="The current number of active connections" />
+      <metric defaultrate="purepath" name="Backup" unit="number" description="A boolean value indicating whether the server is a backup server" />
+      <metric defaultrate="purepath" name="Downstart" unit="ms" description="The time (in milliseconds since Epoch) when the server became “unavail” or “unhealthy”" />
+      <metric defaultrate="purepath" name="Downtime" unit="ms" description="Total time the server was in the “unavail” and “unhealthy” states" />
+      <metric defaultrate="purepath" name="Fails" unit="number" description="The total number of unsuccessful attempts to communicate with the server" />
+      <metric defaultrate="purepath" name="Received" unit="number" description="The total number of bytes received from this server" />
+      <metric defaultrate="purepath" name="Received Rate" unit="number" description="The current rate of bytes received from all servers by upstream"/>
+      <metric defaultrate="purepath" name="Requests" unit="number" description="The total number of client requests forwarded to this server" />
+      <metric defaultrate="purepath" name="Requests Rate"  unit="number" description="The current rate of client requests forwarded to all servers by upstream" />
+      <metric defaultrate="purepath" name="Sent" unit="number" description="The total number of bytes sent to this server" />
+      <metric defaultrate="purepath" name="Sent Rate" unit="number" description="The current rate of bytes sent to all servers by upstream" />
+      <metric defaultrate="purepath" name="State" unit="number" description="Current state, which may be one of “up”, ”draining”, “down”, “unavail”, or “unhealthy”." />
+      <metric defaultrate="purepath" name="Total State Up" unit="number" description="Amount of upstreams with state Up" />
+      <metric defaultrate="purepath" name="Total State Draining" unit="number" description="Amount of upstreams with state Draining" />
+      <metric defaultrate="purepath" name="Total State Down" unit="number" description="Amount of upstreams with state Down" />
+      <metric defaultrate="purepath" name="Total State Unavailable" unit="number" description="Amount of upstreams with state Unavailable" />
+      <metric defaultrate="purepath" name="Total State Unhealthy" unit="number" description="Amount of upstreams with state Unhealthy" />
+      <metric defaultrate="purepath" name="Unavailable" unit="number" description="Times the server became unavailable" />
+      <metric defaultrate="purepath" name="Weight" unit="number" description="Weight of the server" />
+      <metric defaultrate="purepath" name="Responses" unit="number" description="The total number of responses obtained from this server" />
+      <metric defaultrate="purepath" name="Responses Rate" unit="number" description="The current rate of responses obtained from all servers" />
+      <metric defaultrate="purepath" name="1xx Responses" unit="number" description="The number of responses with status codes 1xx" />
+      <metric defaultrate="purepath" name="2xx Responses" unit="number" description="The number of responses with status codes 2xx" />
+      <metric defaultrate="purepath" name="3xx Responses" unit="number" description="The number of responses with status codes 3xx" />
+      <metric defaultrate="purepath" name="4xx Responses" unit="number" description="The number of responses with status codes 4xx" />
+      <metric defaultrate="purepath" name="5xx Responses" unit="number" description="The number of responses with status codes 5xx" />
+      <metric defaultrate="purepath" name="1xx Responses Rate" unit="number" description="The current rate of responses with status codes 1xx from all servers" />
+	  <metric defaultrate="purepath" name="2xx Responses Rate" unit="number" description="The current rate of responses with status codes 2xx from all servers" />
+	  <metric defaultrate="purepath" name="3xx Responses Rate" unit="number" description="The current rate of responses with status codes 3xx from all servers" />
+	  <metric defaultrate="purepath" name="4xx Responses Rate" unit="number" description="The current rate of responses with status codes 4xx from all servers" />
+	  <metric defaultrate="purepath" name="5xx Responses Rate" unit="number" description="The current rate of responses with status codes 5xx from all servers" />
+      <metric defaultrate="purepath" name="Total Health Checks" unit="number" description="The total number of health check requests made" />
+      <metric defaultrate="purepath" name="Failed Health Checks" unit="number" description="The number of failed health checks" />
+      <metric defaultrate="purepath" name="Unhealthy Health Checks" unit="number" description="How many times the server became unhealthy (state “unhealthy”)" />
+      <metric defaultrate="purepath" name="Last Health Check Passed" unit="number" description="Boolean indicating if the last health check request was successful and passed tests" />
+    </metricgroup>
+  </extension>
+  <extension point="com.dynatrace.diagnostics.pdk.monitormetricgroup" id="com.dynatrace.plugin.nginx.monitor.connections" name="NGINX Plus Monitor Connections">
+    <metricgroup monitorid="com.dynatrace.plugin.nginx.monitor">
+      <metric defaultrate="purepath" name="Accepted" unit="number" description="The total number of accepted client connections" />
+      <metric defaultrate="purepath" name="Dropped" unit="number" description="The total number of dropped client connections" />
+      <metric defaultrate="purepath" name="Active" unit="number" description="The current number of active client connections" />
+      <metric defaultrate="purepath" name="Idle" unit="number" description="The current number of idle client connections" />
+    </metricgroup>
+  </extension>
+  <extension point="com.dynatrace.diagnostics.pdk.monitormetricgroup" id="com.dynatrace.plugin.nginx.monitor.caches" name="NGINX Plus Monitor Caches">
+    <metricgroup monitorid="com.dynatrace.plugin.nginx.monitor">
+	    <metric defaultrate="purepath" name="Size" unit="number" description="The current size of cache" />
+		<metric defaultrate="purepath" name="Max Size" unit="number" description="The maximum size of cache" />
+		<metric defaultrate="purepath" name="Cold" unit="number" description="A boolean value indicating whether the cache loader process is still loading data from disk into the cache" />
+		<metric defaultrate="purepath" name="Hit Responses" unit="number" description="The total number of responses read from cache" />
+		<metric defaultrate="purepath" name="Hit Responses Rate" unit="number" description="The current rate of responses read from cache" />
+		<metric defaultrate="purepath" name="Hit Bytes" unit="number" description="The total number of bytes read from cache" />
+		<metric defaultrate="purepath" name="Hit Bytes Rate" unit="number" description="The current rate of bytes read from cache" />
+		<metric defaultrate="purepath" name="Stale Responses" unit="number" description="The total number of responses read from stale cache" />
+		<metric defaultrate="purepath" name="Stale Responses Rate" unit="number" description="The current rate of responses read from stale cache" />
+		<metric defaultrate="purepath" name="Stale Bytes" unit="number" description="The total number of bytes read from cache" />
+		<metric defaultrate="purepath" name="Stale Bytes Rate" unit="number" description="The current rate of bytes read from cache" />
+		<metric defaultrate="purepath" name="Updating Responses" unit="number" description="The total number of responses read from stale cache" />
+		<metric defaultrate="purepath" name="Updating Responses Rate" unit="number" description="The current rate of responses read from stale cache" />
+		<metric defaultrate="purepath" name="Updating Bytes" unit="number" description="The total number of bytes read from cache" />
+		<metric defaultrate="purepath" name="Updating Bytes Rate" unit="number" description="The current rate of bytes read from cache" />
+		<metric defaultrate="purepath" name="Revalidated Responses" unit="number" description="The total number of responses read from stale cache" />
+		<metric defaultrate="purepath" name="Revalidated Responses Rate" unit="number" description="The current rate of responses read from stale cache" />
+		<metric defaultrate="purepath" name="Revalidated Bytes" unit="number" description="The total number of bytes read from cache" />
+		<metric defaultrate="purepath" name="Revalidated Bytes Rate" unit="number" description="The current rate of bytes read from cache" />
+		<metric defaultrate="purepath" name="Miss Responses" unit="number" description="The total number of responses not taken from the cache" />
+		<metric defaultrate="purepath" name="Miss Responses Rate" unit="number" description="The current rate of responses not taken from the cache" />
+		<metric defaultrate="purepath" name="Miss Bytes" unit="number" description="The total number of bytes read from the proxied server" />
+		<metric defaultrate="purepath" name="Miss Bytes Rate" unit="number" description="The current rate of bytes read from the proxied server" />
+		<metric defaultrate="purepath" name="Miss Responses Written" unit="number" description="The total number of responses written to the cache" />
+		<metric defaultrate="purepath" name="Miss Responses Written Rate" unit="number" description="The current rate of responses written to the cache" />
+		<metric defaultrate="purepath" name="Miss Bytes Written" unit="number" description="The total number of bytes written to the cache" />
+		<metric defaultrate="purepath" name="Miss Bytes Written Rate" unit="number" description="The current rate of bytes written to the cache" />
+		<metric defaultrate="purepath" name="Expired Responses" unit="number" description="The total number of responses not taken from the cache" />
+		<metric defaultrate="purepath" name="Expired Responses Rate" unit="number" description="The current rate of responses not taken from the cache" />
+		<metric defaultrate="purepath" name="Expired Bytes" unit="number" description="The total number of bytes read from the proxied server" />
+		<metric defaultrate="purepath" name="Expired Bytes Rate" unit="number" description="The current rate of bytes read from the proxied server" />
+		<metric defaultrate="purepath" name="Expired Responses Written" unit="number" description="The total number of responses written to the cache" />
+		<metric defaultrate="purepath" name="Expired Responses Written Rate" unit="number" description="The current rate of responses written to the cache" />
+		<metric defaultrate="purepath" name="Expired Bytes Written" unit="number" description="The total number of bytes written to the cache" />
+		<metric defaultrate="purepath" name="Expired Bytes Written Rate" unit="number" description="The current rate of bytes written to the cache" />
+		<metric defaultrate="purepath" name="Bypass Responses" unit="number" description="The total number of responses not taken from the cache" />
+		<metric defaultrate="purepath" name="Bypass Responses Rate" unit="number" description="The current rate of responses not taken from the cache" />
+		<metric defaultrate="purepath" name="Bypass Bytes" unit="number" description="The total number of bytes read from the proxied server" />
+		<metric defaultrate="purepath" name="Bypass Bytes Rate" unit="number" description="The current rate of bytes read from the proxied server" />
+		<metric defaultrate="purepath" name="Bypass Responses Written" unit="number" description="The total number of responses written to the cache" />
+		<metric defaultrate="purepath" name="Bypass Responses Written Rate" unit="number" description="The current rate of responses written to the cache" />
+		<metric defaultrate="purepath" name="Bypass Bytes Written" unit="number" description="The total number of bytes written to the cache" />
+		<metric defaultrate="purepath" name="Bypass Bytes Written Rate" unit="number" description="The current rate of bytes written to the cache" />
+    </metricgroup>
+  </extension>
+  <extension point="com.dynatrace.diagnostics.pdk.monitormetricgroup" id="com.dynatrace.plugin.nginx.monitor.stream" name="NGINX Plus Monitor Stream">
+	<metricgroup monitorid="com.dynatrace.plugin.nginx.monitor">
+		<metric defaultrate="purepath" name="Server Zones Processing" unit="number" description="The number of client connections that are currently being processed" />
+		<metric defaultrate="purepath" name="Server Zones Connections" unit="number" description="The total number of connections accepted from clients" />
+		<metric defaultrate="purepath" name="Server Zones Connections Rate" unit="number" description="The current rate of connections accepted from clients" />
+		<metric defaultrate="purepath" name="Server Zones Received" unit="number" description="The total number of bytes received from clients" />
+		<metric defaultrate="purepath" name="Server Zones Received Rate" unit="number" description="The current rate of bytes received from clients" />
+		<metric defaultrate="purepath" name="Server Zones Sent" unit="number" description="The total number of bytes sent to clients" />
+		<metric defaultrate="purepath" name="Server Zones Send Rate" unit="number" description="The current rate of bytes sent to clients" />
+		<metric defaultrate="purepath" name="Upstreams Backup" unit="number" description="A value indicating whether the server is a backup server" />
+		<metric defaultrate="purepath" name="Upstreams Weight" unit="number" description="Weight of the server" />
+		<metric defaultrate="purepath" name="Upstreams State" unit="number" description="Current state, which may be one of “up”, ”draining”, “down”, “unavail”, or “unhealthy”" />
+		<metric defaultrate="purepath" name="Upstreams Active" unit="number" description="The current number of connections" />
+		<metric defaultrate="purepath" name="Upstreams Total Active" unit="number" description="The current number of connections from all servers" />
+		<metric defaultrate="purepath" name="Upstreams Max Connections" unit="number" description="The maximum number of client connections that can be forwarded to this server" />
+		<metric defaultrate="purepath" name="Upstreams Connections" unit="number" description="The total number of client connections forwarded to this server" />
+		<metric defaultrate="purepath" name="Upstreams Connections Rate" unit="number" description="The current rate of client connections forwarded to this server" />
+		<metric defaultrate="purepath" name="Upstreams Connect Time" unit="number" description="The average time to connect to the upstream server. The field is available when using the least_time load balancing method" />
+		<metric defaultrate="purepath" name="Upstreams First Byte Time" unit="number" description="The average time to receive the first byte of data. The field is available when using the least_time load balancing method" />
+		<metric defaultrate="purepath" name="Upstreams Response Time" unit="number" description="The average time to receive the last byte of data. The field is available when using the least_time load balancing method" />
+		<metric defaultrate="purepath" name="Upstreams Sent" unit="number" description="The total number of bytes sent to this server" />
+		<metric defaultrate="purepath" name="Upstreams Sent Rate" unit="number" description="The current rate of bytes sent to this server" />
+		<metric defaultrate="purepath" name="Upstreams Received" unit="number" description="The total number of bytes received from this server" />
+		<metric defaultrate="purepath" name="Upstreams Received Rate" unit="number" description="The current rate of bytes received from this server" />
+		<metric defaultrate="purepath" name="Upstreams Fails" unit="number" description="The total number of unsuccessful attempts to communicate with the server" />
+		<metric defaultrate="purepath" name="Upstreams Fails Rate" unit="number" description="The current rate of unsuccessful attempts to communicate with the server" />
+		<metric defaultrate="purepath" name="Upstreams Unavailable" unit="number" description="How many times the server became unavailable for client connections (state “unavail”) due to the number of unsuccessful attempts reaching the max_fails threshold" />
+		<metric defaultrate="purepath" name="Upstreams Total Health Checks" unit="number" description="The total number of health check requests made" />
+		<metric defaultrate="purepath" name="Upstreams Failed Health Checks" unit="number" description="The number of failed health checks" />
+		<metric defaultrate="purepath" name="Upstreams Unhealthy Health Checks" unit="number" description="How many times the server became unhealthy (state “unhealthy”)" />
+		<metric defaultrate="purepath" name="Upstreams Last Health Check Passed" unit="number" description="Boolean indicating if the last health check request was successful and passed tests" />
+		<metric defaultrate="purepath" name="Upstreams Downstart" unit="number" description="The time (in milliseconds since Epoch) when the server became “unavail” or “unhealthy”" />
+		<metric defaultrate="purepath" name="Upstreams Downtime" unit="number" description="Total time the server was in the “unavail” and “unhealthy” states" />
+		<metric defaultrate="purepath" name="Upstreams Selected" unit="number" description="The time (in milliseconds since Epoch) when the server was last selected to process a connection" />
+	</metricgroup>
+  </extension>
+</plugin>

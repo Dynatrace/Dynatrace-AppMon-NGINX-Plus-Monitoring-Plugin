@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Require-Bundle: com.dynatrace.diagnostics.sdk,
+ com.google.guava
+Bundle-Vendor: Dynatrace
+Bundle-ClassPath: .,lib/org.json.jar, .,lib/javax.ws.rs-api-2.0-m02.jar, .,lib/junit-4.12.jar, .,lib/guava-18.0.jar
+Bundle-Version: 1.0.0
+Bundle-Name: NGINX+ Monitoring Plugin
+Dynatrace-Plugin-Types: monitor, metric
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.dynatrace.plugin.nginx;singleton:=true
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+
