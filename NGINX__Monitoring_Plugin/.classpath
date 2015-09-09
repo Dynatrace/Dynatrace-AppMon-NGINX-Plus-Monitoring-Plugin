@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+    <classpathentry kind="src" path="src"/>
+    <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+    <classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+    <classpathentry kind="lib" path="lib/org.json.jar"/>
+    <classpathentry kind="lib" path="lib/javax.ws.rs-api-2.0-m02.jar"/>
+    <classpathentry kind="lib" path="lib/guava-18.0.jar"/>
+    <classpathentry kind="lib" path="lib/junit-4.12.jar"/>
+    <classpathentry kind="output" path="bin"/>
+</classpath>

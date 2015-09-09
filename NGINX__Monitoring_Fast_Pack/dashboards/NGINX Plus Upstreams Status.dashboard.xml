@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ATTENTION - THIS IS AN AUTOMATICALLY GENERATED FILE -->
+<!-- Manual changes can cause severe problems and system instability -->
+<!-- Apply manual changes only if you have received explicit instructions from dynaTrace Support -->
+<dynatrace version="6.2.0.1239" date="8/26/15 10:53 AM">
+  <dashboardconfig memento.version="6.2.0.1239" icon="com.dynatrace.diagnostics.sdk/default_16x16.png" localizationenabled="false" sessiontype="live" locationassource="false" suppresssavewarning="false" groupname="" authorname="Dynatrace" opendrilldowninnewdashboard="false" sessionid="NGINX Plus Monitoring" autoreplacesession="false" modified="2015-08-26T10:53:05+0000" id="9abbbc8e-9541-495b-ad5f-89d3cebe5037" revision="0000014f-69a3-c668-b925-9f9bd0e6321c" created="2015-08-26T10:53:05+0000" description="" name="NGINX Plus Upstreams Status" modifiedbyname="Dynatrace" locationascomparesource="false">
+    <reportconfig lines.per.table="100" pagesize="A4" enabled="true" print.legends="true" orientation="portrait" formathtml="com.dynatrace.diagnostics.report.velocity.format.htmlrenderer" optimizeequalcolumns="true" type="PDF" title="" override="false" levels.per.tree="10" description="" formatpdf="com.dynatrace.diagnostics.report.velocity.format.pdfrenderer" print.images="true" />
+    <filter>
+      <criterion type="admfilteranalyzer" />
+      <criterion completepurepath="true" type="agents" mode="all">
+        <textpattern enabled="true" name="agentname" type="contains" />
+        <textpattern enabled="true" name="agenthost" type="contains" />
+      </criterion>
+      <criterion type="and" />
+      <criterion excludeexternalsubpaths="false" type="api" mode="all" />
+      <criterion type="applications" mode="all" />
+      <criterion showrendering="true" isactive="true" shownetwork="true" showjavascript="true" type="browserpathtype" />
+      <criterion timerenabled="false" pageenabled="false" type="browsersectionfilter">
+        <timername>
+          <stringmatchpattern text="" match="contains" />
+        </timername>
+        <pageurl>
+          <stringmatchpattern text="" match="contains" />
+        </pageurl>
+      </criterion>
+      <criterion type="btm" />
+      <criterion type="casuemdimension" />
+      <criterion filterinterval="false" intervalend="0" type="dcrumdimension" intervalstart="0" />
+      <criterion isactive="true" analyzeserverpath="true" type="enduserpath" analyzeenduserpath="true" analyzeclienterrors="false" />
+      <criterion completepurepath="true" type="hosts" mode="all" />
+      <criterion severities="" statesmode="all" severitiesmode="all" states="" rulesmode="all" type="incident" />
+      <criterion type="or" />
+      <criterion enduser="false" type="purepaths" mode="all" />
+      <criterion showrendering="true" isactive="false" contenttypegroupsmode="all" javascripttriggersmode="all" shownetwork="true" showjavascript="true" type="riapurepathtype" requestcriterion="ALL" />
+      <criterion includemeasurename="true" includeplatform="true" includetestname="true" type="tests" testcategory="UNIT,BROWSER_TIMER,BROWSER_AUTO_TIMER,PERFORMANCE,LOAD,WEB_API" teststatus="FAILED,INVALIDATED,VOLATILE,DEGRADED,IMPROVED,passed" />
+      <criterion includeplatform="true" type="testsoverview" />
+      <criterion enabled="false" filterbyid="false" type="threads" />
+      <criterion type="timeframe">
+        <timeframe start="0" type="Auto" end="9223372036854775807" />
+      </criterion>
+      <criterion type="visits">
+        <visitidset />
+      </criterion>
+      <criterion type="webpage">
+        <textpattern enabled="true" name="timerName" type="contains" />
+        <textpattern enabled="true" name="pageContext" type="contains" />
+      </criterion>
+      <criterion type="webrequest">
+        <filteruripattern>
+          <stringmatchpattern text="" match="contains" />
+        </filteruripattern>
+        <filterquerypattern>
+          <stringmatchpattern text="" match="contains" />
+        </filterquerypattern>
+      </criterion>
+    </filter>
+    <autorefreshconfig unit="MINUTES" enabled="false" time="5" />
+    <designconfig descriptionalignment="CENTER" descriptionfontstyle="NORMAL" namealignment="CENTER" descriptionfontsize="8" nameshow="true" clienttheme="DEFAULT" headertype="CUSTOM" namefontsize="10" descriptionshow="true" autoadjustfontsizes="false" namefontstyle="BOLD" descriptionfontcolor="128,128,128" />
+    <dashboardlayout>
+      <portletfolder relationtype="LEFT" ratio="0.95" folderid="folder" selectionindex="1" relatedfolderid="DashboardLayout.blankArea" portletconfigorder="d5716892-771c-4890-b012-87e0aa04e0c0, ff9198c8-44b1-4ce5-b391-e1f197ef96a2">
+        <designconfig descriptionalignment="CENTER" descriptionfontstyle="NORMAL" headertype="DEFAULT" namealignment="CENTER" inherited="true" namefontsize="10" descriptionfontsize="8" descriptionshow="true" descriptionfontcolor="128,128,128" namefontstyle="BOLD" nameshow="true" />
+      </portletfolder>
+      <portletfolder relationtype="BOTTOM" ratio="0.5" folderid="org.eclipse.ui.internal.ViewStack@560ca846" selectionindex="0" relatedfolderid="folder" portletconfigorder="71016773-6411-40d7-871c-bf3b34b4ac3d">
+        <designconfig descriptionalignment="CENTER" descriptionfontstyle="NORMAL" headertype="DEFAULT" namealignment="CENTER" inherited="true" namefontsize="10" descriptionfontsize="8" descriptionshow="true" descriptionfontcolor="128,128,128" namefontstyle="BOLD" nameshow="true" />
+      </portletfolder>
+    </dashboardlayout>
+    <portletconfig usespecificautorefresh="false" icon="com.dynatrace.diagnostics.sdk/default_16x16.png" usedashboardsourceforcompare="true" folderid="folder" sessiontype="live" locationassource="false" usedashboardsource="true" sessionid="NGINX Plus Monitoring" id="d5716892-771c-4890-b012-87e0aa04e0c0" addfilterinfo="false" description="" lastvalue="false" name="Chart" typeid="com.dynatrace.diagnostics.portlets.chart.Chart" ismaster="false" showabsolutevalues="false" locationascomparesource="false">
+      <reportconfig lines.per.table="100" print.legends="true" enabled="true" optimizeequalcolumns="true" levels.per.tree="10" override="false" print.images="true" reportposition="1" />
+      <filter>
+        <criterion completepurepath="true" type="agents" mode="all">
+          <textpattern enabled="true" name="agentname" type="contains" />
+          <textpattern enabled="true" name="agenthost" type="contains" />
+        </criterion>
+        <criterion type="applications" mode="all" />
+        <criterion type="btm" />
+        <criterion completepurepath="true" type="hosts" mode="all" />
+        <criterion type="timeframe">
+          <timeframe start="0" type="Auto" end="9223372036854775807" />
+        </criterion>
+        <criterion type="visits">
+          <visitidset />
+        </criterion>
+        <inheritancemap />
+      </filter>
+      <autorefreshconfig unit="MINUTES" enabled="false" time="5" />
+      <sashconfig weights="1,1" displayoption="CHART" />
+      <datamodelconfig>
+        <chart maxdisplayitems="10" axis.x.title="" legendposition="Bottom" zoomable="true" showtooltips="true" charttype="LineChart" resolution="Auto" isentitymarkable="false" title="" showlabels="true" yaxisalignment="0" showname="true" splitcharts="false" bounds.y.enabled="false" axis.y.show="true" orientation="Horizontal" lockyaxis="true" axis.y.title="" axis.y.title.show="true" limititems="false" axis.x.show="true" axis.x.title.show="true" logxaxis="false" showheatfield="true" showvalues="false" showtitle="false" showlegend="true">
+          <legendcomposition splittings="true" host="true" measure="true" agent="true">
+            <pielabelcomposition unit="true" value="true" />
+          </legendcomposition>
+          <chartsource position="1" scale="0" visible="false" sessiontype="live" colorinheritancemode="random" aggregationtype="Avg" uiunit="number" groupingvalue="" id="1213da21-66c5-4070-923f-08664c5c3760" fetchmeasurecolor="true" overridesource="false" rate="10s" ratesupported="true" name="State" sourcecolor="RGB(128,64,192,255)" sourcetype="MEASURE" fetchbaseline="false" dynamicconfig="false" autounit="false" sessionid="NGINX Plus Monitoring" groupingcriterion="appservers" displayrate="10s" unit="number" systemid="NGINX Plus Monitoring" measuretype="MonitorMeasure" fetch.dynamic.measures="true" fetchthreshold="false" autoscale="false">
+            <tagtolabel>
+              <taglabelentry value="demoupstreams" key="demoupstreams" />
+              <taglabelentry value="appservers" key="appservers" />
+            </tagtolabel>
+            <lightweightuniquemeasureidentifier keyid="State" metricgroupkey="NGINX Plus Monitor Upstreams" collector="" systemid="NGINX Plus Monitoring" application="" agenthost="" parentkeyid="State" measuretype="MonitorMeasure" metrickeyid="State" agentname="New NGINX Plus Monitor" metricsimpledisplayname="State" />
+            <displaysourceinfo monitorhost="&lt;all-hosts&gt;" monitordetails="New NGINX Plus Monitor" measureunit="number" monitorscheduleid="New NGINX Plus Monitor" measurerate="purepath" />
+          </chartsource>
+          <splitconfig splitmode="PerSeries" splitlayout="Horizontal" />
+        </chart>
+        <table drawcolumn="-1" sortcolumn="16" columnorder="0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19">
+          <column index="0" sort="None" forcevisible="false" hidden="false" width="400" />
+          <column index="1" sort="None" forcevisible="false" hidden="true" width="100" />
+          <column index="2" sort="None" forcevisible="false" hidden="true" width="100" />
+          <column index="3" sort="None" forcevisible="false" hidden="false" width="25" />
+          <column index="4" sort="None" forcevisible="false" hidden="false" width="100" />
+          <column index="5" sort="None" forcevisible="false" hidden="true" width="100" />
+          <column index="6" sort="None" forcevisible="false" hidden="false" width="50" />
+          <column index="7" sort="None" forcevisible="false" hidden="true" width="75" />
+          <column index="8" sort="None" forcevisible="false" hidden="true" width="75" />
+          <column index="9" sort="None" forcevisible="false" hidden="true" width="75" />
+          <column index="10" sort="None" forcevisible="false" hidden="true" width="75" />
+          <column index="11" sort="None" forcevisible="false" hidden="true" width="75" />
+          <column index="12" sort="None" forcevisible="false" hidden="true" width="100" />
+          <column index="13" sort="None" forcevisible="false" hidden="false" width="105" />
+          <column index="14" sort="None" forcevisible="false" hidden="true" width="50" />
+          <column index="15" sort="None" forcevisible="false" hidden="true" width="50" />
+          <column index="16" sort="Up" forcevisible="false" hidden="false" width="100" />
+          <column index="17" sort="None" forcevisible="false" hidden="true" width="150" />
+          <column index="18" sort="None" forcevisible="false" hidden="true" width="150" />
+          <column index="19" sort="None" forcevisible="false" hidden="true" width="150" />
+        </table>
+        <heatfieldconfig smartmeasure="true" filterconfirmed="false" smartserver="true" customevents="true" deploymentevents="true">
+          <incidentrules />
+        </heatfieldconfig>
+      </datamodelconfig>
+      <chartcolors />
+    </portletconfig>
+    <portletconfig usespecificautorefresh="false" icon="com.dynatrace.diagnostics.sdk/default_16x16.png" usedashboardsourceforcompare="true" folderid="folder" sessiontype="live" locationassource="false" usedashboardsource="true" sessionid="NGINX Plus Monitoring" id="ff9198c8-44b1-4ce5-b391-e1f197ef96a2" addfilterinfo="false" description="" lastvalue="false" name="appservers" typeid="com.dynatrace.diagnostics.portlets.chart.Chart" ismaster="false" showabsolutevalues="false" locationascomparesource="false">
+      <reportconfig lines.per.table="100" print.legends="true" enabled="true" optimizeequalcolumns="true" levels.per.tree="10" override="false" print.images="true" reportposition="2" />
+      <filter>
+        <criterion completepurepath="true" type="agents" mode="all">
+          <textpattern enabled="true" name="agentname" type="contains" />
+          <textpattern enabled="true" name="agenthost" type="contains" />
+        </criterion>
+        <criterion type="applications" mode="all" />
+        <criterion type="btm" />
+        <criterion completepurepath="true" type="hosts" mode="all" />
+        <criterion type="timeframe">
+          <timeframe start="0" type="Auto" end="9223372036854775807" />
+        </criterion>
+        <criterion type="visits">
+          <visitidset />
+        </criterion>
+        <inheritancemap />
+      </filter>
+      <autorefreshconfig unit="MINUTES" enabled="false" time="5" />
+      <sashconfig weights="1,1" displayoption="CHART" />
+      <datamodelconfig>
+        <chart maxdisplayitems="10" axis.x.title="" legendposition="Bottom" zoomable="true" showtooltips="true" charttype="TrafficLightChart" resolution="Auto" isentitymarkable="false" title="" showlabels="true" yaxisalignment="0" showname="true" splitcharts="true" bounds.y.enabled="false" axis.y.show="true" orientation="Horizontal" lockyaxis="true" axis.y.title="" axis.y.title.show="true" limititems="false" axis.x.show="true" axis.x.title.show="true" logxaxis="false" showheatfield="true" showvalues="false" showtitle="false" showlegend="true">
+          <legendcomposition splittings="true" host="true" measure="true" agent="true">
+            <pielabelcomposition unit="true" value="true" />
+          </legendcomposition>
+          <chartsource position="-1" scale="0" visible="true" sessiontype="live" parentid="0a62f1c9-d90c-4f37-9574-7a2a8d3b011b" aggregationtype="Last" uiunit="number" groupingvalue="" id="8f38cd0e-a1e4-39e4-933a-168a0f481954" fetchmeasurecolor="false" overridesource="true" rate="10s" ratesupported="true" name="State" sourcecolor="RGB(122,150,235,255)" sourcetype="MEASURE" fetchbaseline="false" dynamicconfig="true" autounit="false" sessionid="NGINX Plus Monitoring" groupingcriterion="appservers" displayrate="10s" unit="number" systemid="NGINX Plus Monitoring" measuretype="MonitorMeasure" fetch.dynamic.measures="true" fetchthreshold="true" autoscale="false">
+            <tagtolabel>
+              <taglabelentry value="appservers" key="appservers" />
+              <taglabelentry value="demoupstreams" key="demoupstreams" />
+            </tagtolabel>
+            <lightweightuniquemeasureidentifier keyid="State" metricgroupkey="NGINX Plus Monitor Upstreams" collector="" systemid="NGINX Plus Monitoring" application="" agenthost="-" parentkeyid="State" measuretype="MonitorMeasure" metrickeyid="State" agentname="-" metricsimpledisplayname="State">
+              <tag value="192.0.2.1:80(appservers)" type="0" key="appservers" />
+            </lightweightuniquemeasureidentifier>
+            <displaysourceinfo monitorhost="demo.nginx.com" monitordetails="New NGINX Plus Monitor" measureunit="number" monitorscheduleid="New NGINX Plus Monitor" measurerate="purepath" />
+          </chartsource>
+          <chartsource position="-1" scale="0" visible="true" sessiontype="live" parentid="0a62f1c9-d90c-4f37-9574-7a2a8d3b011b" aggregationtype="Last" uiunit="number" groupingvalue="" id="c3d84f5a-f77c-3bc3-aac2-c9a41821f4f4" fetchmeasurecolor="false" overridesource="true" rate="10s" ratesupported="true" name="State" sourcecolor="RGB(235,122,122,255)" sourcetype="MEASURE" fetchbaseline="false" dynamicconfig="true" autounit="false" sessionid="NGINX Plus Monitoring" groupingcriterion="appservers" displayrate="10s" unit="number" systemid="NGINX Plus Monitoring" measuretype="MonitorMeasure" fetch.dynamic.measures="true" fetchthreshold="true" autoscale="false">
+            <tagtolabel>
+              <taglabelentry value="appservers" key="appservers" />
+              <taglabelentry value="demoupstreams" key="demoupstreams" />
+            </tagtolabel>
+            <lightweightuniquemeasureidentifier keyid="State" metricgroupkey="NGINX Plus Monitor Upstreams" collector="" systemid="NGINX Plus Monitoring" application="" agenthost="-" parentkeyid="State" measuretype="MonitorMeasure" metrickeyid="State" agentname="-" metricsimpledisplayname="State">
+              <tag value="127.0.0.1:9091(appservers)" type="0" key="appservers" />
+            </lightweightuniquemeasureidentifier>
+            <displaysourceinfo monitorhost="demo.nginx.com" monitordetails="New NGINX Plus Monitor" measureunit="number" monitorscheduleid="New NGINX Plus Monitor" measurerate="purepath" />
+          </chartsource>
+          <chartsource position="-1" scale="0" visible="true" sessiontype="live" parentid="0a62f1c9-d90c-4f37-9574-7a2a8d3b011b" aggregationtype="Last" uiunit="number" groupingvalue="" id="ca322359-fb15-3577-9156-1a0739acf9b7" fetchmeasurecolor="false" overridesource="true" rate="10s" ratesupported="true" name="State" sourcecolor="RGB(228,78,141,255)" sourcetype="MEASURE" fetchbaseline="false" dynamicconfig="true" autounit="false" sessionid="NGINX Plus Monitoring" groupingcriterion="appservers" displayrate="10s" unit="number" systemid="NGINX Plus Monitoring" measuretype="MonitorMeasure" fetch.dynamic.measures="true" fetchthreshold="true" autoscale="false">
+            <tagtolabel>
+              <taglabelentry value="appservers" key="appservers" />
+              <taglabelentry value="demoupstreams" key="demoupstreams" />
+            </tagtolabel>
+            <lightweightuniquemeasureidentifier keyid="State" metricgroupkey="NGINX Plus Monitor Upstreams" collector="" systemid="NGINX Plus Monitoring" application="" agenthost="-" parentkeyid="State" measuretype="MonitorMeasure" metrickeyid="State" agentname="-" metricsimpledisplayname="State">
+              <tag value="127.0.0.1:9090(appservers)" type="0" key="appservers" />
+            </lightweightuniquemeasureidentifier>
+            <displaysourceinfo monitorhost="demo.nginx.com" monitordetails="New NGINX Plus Monitor" measureunit="number" monitorscheduleid="New NGINX Plus Monitor" measurerate="purepath" />
+          </chartsource>
+          <chartsource position="-1" scale="0" visible="true" sessiontype="live" parentid="0a62f1c9-d90c-4f37-9574-7a2a8d3b011b" aggregationtype="Last" uiunit="number" groupingvalue="" id="e99f7962-40ce-3bca-87ed-5f65e954149c" fetchmeasurecolor="false" overridesource="true" rate="10s" ratesupported="true" name="State" sourcecolor="RGB(133,20,121,255)" sourcetype="MEASURE" fetchbaseline="false" dynamicconfig="true" autounit="false" sessionid="NGINX Plus Monitoring" groupingcriterion="appservers" displayrate="10s" unit="number" systemid="NGINX Plus Monitoring" measuretype="MonitorMeasure" fetch.dynamic.measures="true" fetchthreshold="true" autoscale="false">
+            <tagtolabel>
+              <taglabelentry value="appservers" key="appservers" />
+              <taglabelentry value="demoupstreams" key="demoupstreams" />
+            </tagtolabel>
+            <lightweightuniquemeasureidentifier keyid="State" metricgroupkey="NGINX Plus Monitor Upstreams" collector="" systemid="NGINX Plus Monitoring" application="" agenthost="-" parentkeyid="State" measuretype="MonitorMeasure" metrickeyid="State" agentname="-" metricsimpledisplayname="State">
+              <tag value="172.20.13.37:80(appservers)" type="0" key="appservers" />
+            </lightweightuniquemeasureidentifier>
+            <displaysourceinfo monitorhost="demo.nginx.com" monitordetails="New NGINX Plus Monitor" measureunit="number" monitorscheduleid="New NGINX Plus Monitor" measurerate="purepath" />
+          </chartsource>
+          <chartsource position="-1" scale="0" visible="true" sessiontype="live" parentid="0a62f1c9-d90c-4f37-9574-7a2a8d3b011b" aggregationtype="Last" uiunit="number" groupingvalue="" id="fbfde78a-ecbe-38a7-9b8d-606f23fe0e8e" fetchmeasurecolor="false" overridesource="true" rate="10s" ratesupported="true" name="State" sourcecolor="RGB(13,68,89,255)" sourcetype="MEASURE" fetchbaseline="false" dynamicconfig="true" autounit="false" sessionid="NGINX Plus Monitoring" groupingcriterion="appservers" displayrate="10s" unit="number" systemid="NGINX Plus Monitoring" measuretype="MonitorMeasure" fetch.dynamic.measures="true" fetchthreshold="true" autoscale="false">
+            <tagtolabel>
+              <taglabelentry value="appservers" key="appservers" />
+              <taglabelentry value="demoupstreams" key="demoupstreams" />
+            </tagtolabel>
+            <lightweightuniquemeasureidentifier keyid="State" metricgroupkey="NGINX Plus Monitor Upstreams" collector="" systemid="NGINX Plus Monitoring" application="" agenthost="-" parentkeyid="State" measuretype="MonitorMeasure" metrickeyid="State" agentname="-" metricsimpledisplayname="State" />
+            <displaysourceinfo monitorhost="demo.nginx.com" monitordetails="New NGINX Plus Monitor" measureunit="number" monitorscheduleid="New NGINX Plus Monitor" measurerate="purepath" />
+          </chartsource>
+          <chartsource position="1" scale="0" visible="false" sessiontype="live" colorinheritancemode="random" aggregationtype="Last" uiunit="number" groupingvalue="" id="0a62f1c9-d90c-4f37-9574-7a2a8d3b011b" fetchmeasurecolor="false" overridesource="true" rate="10s" ratesupported="true" name="State" sourcecolor="RGB(128,64,192,255)" sourcetype="MEASURE" fetchbaseline="false" dynamicconfig="false" autounit="false" sessionid="NGINX Plus Monitoring" groupingcriterion="appservers" displayrate="10s" unit="number" systemid="NGINX Plus Monitoring" measuretype="MonitorMeasure" fetch.dynamic.measures="true" fetchthreshold="true" autoscale="false">
+            <tagtolabel>
+              <taglabelentry value="demoupstreams" key="demoupstreams" />
+              <taglabelentry value="appservers" key="appservers" />
+            </tagtolabel>
+            <lightweightuniquemeasureidentifier keyid="State" metricgroupkey="NGINX Plus Monitor Upstreams" collector="" systemid="NGINX Plus Monitoring" application="" agenthost="" parentkeyid="State" measuretype="MonitorMeasure" metrickeyid="State" agentname="New NGINX Plus Monitor" metricsimpledisplayname="State" />
+            <displaysourceinfo monitorhost="&lt;all-hosts&gt;" monitordetails="New NGINX Plus Monitor" measureunit="number" monitorscheduleid="New NGINX Plus Monitor" measurerate="purepath" />
+          </chartsource>
+          <chartsource position="-1" scale="0" visible="true" sessiontype="live" parentid="0a62f1c9-d90c-4f37-9574-7a2a8d3b011b" aggregationtype="Last" uiunit="number" groupingvalue="" id="6624c3bd-aed6-398f-91e1-454e685fbc59" fetchmeasurecolor="false" overridesource="true" rate="10s" ratesupported="true" name="State" sourcecolor="RGB(59,13,89,255)" sourcetype="MEASURE" fetchbaseline="false" dynamicconfig="true" autounit="false" sessionid="NGINX Plus Monitoring" groupingcriterion="appservers" displayrate="10s" unit="number" systemid="NGINX Plus Monitoring" measuretype="MonitorMeasure" fetch.dynamic.measures="true" fetchthreshold="true" autoscale="false">
+            <tagtolabel>
+              <taglabelentry value="appservers" key="appservers" />
+              <taglabelentry value="demoupstreams" key="demoupstreams" />
+            </tagtolabel>
+            <lightweightuniquemeasureidentifier keyid="State" metricgroupkey="NGINX Plus Monitor Upstreams" collector="" systemid="NGINX Plus Monitoring" application="" agenthost="-" parentkeyid="State" measuretype="MonitorMeasure" metrickeyid="State" agentname="-" metricsimpledisplayname="State">
+              <tag value="192.0.2.2:80(appservers)" type="0" key="appservers" />
+            </lightweightuniquemeasureidentifier>
+            <displaysourceinfo monitorhost="demo.nginx.com" monitordetails="New NGINX Plus Monitor" measureunit="number" monitorscheduleid="New NGINX Plus Monitor" measurerate="purepath" />
+          </chartsource>
+          <splitconfig splitmode="PerSeries" splitlayout="Horizontal" />
+        </chart>
+        <table drawcolumn="-1" sortcolumn="16" columnorder="0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19">
+          <column index="0" sort="None" forcevisible="false" hidden="false" width="400" />
+          <column index="1" sort="None" forcevisible="false" hidden="true" width="100" />
+          <column index="2" sort="None" forcevisible="false" hidden="true" width="100" />
+          <column index="3" sort="None" forcevisible="false" hidden="false" width="25" />
+          <column index="4" sort="None" forcevisible="false" hidden="false" width="100" />
+          <column index="5" sort="None" forcevisible="false" hidden="true" width="100" />
+          <column index="6" sort="None" forcevisible="false" hidden="false" width="50" />
+          <column index="7" sort="None" forcevisible="false" hidden="true" width="75" />
+          <column index="8" sort="None" forcevisible="false" hidden="true" width="75" />
+          <column index="9" sort="None" forcevisible="false" hidden="true" width="75" />
+          <column index="10" sort="None" forcevisible="false" hidden="true" width="75" />
+          <column index="11" sort="None" forcevisible="false" hidden="true" width="75" />
+          <column index="12" sort="None" forcevisible="false" hidden="true" width="100" />
+          <column index="13" sort="None" forcevisible="false" hidden="false" width="105" />
+          <column index="14" sort="None" forcevisible="false" hidden="true" width="50" />
+          <column index="15" sort="None" forcevisible="false" hidden="true" width="50" />
+          <column index="16" sort="Up" forcevisible="false" hidden="false" width="100" />
+          <column index="17" sort="None" forcevisible="false" hidden="true" width="150" />
+          <column index="18" sort="None" forcevisible="false" hidden="true" width="150" />
+          <column index="19" sort="None" forcevisible="false" hidden="true" width="150" />
+        </table>
+        <heatfieldconfig smartmeasure="true" filterconfirmed="false" smartserver="true" customevents="true" deploymentevents="true">
+          <incidentrules />
+        </heatfieldconfig>
+      </datamodelconfig>
+      <chartcolors />
+    </portletconfig>
+    <portletconfig usespecificautorefresh="false" icon="com.dynatrace.diagnostics.sdk/default_16x16.png" usedashboardsourceforcompare="true" folderid="org.eclipse.ui.internal.ViewStack@560ca846" sessiontype="live" locationassource="false" usedashboardsource="true" sessionid="NGINX Plus Monitoring" id="71016773-6411-40d7-871c-bf3b34b4ac3d" addfilterinfo="false" description="" lastvalue="false" name="demoupstreams" typeid="com.dynatrace.diagnostics.portlets.chart.Chart" ismaster="false" showabsolutevalues="false" locationascomparesource="false">
+      <reportconfig lines.per.table="100" print.legends="true" enabled="true" optimizeequalcolumns="true" levels.per.tree="10" override="false" print.images="true" reportposition="3" />
+      <filter>
+        <criterion completepurepath="true" type="agents" mode="all">
+          <textpattern enabled="true" name="agentname" type="contains" />
+          <textpattern enabled="true" name="agenthost" type="contains" />
+        </criterion>
+        <criterion type="applications" mode="all" />
+        <criterion type="btm" />
+        <criterion completepurepath="true" type="hosts" mode="all" />
+        <criterion type="timeframe">
+          <timeframe start="0" type="Auto" end="9223372036854775807" />
+        </criterion>
+        <criterion type="visits">
+          <visitidset />
+        </criterion>
+        <inheritancemap />
+      </filter>
+      <autorefreshconfig unit="MINUTES" enabled="false" time="5" />
+      <sashconfig weights="1,1" displayoption="CHART" />
+      <datamodelconfig>
+        <chart maxdisplayitems="10" axis.x.title="" legendposition="Bottom" zoomable="true" showtooltips="true" charttype="TrafficLightChart" resolution="Auto" isentitymarkable="false" title="" showlabels="true" yaxisalignment="0" showname="true" splitcharts="true" bounds.y.enabled="false" axis.y.show="true" orientation="Horizontal" lockyaxis="true" axis.y.title="" axis.y.title.show="true" limititems="false" axis.x.show="true" axis.x.title.show="true" logxaxis="false" showheatfield="true" showvalues="false" showtitle="false" showlegend="true">
+          <legendcomposition splittings="true" host="true" measure="true" agent="true">
+            <pielabelcomposition unit="true" value="true" />
+          </legendcomposition>
+          <chartsource position="-1" scale="0" visible="true" sessiontype="live" parentid="0bc3a867-0f23-422d-9927-86a4b5459dcb" aggregationtype="Last" uiunit="number" groupingvalue="" id="c64c17b2-2a0b-3533-82ad-6a17ef0fa65d" fetchmeasurecolor="false" overridesource="true" rate="10s" ratesupported="true" name="State" sourcecolor="RGB(13,68,89,255)" sourcetype="MEASURE" fetchbaseline="false" dynamicconfig="true" autounit="false" sessionid="NGINX Plus Monitoring" groupingcriterion="demoupstreams" displayrate="10s" unit="number" systemid="NGINX Plus Monitoring" measuretype="MonitorMeasure" fetch.dynamic.measures="true" fetchthreshold="true" autoscale="false">
+            <tagtolabel>
+              <taglabelentry value="appservers" key="appservers" />
+              <taglabelentry value="demoupstreams" key="demoupstreams" />
+            </tagtolabel>
+            <lightweightuniquemeasureidentifier keyid="State" metricgroupkey="NGINX Plus Monitor Upstreams" collector="" systemid="NGINX Plus Monitoring" application="" agenthost="-" parentkeyid="State" measuretype="MonitorMeasure" metrickeyid="State" agentname="-" metricsimpledisplayname="State">
+              <tag value="127.0.0.1:8006(demoupstreams)" type="0" key="demoupstreams" />
+            </lightweightuniquemeasureidentifier>
+            <displaysourceinfo monitorhost="demo.nginx.com" monitordetails="New NGINX Plus Monitor" measureunit="number" monitorscheduleid="New NGINX Plus Monitor" measurerate="purepath" />
+          </chartsource>
+          <chartsource position="-1" scale="0" visible="true" sessiontype="live" parentid="0bc3a867-0f23-422d-9927-86a4b5459dcb" aggregationtype="Last" uiunit="number" groupingvalue="" id="e0f056f1-0073-346f-a2cd-57f895c39ce4" fetchmeasurecolor="false" overridesource="true" rate="10s" ratesupported="true" name="State" sourcecolor="RGB(229,77,77,255)" sourcetype="MEASURE" fetchbaseline="false" dynamicconfig="true" autounit="false" sessionid="NGINX Plus Monitoring" groupingcriterion="demoupstreams" displayrate="10s" unit="number" systemid="NGINX Plus Monitoring" measuretype="MonitorMeasure" fetch.dynamic.measures="true" fetchthreshold="true" autoscale="false">
+            <tagtolabel>
+              <taglabelentry value="appservers" key="appservers" />
+              <taglabelentry value="demoupstreams" key="demoupstreams" />
+            </tagtolabel>
+            <lightweightuniquemeasureidentifier keyid="State" metricgroupkey="NGINX Plus Monitor Upstreams" collector="" systemid="NGINX Plus Monitoring" application="" agenthost="-" parentkeyid="State" measuretype="MonitorMeasure" metrickeyid="State" agentname="-" metricsimpledisplayname="State">
+              <tag value="127.0.0.1:8005(demoupstreams)" type="0" key="demoupstreams" />
+            </lightweightuniquemeasureidentifier>
+            <displaysourceinfo monitorhost="demo.nginx.com" monitordetails="New NGINX Plus Monitor" measureunit="number" monitorscheduleid="New NGINX Plus Monitor" measurerate="purepath" />
+          </chartsource>
+          <chartsource position="-1" scale="0" visible="true" sessiontype="live" parentid="0bc3a867-0f23-422d-9927-86a4b5459dcb" aggregationtype="Last" uiunit="number" groupingvalue="" id="e8c2934a-0919-3813-a0ba-746464b89e5b" fetchmeasurecolor="false" overridesource="true" rate="10s" ratesupported="true" name="State" sourcecolor="RGB(13,89,71,255)" sourcetype="MEASURE" fetchbaseline="false" dynamicconfig="true" autounit="false" sessionid="NGINX Plus Monitoring" groupingcriterion="demoupstreams" displayrate="10s" unit="number" systemid="NGINX Plus Monitoring" measuretype="MonitorMeasure" fetch.dynamic.measures="true" fetchthreshold="true" autoscale="false">
+            <tagtolabel>
+              <taglabelentry value="appservers" key="appservers" />
+              <taglabelentry value="demoupstreams" key="demoupstreams" />
+            </tagtolabel>
+            <lightweightuniquemeasureidentifier keyid="State" metricgroupkey="NGINX Plus Monitor Upstreams" collector="" systemid="NGINX Plus Monitoring" application="" agenthost="-" parentkeyid="State" measuretype="MonitorMeasure" metrickeyid="State" agentname="-" metricsimpledisplayname="State">
+              <tag value="127.0.0.1:8001(demoupstreams)" type="0" key="demoupstreams" />
+            </lightweightuniquemeasureidentifier>
+            <displaysourceinfo monitorhost="demo.nginx.com" monitordetails="New NGINX Plus Monitor" measureunit="number" monitorscheduleid="New NGINX Plus Monitor" measurerate="purepath" />
+          </chartsource>
+          <chartsource position="-1" scale="0" visible="true" sessiontype="live" parentid="0bc3a867-0f23-422d-9927-86a4b5459dcb" aggregationtype="Last" uiunit="number" groupingvalue="" id="ef75e389-066b-3936-8311-14cc0911b740" fetchmeasurecolor="false" overridesource="true" rate="10s" ratesupported="true" name="State" sourcecolor="RGB(178,178,26,255)" sourcetype="MEASURE" fetchbaseline="false" dynamicconfig="true" autounit="false" sessionid="NGINX Plus Monitoring" groupingcriterion="demoupstreams" displayrate="10s" unit="number" systemid="NGINX Plus Monitoring" measuretype="MonitorMeasure" fetch.dynamic.measures="true" fetchthreshold="true" autoscale="false">
+            <tagtolabel>
+              <taglabelentry value="appservers" key="appservers" />
+              <taglabelentry value="demoupstreams" key="demoupstreams" />
+            </tagtolabel>
+            <lightweightuniquemeasureidentifier keyid="State" metricgroupkey="NGINX Plus Monitor Upstreams" collector="" systemid="NGINX Plus Monitoring" application="" agenthost="-" parentkeyid="State" measuretype="MonitorMeasure" metrickeyid="State" agentname="-" metricsimpledisplayname="State">
+              <tag value="127.0.0.1:8007(demoupstreams)" type="0" key="demoupstreams" />
+            </lightweightuniquemeasureidentifier>
+            <displaysourceinfo monitorhost="demo.nginx.com" monitordetails="New NGINX Plus Monitor" measureunit="number" monitorscheduleid="New NGINX Plus Monitor" measurerate="purepath" />
+          </chartsource>
+          <chartsource position="-1" scale="0" visible="true" sessiontype="live" parentid="0bc3a867-0f23-422d-9927-86a4b5459dcb" aggregationtype="Last" uiunit="number" groupingvalue="" id="ff05aab4-ad49-3d89-975e-df79076359a3" fetchmeasurecolor="false" overridesource="true" rate="10s" ratesupported="true" name="State" sourcecolor="RGB(213,235,122,255)" sourcetype="MEASURE" fetchbaseline="false" dynamicconfig="true" autounit="false" sessionid="NGINX Plus Monitoring" groupingcriterion="demoupstreams" displayrate="10s" unit="number" systemid="NGINX Plus Monitoring" measuretype="MonitorMeasure" fetch.dynamic.measures="true" fetchthreshold="true" autoscale="false">
+            <tagtolabel>
+              <taglabelentry value="appservers" key="appservers" />
+              <taglabelentry value="demoupstreams" key="demoupstreams" />
+            </tagtolabel>
+            <lightweightuniquemeasureidentifier keyid="State" metricgroupkey="NGINX Plus Monitor Upstreams" collector="" systemid="NGINX Plus Monitoring" application="" agenthost="-" parentkeyid="State" measuretype="MonitorMeasure" metrickeyid="State" agentname="-" metricsimpledisplayname="State" />
+            <displaysourceinfo monitorhost="demo.nginx.com" monitordetails="New NGINX Plus Monitor" measureunit="number" monitorscheduleid="New NGINX Plus Monitor" measurerate="purepath" />
+          </chartsource>
+          <chartsource position="1" scale="0" visible="false" sessiontype="live" colorinheritancemode="random" aggregationtype="Last" uiunit="number" groupingvalue="" id="0bc3a867-0f23-422d-9927-86a4b5459dcb" fetchmeasurecolor="false" overridesource="true" rate="10s" ratesupported="true" name="State" sourcecolor="RGB(128,64,192,255)" sourcetype="MEASURE" fetchbaseline="false" dynamicconfig="false" autounit="false" sessionid="NGINX Plus Monitoring" groupingcriterion="demoupstreams" displayrate="10s" unit="number" systemid="NGINX Plus Monitoring" measuretype="MonitorMeasure" fetch.dynamic.measures="true" fetchthreshold="true" autoscale="false">
+            <tagtolabel>
+              <taglabelentry value="demoupstreams" key="demoupstreams" />
+              <taglabelentry value="appservers" key="appservers" />
+            </tagtolabel>
+            <lightweightuniquemeasureidentifier keyid="State" metricgroupkey="NGINX Plus Monitor Upstreams" collector="" systemid="NGINX Plus Monitoring" application="" agenthost="" parentkeyid="State" measuretype="MonitorMeasure" metrickeyid="State" agentname="New NGINX Plus Monitor" metricsimpledisplayname="State" />
+            <displaysourceinfo monitorhost="&lt;all-hosts&gt;" monitordetails="New NGINX Plus Monitor" measureunit="number" monitorscheduleid="New NGINX Plus Monitor" measurerate="purepath" />
+          </chartsource>
+          <chartsource position="-1" scale="0" visible="true" sessiontype="live" parentid="0bc3a867-0f23-422d-9927-86a4b5459dcb" aggregationtype="Last" uiunit="number" groupingvalue="" id="34b19e8f-98ee-39f5-be2c-9a09e76fc911" fetchmeasurecolor="false" overridesource="true" rate="10s" ratesupported="true" name="State" sourcecolor="RGB(133,20,68,255)" sourcetype="MEASURE" fetchbaseline="false" dynamicconfig="true" autounit="false" sessionid="NGINX Plus Monitoring" groupingcriterion="demoupstreams" displayrate="10s" unit="number" systemid="NGINX Plus Monitoring" measuretype="MonitorMeasure" fetch.dynamic.measures="true" fetchthreshold="true" autoscale="false">
+            <tagtolabel>
+              <taglabelentry value="appservers" key="appservers" />
+              <taglabelentry value="demoupstreams" key="demoupstreams" />
+            </tagtolabel>
+            <lightweightuniquemeasureidentifier keyid="State" metricgroupkey="NGINX Plus Monitor Upstreams" collector="" systemid="NGINX Plus Monitoring" application="" agenthost="-" parentkeyid="State" measuretype="MonitorMeasure" metrickeyid="State" agentname="-" metricsimpledisplayname="State">
+              <tag value="127.0.0.1:8004(demoupstreams)" type="0" key="demoupstreams" />
+            </lightweightuniquemeasureidentifier>
+            <displaysourceinfo monitorhost="demo.nginx.com" monitordetails="New NGINX Plus Monitor" measureunit="number" monitorscheduleid="New NGINX Plus Monitor" measurerate="purepath" />
+          </chartsource>
+          <chartsource position="-1" scale="0" visible="true" sessiontype="live" parentid="0bc3a867-0f23-422d-9927-86a4b5459dcb" aggregationtype="Last" uiunit="number" groupingvalue="" id="3c20f9b3-b5ec-318f-8c47-33fe5c30c9c7" fetchmeasurecolor="false" overridesource="true" rate="10s" ratesupported="true" name="State" sourcecolor="RGB(90,229,77,255)" sourcetype="MEASURE" fetchbaseline="false" dynamicconfig="true" autounit="false" sessionid="NGINX Plus Monitoring" groupingcriterion="demoupstreams" displayrate="10s" unit="number" systemid="NGINX Plus Monitoring" measuretype="MonitorMeasure" fetch.dynamic.measures="true" fetchthreshold="true" autoscale="false">
+            <tagtolabel>
+              <taglabelentry value="appservers" key="appservers" />
+              <taglabelentry value="demoupstreams" key="demoupstreams" />
+            </tagtolabel>
+            <lightweightuniquemeasureidentifier keyid="State" metricgroupkey="NGINX Plus Monitor Upstreams" collector="" systemid="NGINX Plus Monitoring" application="" agenthost="-" parentkeyid="State" measuretype="MonitorMeasure" metrickeyid="State" agentname="-" metricsimpledisplayname="State">
+              <tag value="127.0.0.1:8002(demoupstreams)" type="0" key="demoupstreams" />
+            </lightweightuniquemeasureidentifier>
+            <displaysourceinfo monitorhost="demo.nginx.com" monitordetails="New NGINX Plus Monitor" measureunit="number" monitorscheduleid="New NGINX Plus Monitor" measurerate="purepath" />
+          </chartsource>
+          <chartsource position="-1" scale="0" visible="true" sessiontype="live" parentid="0bc3a867-0f23-422d-9927-86a4b5459dcb" aggregationtype="Last" uiunit="number" groupingvalue="" id="5fc2fb11-a2ce-34a7-8eec-dc05be82b199" fetchmeasurecolor="false" overridesource="true" rate="10s" ratesupported="true" name="State" sourcecolor="RGB(229,185,77,255)" sourcetype="MEASURE" fetchbaseline="false" dynamicconfig="true" autounit="false" sessionid="NGINX Plus Monitoring" groupingcriterion="demoupstreams" displayrate="10s" unit="number" systemid="NGINX Plus Monitoring" measuretype="MonitorMeasure" fetch.dynamic.measures="true" fetchthreshold="true" autoscale="false">
+            <tagtolabel>
+              <taglabelentry value="appservers" key="appservers" />
+              <taglabelentry value="demoupstreams" key="demoupstreams" />
+            </tagtolabel>
+            <lightweightuniquemeasureidentifier keyid="State" metricgroupkey="NGINX Plus Monitor Upstreams" collector="" systemid="NGINX Plus Monitoring" application="" agenthost="-" parentkeyid="State" measuretype="MonitorMeasure" metrickeyid="State" agentname="-" metricsimpledisplayname="State">
+              <tag value="127.0.0.1:8003(demoupstreams)" type="0" key="demoupstreams" />
+            </lightweightuniquemeasureidentifier>
+            <displaysourceinfo monitorhost="demo.nginx.com" monitordetails="New NGINX Plus Monitor" measureunit="number" monitorscheduleid="New NGINX Plus Monitor" measurerate="purepath" />
+          </chartsource>
+          <splitconfig splitmode="PerSeries" splitlayout="Horizontal" />
+        </chart>
+        <table drawcolumn="-1" sortcolumn="16" columnorder="0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19">
+          <column index="0" sort="None" forcevisible="false" hidden="false" width="400" />
+          <column index="1" sort="None" forcevisible="false" hidden="true" width="100" />
+          <column index="2" sort="None" forcevisible="false" hidden="true" width="100" />
+          <column index="3" sort="None" forcevisible="false" hidden="false" width="25" />
+          <column index="4" sort="None" forcevisible="false" hidden="false" width="100" />
+          <column index="5" sort="None" forcevisible="false" hidden="true" width="100" />
+          <column index="6" sort="None" forcevisible="false" hidden="false" width="50" />
+          <column index="7" sort="None" forcevisible="false" hidden="true" width="75" />
+          <column index="8" sort="None" forcevisible="false" hidden="true" width="75" />
+          <column index="9" sort="None" forcevisible="false" hidden="true" width="75" />
+          <column index="10" sort="None" forcevisible="false" hidden="true" width="75" />
+          <column index="11" sort="None" forcevisible="false" hidden="true" width="75" />
+          <column index="12" sort="None" forcevisible="false" hidden="true" width="100" />
+          <column index="13" sort="None" forcevisible="false" hidden="false" width="105" />
+          <column index="14" sort="None" forcevisible="false" hidden="true" width="50" />
+          <column index="15" sort="None" forcevisible="false" hidden="true" width="50" />
+          <column index="16" sort="Up" forcevisible="false" hidden="false" width="100" />
+          <column index="17" sort="None" forcevisible="false" hidden="true" width="150" />
+          <column index="18" sort="None" forcevisible="false" hidden="true" width="150" />
+          <column index="19" sort="None" forcevisible="false" hidden="true" width="150" />
+        </table>
+        <heatfieldconfig smartmeasure="true" filterconfirmed="false" smartserver="true" customevents="true" deploymentevents="true">
+          <incidentrules />
+        </heatfieldconfig>
+      </datamodelconfig>
+      <chartcolors />
+    </portletconfig>
+  </dashboardconfig>
+</dynatrace>

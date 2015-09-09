@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="NGINX+ Monitoring Plugin" default="deploy" basedir=".">
+	<property name="bundle.name" value="NGINX+ Monitoring Plugin"/>
+	<property name="bundle.version" value="1.0.0"/>
+
+	<property name="plugin.dir" value="NGINX__Monitoring_Plugin"/>
+	<property name="plugin.build.dir" value="${plugin.dir}/build"/>
+	<property name="plugin.lib.dir" value="${plugin.dir}/lib"/>
+	<property name="plugin.jar.dir" value=".plugin"/>
+	<property name="plugin.jar.name" value="com.dynatrace.plugin.nginx_${bundle.version}.jar"/>
+
+	<property name="fast_pack.dir" value="NGINX__Monitoring_Fast_Pack"/>
+	<property name="fast_pack.jar.dir" value=".fast_pack"/>
+	<property name="fast_pack.jar.name" value="com.dynatrace.plugin.nginx_${bundle.version}.fast_pack.jar"/>
+
+	<target name="_CLEAN">
+		<delete dir="${plugin.jar.dir}"/>
+		<delete dir="${fast_pack.jar.dir}"/>
+		<delete file="${plugin.jar.name}"/>
+		<delete file="${fast_pack.jar.name}"/>
+	</target>
+
+	<target name="_BUILD_PLUGIN_JAR">
+		<copy file="${plugin.dir}/plugin.xml" todir="${plugin.jar.dir}"/>
+
+		<copy todir="${plugin.jar.dir}/com">
+			<fileset dir="${plugin.build.dir}/com"/>
+		</copy>
+
+		<copy todir="${plugin.jar.dir}/lib">
+			<fileset dir="${plugin.lib.dir}"/>
+		</copy>
+
+		<jar destfile="${plugin.jar.name}" basedir="${plugin.jar.dir}">
+			<manifest>
+				<attribute name="Manifest-Version" value="1.0"/>
+				<attribute name="Require-Bundle" value="com.dynatrace.diagnostics.sdk"/>
+				<attribute name="Bundle-Vendor" value="Dynatrace"/>
+                <attribute name="Bundle-ClassPath" value=".,lib/org.json.jar,lib/javax.ws.rs-api-2.0-m02.jar,lib/guava-18.0.jar"/>
+				<attribute name="Bundle-Version" value="${bundle.version}"/>
+				<attribute name="Bundle-Name" value="${bundle.name}"/>
+				<attribute name="Dynatrace-Plugin-Types" value="monitor, metric"/>
+				<attribute name="Bundle-ManifestVersion" value="2"/>
+				<attribute name="Bundle-SymbolicName" value="com.dynatrace.plugin.nginx;singleton:=true"/>
+				<attribute name="Bundle-RequiredExecutionEnvironment" value="JavaSE-1.7"/>
+			</manifest>
+		</jar>
+	</target>
+
+	<target name="_BUILD_FAST_PACK_JAR" depends="_BUILD_PLUGIN_JAR">
+		<copy file="${plugin.jar.name}" todir="${fast_pack.jar.dir}"/>
+
+		<copy file="${fast_pack.dir}/plugin.xml" todir="${fast_pack.jar.dir}"/>
+
+		<copy todir="${fast_pack.jar.dir}/dashboards">
+			<fileset dir="${fast_pack.dir}/dashboards"/>
+		</copy>
+
+		<copy todir="${fast_pack.jar.dir}/profiles">
+			<fileset dir="${fast_pack.dir}/profiles"/>
+		</copy>
+
+		<jar destfile="${fast_pack.jar.name}" basedir="${fast_pack.jar.dir}">
+				<manifest>
+					<attribute name="Manifest-Version" value="1.0"/>
+					<attribute name="Require-Bundle" value="com.dynatrace.diagnostics.sdk"/>
+					<attribute name="Bundle-Vendor" value="Dynatrace"/>
+					<attribute name="Bundle-Version" value="${bundle.version}"/>
+					<attribute name="Bundle-Name" value="${bundle.name}"/>
+					<attribute name="Bundle-ManifestVersion" value="2"/>
+					<attribute name="Bundle-SymbolicName" value="com.dynatrace.plugin.nginx;singleton:=true"/>
+					<attribute name="Bundle-RequiredExecutionEnvironment" value="JavaSE-1.7"/>
+				</manifest>
+			</jar>
+	</target>
+
+	<target name="_BUILD_ALL" depends="_BUILD_FAST_PACK_JAR"/>
+
+	<target name="_CLEAN+BUILD_ALL" depends="_CLEAN,_BUILD_ALL"/>
+</project>
