@@ -18,6 +18,7 @@ import com.dynatrace.diagnostics.pdk.Status;
 import com.dynatrace.plugin.nginx.bookers.CachesBooker;
 import com.dynatrace.plugin.nginx.bookers.ConnectionsBooker;
 import com.dynatrace.plugin.nginx.bookers.RequestsBooker;
+import com.dynatrace.plugin.nginx.bookers.SSLBooker;
 import com.dynatrace.plugin.nginx.bookers.ServerZonesBooker;
 import com.dynatrace.plugin.nginx.bookers.StreamBooker;
 import com.dynatrace.plugin.nginx.bookers.UpstreamsBooker;
@@ -118,6 +119,7 @@ public class NginxPlusMonitor implements com.dynatrace.diagnostics.pdk.Monitor {
 		}
 
 		ConnectionsBooker.book(nginxStatusDTO.getConnections(), env, calculator);
+		SSLBooker.book(nginxStatusDTO.getSSL(), env, calculator);
 		RequestsBooker.book(nginxStatusDTO.getRequests(), env, calculator);
 		ServerZonesBooker.book(nginxStatusDTO.getServerZones(), env, calculator.getServerZonesCalculator());
 		UpstreamsBooker.book(nginxStatusDTO.getUpstreams(), env, calculator.getUpstreamsCalculator());

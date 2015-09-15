@@ -24,6 +24,13 @@
       <metric defaultrate="purepath" name="Requests" unit="number" description="The average number of client requests per second" />
     </metricgroup>
   </extension>
+  <extension point="com.dynatrace.diagnostics.pdk.monitormetricgroup" id="com.dynatrace.plugin.nginx.monitor.ssl" name="NGINX Plus Monitor SSL">
+    <metricgroup monitorid="com.dynatrace.plugin.nginx.monitor">
+      <metric defaultrate="purepath" name="Handshakes" unit="number" description="The total number of client requests" />
+      <metric defaultrate="purepath" name="Handshakes failed" unit="number" description="The current number of client requests" />
+      <metric defaultrate="purepath" name="Session reuses" unit="number" description="The average number of client requests per second" />
+    </metricgroup>
+  </extension>
   <extension point="com.dynatrace.diagnostics.pdk.monitormetricgroup" id="com.dynatrace.plugin.nginx.monitor.serverzones" name="NGINX Plus Monitor Server Zones">
     <metricgroup monitorid="com.dynatrace.plugin.nginx.monitor">
       <metric defaultrate="purepath" name="Processing" unit="number" description="The number of client requests that are currently being processed" />
@@ -31,6 +38,8 @@
       <metric defaultrate="purepath" name="Requests Rate"  unit="number" description="The current rate of client requests forwarded to specific server zone" />
       <metric defaultrate="purepath" name="Responses" unit="number" description="The number of responses sent to clients." />
       <metric defaultrate="purepath" name="Responses Rate" unit="number" description="The current rate of responses obtained from specific server zone" />
+      <metric defaultrate="purepath" name="Discarded" unit="number" description="The total number of requests completed without sending a response" />
+      <metric defaultrate="purepath" name="Discarded Rate" unit="number" description="The current rate of requests completed without sending a response" />
       <metric defaultrate="purepath" name="Received" unit="number" description="The total number of bytes received from clients" />
       <metric defaultrate="purepath" name="Received Rate" unit="number" description="The current rate of bytes received from specific server zone" />
       <metric defaultrate="purepath" name="Sent" unit="number" description="The total number of bytes sent to clients from all server zones" />

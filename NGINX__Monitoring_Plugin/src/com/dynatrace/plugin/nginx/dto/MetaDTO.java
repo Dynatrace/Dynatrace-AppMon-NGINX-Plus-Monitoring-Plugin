@@ -3,7 +3,11 @@ package com.dynatrace.plugin.nginx.dto;
 public class MetaDTO {
 	private double version;
 	private String nginxVersion;
-	private long timestamp;
+	private String address;
+	private Double generation;
+	private Double load_timestamp;
+	private Double timestamp;
+	private Double pid;
 
 	public double getVersion() {
 		return version;
@@ -21,11 +25,43 @@ public class MetaDTO {
 		this.nginxVersion = nginxVersion;
 	}
 
-	public long getTimestamp() {
+	public Double getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(long timestamp) {
+	public void setTimestamp(Double timestamp) {
 		this.timestamp = timestamp;
+	}
+
+	public Double getGeneration() {
+		return generation;
+	}
+
+	public void setGeneration(Double generation) {
+		this.generation = generation;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public Double getLoad_timestamp() {
+		return load_timestamp;
+	}
+
+	public void setLoad_timestamp(Double load_timestamp) {
+		this.load_timestamp = load_timestamp;
+	}
+
+	public Double getPid() {
+		return pid;
+	}
+
+	public void setPid(Double pid) {
+		this.pid = pid;
 	}
 }

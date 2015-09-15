@@ -33,7 +33,7 @@ public class ServerZonesParser {
 				serverZoneDTO.setResponses5xx(responses.getDouble("5xx"));
 				serverZoneDTO.setTotalResponses(responses.getDouble("total"));
 			}
-
+			serverZoneDTO.setDiscarded(serverZone.getDouble("discarded"));
 			serverZoneDTO.setReceived(serverZone.getDouble("received"));
 			serverZoneDTO.setSent(serverZone.getDouble("sent"));
 			serverZones_.add(serverZoneDTO);

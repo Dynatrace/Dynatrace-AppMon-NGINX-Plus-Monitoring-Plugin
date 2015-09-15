@@ -10,6 +10,7 @@ public class ServerZoneDTO {
 	private Double responses4xx;
 	private Double responses5xx;
 	private Double totalResponses;
+	private Double discarded;
 	private Double received;
 	private Double sent;
 
@@ -103,5 +104,13 @@ public class ServerZoneDTO {
 
 	public void setSent(Double sent) {
 		this.sent = sent;
+	}
+
+	public Double getDiscarded() {
+		return discarded;
+	}
+
+	public void setDiscarded(Double discarded) {
+		this.discarded = discarded;
 	}
 }
