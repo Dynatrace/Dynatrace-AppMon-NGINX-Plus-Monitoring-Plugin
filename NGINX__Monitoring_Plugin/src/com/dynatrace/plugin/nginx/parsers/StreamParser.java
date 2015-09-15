@@ -38,7 +38,7 @@ public class StreamParser {
 		while (upstreamsNames.hasNext()) {
 			String upstreamName = (String)upstreamsNames.next();
 			streamDTO.getUpstreams().createNewServerGroup(upstreamName);
-			JSONArray upstream = upstreams.getJSONArray(upstreamName);
+			JSONArray upstream = upstreams.getJSONObject(upstreamName).getJSONArray("peers");
 			for (int i = 0; i < upstream.length(); i ++) {
 				JSONObject server = upstream.getJSONObject(i);
 				StreamServerDTO streamServerDTO = new StreamServerDTO();

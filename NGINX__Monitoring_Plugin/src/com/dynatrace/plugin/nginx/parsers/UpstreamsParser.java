@@ -22,7 +22,7 @@ public class UpstreamsParser {
 		while (upStreamNames.hasNext()) {
 			String upStreamName = (String)upStreamNames.next();
 			serverGroups.createNewServerGroup(upStreamName);
-			JSONArray upStream = upStreams.getJSONArray(upStreamName);
+			JSONArray upStream = upStreams.getJSONObject(upStreamName).getJSONArray("peers");
 
 			for (int i = 0; i < upStream.length(); i++) {
 				JSONObject server = upStream.getJSONObject(i);

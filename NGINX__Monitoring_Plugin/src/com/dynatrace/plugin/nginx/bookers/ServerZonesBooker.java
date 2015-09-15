@@ -33,6 +33,9 @@ public class ServerZonesBooker extends Booker {
 	public static final String MSR_RESPONSES = "Responses";
 	public static final String MSR_RESPONSES_RATE = "Responses Rate";
 
+	public static final String MSR_DISCARDED = "Discarded";
+	public static final String MSR_DISCARDED_RATE = "Discarded Rate";
+
 	public static final String MSR_RECEIVED = "Received";
 	public static final String MSR_RECEIVED_RATE = "Received Rate";
 
@@ -67,6 +70,9 @@ public class ServerZonesBooker extends Booker {
 		Collection<MonitorMeasure> responsesM = env.getMonitorMeasures(ServerZonesParser.GROUP, MSR_RESPONSES);
 		Collection<MonitorMeasure> responsesRateM = env.getMonitorMeasures(ServerZonesParser.GROUP, MSR_RESPONSES_RATE);
 
+		Collection<MonitorMeasure> discardedM = env.getMonitorMeasures(ServerZonesParser.GROUP, MSR_DISCARDED);
+		Collection<MonitorMeasure> discardedRateM = env.getMonitorMeasures(ServerZonesParser.GROUP, MSR_DISCARDED_RATE);
+
 		Collection<MonitorMeasure> receivedM = env.getMonitorMeasures(ServerZonesParser.GROUP, MSR_RECEIVED);
 		Collection<MonitorMeasure> receivedRateM = env.getMonitorMeasures(ServerZonesParser.GROUP, MSR_RECEIVED_RATE);
 
@@ -89,50 +95,12 @@ public class ServerZonesBooker extends Booker {
 			setDynamicMeasure(env, responses4xxRateM, DYNAMIC_KEY, s.getServerZoneName(), calculator.getResponses4xxRate().get(s.getServerZoneName()));
 			setDynamicMeasure(env, responses5xxM, DYNAMIC_KEY, s.getServerZoneName(), s.getResponses5xx());
 			setDynamicMeasure(env, responses5xxRateM, DYNAMIC_KEY, s.getServerZoneName(), calculator.getResponses5xxRate().get(s.getServerZoneName()));
+			setDynamicMeasure(env, discardedM, DYNAMIC_KEY, s.getServerZoneName(), s.getDiscarded());
+			setDynamicMeasure(env, discardedRateM, DYNAMIC_KEY, s.getServerZoneName(), calculator.getDiscardedRate().get(s.getServerZoneName()));
 			setDynamicMeasure(env, receivedM, DYNAMIC_KEY, s.getServerZoneName(), s.getReceived());
 			setDynamicMeasure(env, receivedRateM, DYNAMIC_KEY, s.getServerZoneName(), calculator.getTrafficRecvRate().get(s.getServerZoneName()));
 			setDynamicMeasure(env, sentM, DYNAMIC_KEY, s.getServerZoneName(), s.getSent());
 			setDynamicMeasure(env, sentRateM, DYNAMIC_KEY, s.getServerZoneName(), calculator.getTrafficSentRate().get(s.getServerZoneName()));
-		}
-
-		for (MonitorMeasure m : processingM) {
-			m.setValue(calculator.getTotalProcessing());
-		}
-
-		for (MonitorMeasure m : requestsRateM) {
-			m.setValue(calculator.getTotalRequestsRate());
-		}
-
-		for (MonitorMeasure m : responsesRateM) {
-			m.setValue(calculator.getTotalResponsesRate());
-		}
-
-		for (MonitorMeasure m : responses1xxRateM) {
-			m.setValue(calculator.getTotalResponses1xxRate());
-		}
-
-		for (MonitorMeasure m : responses2xxRateM) {
-			m.setValue(calculator.getTotalResponses2xxRate());
-		}
-
-		for (MonitorMeasure m : responses3xxRateM) {
-			m.setValue(calculator.getTotalResponses3xxRate());
-		}
-
-		for (MonitorMeasure m : responses4xxRateM) {
-			m.setValue(calculator.getTotalResponses4xxRate());
-		}
-
-		for (MonitorMeasure m : responses5xxRateM) {
-			m.setValue(calculator.getTotalResponses5xxRate());
-		}
-
-		for (MonitorMeasure m : sentRateM) {
-			m.setValue(calculator.getTotalTrafficSentRate());
-		}
-
-		for (MonitorMeasure m : receivedRateM) {
-			m.setValue(calculator.getTotalTrafficRecvRate());
 		}
 	}
 }

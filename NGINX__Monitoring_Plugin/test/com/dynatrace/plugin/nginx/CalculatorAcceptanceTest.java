@@ -193,6 +193,7 @@ public class CalculatorAcceptanceTest {
 			ServerZoneDTO serv = new ServerZoneDTO(server);
 			serv.setProcessing(100.0);
 			serv.setRequests(100.0);
+			serv.setDiscarded(100.0);
 			serv.setSent(100.0);
 			serv.setReceived(100.0);
 			serv.setResponses1xx(100.0);
@@ -208,6 +209,7 @@ public class CalculatorAcceptanceTest {
 			ServerZoneDTO serv = new ServerZoneDTO(server);
 			serv.setProcessing(200.0);
 			serv.setRequests(200.0);
+			serv.setDiscarded(200.0);
 			serv.setSent(200.0);
 			serv.setReceived(200.0);
 			serv.setResponses1xx(200.0);
@@ -231,6 +233,7 @@ public class CalculatorAcceptanceTest {
 			assertEquals(4.0, serverZonesCalculator.getResponses3xxRate().get(server), DELTA);
 			assertEquals(4.0, serverZonesCalculator.getResponses4xxRate().get(server), DELTA);
 			assertEquals(4.0, serverZonesCalculator.getResponses5xxRate().get(server), DELTA);
+			assertEquals(4.0, serverZonesCalculator.getDiscardedRate().get(server), DELTA);
 			assertEquals(4.0, serverZonesCalculator.getTrafficSentRate().get(server), DELTA);
 			assertEquals(4.0, serverZonesCalculator.getTrafficRecvRate().get(server), DELTA);
 		}
@@ -241,6 +244,7 @@ public class CalculatorAcceptanceTest {
 		assertEquals(8.0, serverZonesCalculator.getResponses3xxRate().get(serv3S), DELTA);
 		assertEquals(8.0, serverZonesCalculator.getResponses4xxRate().get(serv3S), DELTA);
 		assertEquals(8.0, serverZonesCalculator.getResponses5xxRate().get(serv3S), DELTA);
+		assertEquals(8.0, serverZonesCalculator.getDiscardedRate().get(serv3S), DELTA);
 		assertEquals(8.0, serverZonesCalculator.getTrafficSentRate().get(serv3S), DELTA);
 		assertEquals(8.0, serverZonesCalculator.getTrafficRecvRate().get(serv3S), DELTA);
 	}
@@ -429,20 +433,12 @@ public class CalculatorAcceptanceTest {
 		assertEquals(4.0, streamCalculator.getServerZoneConnectionsRate().get("frontend"), DELTA);
 		assertEquals(4.0, streamCalculator.getServerZoneReceivedRate().get("frontend"), DELTA);
 		assertEquals(4.0, streamCalculator.getServerZoneSentRate().get("frontend"), DELTA);
-		assertEquals(4.0, streamCalculator.getTotalServerZonesConnectionsRate(), DELTA);
-		assertEquals(4.0, streamCalculator.getTotalServerZoneReceivedRate(), DELTA);
-		assertEquals(4.0, streamCalculator.getTotalServerZoneSentRate(), DELTA);
 
 		for (String s : new String[] {serv1S, serv2S, serv3S}) {
-			assertEquals(4.0, streamCalculator.getUpstreamsConnectionsRate().get(streamCalculator.generateKey(group1S, s)), DELTA);
-			assertEquals(4.0, streamCalculator.getUpstreamsSentRate().get(streamCalculator.generateKey(group1S, s)), DELTA);
-			assertEquals(4.0, streamCalculator.getUpstreamsReceivedRate().get(streamCalculator.generateKey(group1S, s)), DELTA);
-			assertEquals(4.0, streamCalculator.getUpstreamsFailsRate().get(streamCalculator.generateKey(group1S, s)), DELTA);
+			assertEquals(4.0, streamCalculator.getUpstreamsConnectionsRate().get(group1S, s), DELTA);
+			assertEquals(4.0, streamCalculator.getUpstreamsSentRate().get(group1S, s), DELTA);
+			assertEquals(4.0, streamCalculator.getUpstreamsReceivedRate().get(group1S, s), DELTA);
+			assertEquals(4.0, streamCalculator.getUpstreamsFailsRate().get(group1S, s), DELTA);
 		}
-
-		assertEquals(12.0, streamCalculator.getTotalUpstreamsConnectionsRate(), DELTA);
-		assertEquals(12.0, streamCalculator.getTotalUpstreamsSentRate(), DELTA);
-		assertEquals(12.0, streamCalculator.getTotalUpstreamsReceivedRate(), DELTA);
-		assertEquals(12.0, streamCalculator.getTotalUpstreamsFailsRate(), DELTA);
 	}
 }

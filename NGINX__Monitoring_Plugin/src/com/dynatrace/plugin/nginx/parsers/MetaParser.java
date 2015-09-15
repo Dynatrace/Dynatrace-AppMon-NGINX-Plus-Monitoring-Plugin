@@ -11,7 +11,11 @@ public class MetaParser {
 		MetaDTO metaDTO = new MetaDTO();
 		metaDTO.setVersion(jsonObject.getDouble("version"));
 		metaDTO.setNginx_version(jsonObject.getString("nginx_version"));
-		metaDTO.setTimestamp(jsonObject.getLong("timestamp")/1000);
+		metaDTO.setAddress(jsonObject.getString("address"));
+		metaDTO.setGeneration(jsonObject.getDouble("generation"));
+		metaDTO.setLoad_timestamp(jsonObject.getDouble("load_timestamp"));
+		metaDTO.setTimestamp(jsonObject.getDouble("timestamp") / 1000);
+		metaDTO.setPid(jsonObject.getDouble("pid"));
 		return metaDTO;
 	}
 }

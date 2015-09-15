@@ -10,6 +10,7 @@ import com.dynatrace.plugin.nginx.parsers.CachesParser;
 import com.dynatrace.plugin.nginx.parsers.ConnectionsParser;
 import com.dynatrace.plugin.nginx.parsers.MetaParser;
 import com.dynatrace.plugin.nginx.parsers.RequestsParser;
+import com.dynatrace.plugin.nginx.parsers.SSLParser;
 import com.dynatrace.plugin.nginx.parsers.ServerZonesParser;
 import com.dynatrace.plugin.nginx.parsers.StreamParser;
 import com.dynatrace.plugin.nginx.parsers.UpstreamsParser;
@@ -17,6 +18,7 @@ import com.dynatrace.plugin.nginx.parsers.UpstreamsParser;
 public class NginxStatus {
 	private MetaDTO meta;
 	private ConnectionsDTO connections;
+	private SSLDTO ssl;
 	private RequestsDTO requests;
 	private Collection<ServerZoneDTO> serverZones;
 	private ServerGroups upstreams;
@@ -26,6 +28,7 @@ public class NginxStatus {
 	public NginxStatus(JSONObject jsonObject) throws JSONException {
 		meta = MetaParser.parse(jsonObject);
 		connections = ConnectionsParser.parse(jsonObject);
+		ssl = SSLParser.parse(jsonObject);
 		requests = RequestsParser.parse(jsonObject);
 		serverZones = ServerZonesParser.parse(jsonObject);
 		upstreams = UpstreamsParser.parse(jsonObject);
@@ -36,6 +39,7 @@ public class NginxStatus {
 	public NginxStatus() {
 		meta = new MetaDTO();
 		connections = new ConnectionsDTO();
+		ssl = new SSLDTO();
 		requests = new RequestsDTO();
 		serverZones = new ArrayList<ServerZoneDTO>();
 		upstreams = new ServerGroups();
@@ -49,6 +53,10 @@ public class NginxStatus {
 
 	public ConnectionsDTO getConnections() {
 		return this.connections;
+	}
+
+	public SSLDTO getSSL() {
+		return this.ssl;
 	}
 
 	public RequestsDTO getRequests() {

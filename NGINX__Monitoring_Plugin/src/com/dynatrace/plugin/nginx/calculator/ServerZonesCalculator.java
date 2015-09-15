@@ -9,35 +9,18 @@ import com.dynatrace.plugin.nginx.dto.NginxStatus;
 import com.dynatrace.plugin.nginx.dto.ServerZoneDTO;
 
 public class ServerZonesCalculator extends TimeFrameCalculator implements Calculator {
-	private Double totalProcessing = 0.0;
-
 	private Map<String, Double> requestsRate = new HashMap<String, Double>();
-	private Double totalRequestsRate = 0.0;
-
 	private Map<String, Double> responsesRate = new HashMap<String, Double>();
-	private Double totalResponsesRate = 0.0;
-
+	private Map<String, Double> discarded = new HashMap<String, Double>();
 	private Map<String, Double> trafficSentRate = new HashMap<String, Double>();
-	private Double totalTrafficSentRate = 0.0;
-
 	private Map<String, Double> trafficRecvRate = new HashMap<String, Double>();
-	private Double totalTrafficRecvRate = 0.0;
-
 	private Map<String, Double> responses1xxRate = new HashMap<String, Double>();
-	private Double totalResponses1xxRate = 0.0;
-
 	private Map<String, Double> responses2xxRate = new HashMap<String, Double>();
-	private Double totalResponses2xxRate = 0.0;
-
 	private Map<String, Double> responses3xxRate = new HashMap<String, Double>();
-	private Double totalResponses3xxRate = 0.0;
-
 	private Map<String, Double> responses4xxRate = new HashMap<String, Double>();
-	private Double totalResponses4xxRate = 0.0;
-
 	private Map<String, Double> responses5xxRate = new HashMap<String, Double>();
-	private Double totalResponses5xxRate = 0.0;
 
+	@Override
 	public void calculate(NginxStatus prev, NginxStatus cur) {
 		double time_frame = calculateTimeFrame(prev, cur);
 		this.calculateServerZones(prev, cur, time_frame);
@@ -57,6 +40,7 @@ public class ServerZonesCalculator extends TimeFrameCalculator implements Calcul
 			Double Responses3xxRate;
 			Double Responses4xxRate;
 			Double Responses5xxRate;
+			Double Discarded;
 			Double TrafficSentRate;
 			Double TrafficRecvRate;
 
@@ -65,8 +49,6 @@ public class ServerZonesCalculator extends TimeFrameCalculator implements Calcul
 			try {
 				prev_ = prevIter.next();
 
-				totalProcessing += cur_.getProcessing();
-
 				RequestsRate = (cur_.getRequests() - prev_.getRequests()) / time_frame;
 				ResponsesRate = (cur_.getTotalResponses() - prev_.getTotalResponses()) / time_frame;
 				Responses1xxRate = (cur_.getResponses1xx() - prev_.getResponses1xx()) / time_frame;
@@ -74,12 +56,11 @@ public class ServerZonesCalculator extends TimeFrameCalculator implements Calcul
 				Responses3xxRate = (cur_.getResponses3xx() - prev_.getResponses3xx()) / time_frame;
 				Responses4xxRate = (cur_.getResponses4xx() - prev_.getResponses4xx()) / time_frame;
 				Responses5xxRate = (cur_.getResponses5xx() - prev_.getResponses5xx()) / time_frame;
+				Discarded = (cur_.getDiscarded() - prev_.getDiscarded()) / time_frame;
 				TrafficSentRate = (cur_.getSent() - prev_.getSent()) / time_frame;
 				TrafficRecvRate = (cur_.getReceived() - prev_.getReceived()) / time_frame;
 
 			} catch (NoSuchElementException e) {
-				totalProcessing += cur_.getProcessing();
-
 				RequestsRate = cur_.getRequests() / time_frame;
 				ResponsesRate = cur_.getTotalResponses() / time_frame;
 				Responses1xxRate = cur_.getResponses1xx() / time_frame;
@@ -87,34 +68,19 @@ public class ServerZonesCalculator extends TimeFrameCalculator implements Calcul
 				Responses3xxRate = cur_.getResponses3xx() / time_frame;
 				Responses4xxRate = cur_.getResponses4xx() / time_frame;
 				Responses5xxRate = cur_.getResponses5xx() / time_frame;
+				Discarded = cur_.getDiscarded() / time_frame;
 				TrafficSentRate = cur_.getSent() / time_frame;
 				TrafficRecvRate = cur_.getReceived() / time_frame;
 			}
-			this.totalRequestsRate += RequestsRate;
 			this.requestsRate.put(serverZoneName, RequestsRate);
-
-			this.totalResponsesRate += ResponsesRate;
 			this.responsesRate.put(serverZoneName, ResponsesRate);
-
-			this.totalResponses1xxRate += Responses1xxRate;
 			this.responses1xxRate.put(serverZoneName, Responses1xxRate);
-
-			this.totalResponses2xxRate += Responses2xxRate;
 			this.responses2xxRate.put(serverZoneName, Responses2xxRate);
-
-			this.totalResponses3xxRate += Responses3xxRate;
 			this.responses3xxRate.put(serverZoneName, Responses3xxRate);
-
-			this.totalResponses4xxRate += Responses4xxRate;
 			this.responses4xxRate.put(serverZoneName, Responses4xxRate);
-
-			this.totalResponses5xxRate += Responses5xxRate;
 			this.responses5xxRate.put(serverZoneName, Responses5xxRate);
-
-			this.totalTrafficSentRate += TrafficSentRate;
+			this.discarded.put(serverZoneName, Discarded);
 			this.trafficSentRate.put(serverZoneName, TrafficSentRate);
-
-			this.totalTrafficRecvRate += TrafficRecvRate;
 			this.trafficRecvRate.put(serverZoneName, TrafficRecvRate);
 		}
 	}
@@ -155,43 +121,7 @@ public class ServerZonesCalculator extends TimeFrameCalculator implements Calcul
 		return responses5xxRate;
 	}
 
-	public Double getTotalRequestsRate() {
-		return totalRequestsRate;
-	}
-
-	public Double getTotalResponsesRate() {
-		return totalResponsesRate;
-	}
-
-	public Double getTotalTrafficSentRate() {
-		return totalTrafficSentRate;
-	}
-
-	public Double getTotalTrafficRecvRate() {
-		return totalTrafficRecvRate;
-	}
-
-	public Double getTotalResponses1xxRate() {
-		return totalResponses1xxRate;
-	}
-
-	public Double getTotalResponses2xxRate() {
-		return totalResponses2xxRate;
-	}
-
-	public Double getTotalResponses3xxRate() {
-		return totalResponses3xxRate;
-	}
-
-	public Double getTotalResponses4xxRate() {
-		return totalResponses4xxRate;
-	}
-
-	public Double getTotalResponses5xxRate() {
-		return totalResponses5xxRate;
-	}
-
-	public Double getTotalProcessing() {
-		return totalProcessing;
+	public Map<String, Double> getDiscardedRate() {
+		return discarded;
 	}
 }

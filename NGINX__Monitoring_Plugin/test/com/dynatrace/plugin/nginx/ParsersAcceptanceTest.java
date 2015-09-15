@@ -1,6 +1,6 @@
 package com.dynatrace.plugin.nginx;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.Collection;
 
@@ -11,21 +11,12 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import com.dynatrace.plugin.nginx.NginxPlusMonitoringConnection;
-import com.dynatrace.plugin.nginx.dto.CacheDTO;
-import com.dynatrace.plugin.nginx.dto.ConnectionsDTO;
-import com.dynatrace.plugin.nginx.dto.MetaDTO;
-import com.dynatrace.plugin.nginx.dto.RequestsDTO;
-import com.dynatrace.plugin.nginx.dto.ServerDTO;
-import com.dynatrace.plugin.nginx.dto.ServerGroups;
-import com.dynatrace.plugin.nginx.dto.ServerZoneDTO;
-import com.dynatrace.plugin.nginx.dto.Stream;
-import com.dynatrace.plugin.nginx.dto.StreamServerDTO;
-import com.dynatrace.plugin.nginx.dto.StreamServerZoneDTO;
+import com.dynatrace.plugin.nginx.dto.*;
 import com.dynatrace.plugin.nginx.parsers.CachesParser;
 import com.dynatrace.plugin.nginx.parsers.ConnectionsParser;
 import com.dynatrace.plugin.nginx.parsers.MetaParser;
 import com.dynatrace.plugin.nginx.parsers.RequestsParser;
+import com.dynatrace.plugin.nginx.parsers.SSLParser;
 import com.dynatrace.plugin.nginx.parsers.ServerZonesParser;
 import com.dynatrace.plugin.nginx.parsers.StreamParser;
 import com.dynatrace.plugin.nginx.parsers.UpstreamsParser;
@@ -55,7 +46,11 @@ public class ParsersAcceptanceTest {
 		MetaDTO metaDTO = MetaParser.parse(jsonObject);
 		assertNotNull(metaDTO.getVersion());
 		assertNotNull(metaDTO.getNginx_version());
+		assertNotNull(metaDTO.getAddress());
+		assertNotNull(metaDTO.getGeneration());
+		assertNotNull(metaDTO.getLoad_timestamp());
 		assertNotNull(metaDTO.getTimestamp());
+		assertNotNull(metaDTO.getPid());
 	}
 
 	@Test
@@ -64,6 +59,15 @@ public class ParsersAcceptanceTest {
 		RequestsDTO requestsDTO = RequestsParser.parse(jsonObject);
 		assertNotNull(requestsDTO.getCurrent());
 		assertNotNull(requestsDTO.getTotal());
+	}
+
+	@Test
+	public void TestSSLParser() throws Exception {
+		JSONObject jsonObject = connection_.getStatusJson();
+		SSLDTO sslDTO = SSLParser.parse(jsonObject);
+		assertNotNull(sslDTO.getHandshakes());
+		assertNotNull(sslDTO.getHandshakes_failed());
+		assertNotNull(sslDTO.getSession_reuses());
 	}
 
 	@Test
@@ -121,6 +125,7 @@ public class ParsersAcceptanceTest {
 			assertNotNull(s.getResponses4xx());
 			assertNotNull(s.getResponses5xx());
 			assertNotNull(s.getTotalResponses());
+			assertNotNull(s.getDiscarded());
 			assertNotNull(s.getReceived());
 			assertNotNull(s.getSent());
 		}
