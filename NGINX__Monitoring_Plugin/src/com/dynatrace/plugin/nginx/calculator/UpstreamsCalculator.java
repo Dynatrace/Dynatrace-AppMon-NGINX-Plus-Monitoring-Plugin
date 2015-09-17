@@ -75,15 +75,15 @@ public class UpstreamsCalculator extends TimeFrameCalculator implements Calculat
 
 					totalActive += cur_.getActive();
 
-					RequestsRate = cur_.getRequests() / time_frame;
-					ResponsesRate = cur_.getTotalResponses() / time_frame;
-					Responses1xxRate = cur_.getResponses1xx() / time_frame;
-					Responses2xxRate = cur_.getResponses2xx() / time_frame;
-					Responses3xxRate = cur_.getResponses3xx() / time_frame;
-					Responses4xxRate = cur_.getResponses4xx() / time_frame;
-					Responses5xxRate = cur_.getResponses5xx() / time_frame;
-					TrafficSentRate = cur_.getSent() / time_frame;
-					TrafficRecvRate = cur_.getReceived() / time_frame;
+					RequestsRate = Double.NaN;
+					ResponsesRate = Double.NaN;
+					Responses1xxRate = Double.NaN;
+					Responses2xxRate = Double.NaN;
+					Responses3xxRate = Double.NaN;
+					Responses4xxRate = Double.NaN;
+					Responses5xxRate = Double.NaN;
+					TrafficSentRate = Double.NaN;
+					TrafficRecvRate = Double.NaN;
 				}
 
 				this.requestsRate.put(serverGroupName, cur_.getServer(), RequestsRate);
