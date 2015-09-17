@@ -238,15 +238,15 @@ public class CalculatorAcceptanceTest {
 			assertEquals(4.0, serverZonesCalculator.getTrafficRecvRate().get(server), DELTA);
 		}
 
-		assertEquals(8.0, serverZonesCalculator.getRequestsRate().get(serv3S), DELTA);
-		assertEquals(8.0, serverZonesCalculator.getResponses1xxRate().get(serv3S), DELTA);
-		assertEquals(8.0, serverZonesCalculator.getResponses2xxRate().get(serv3S), DELTA);
-		assertEquals(8.0, serverZonesCalculator.getResponses3xxRate().get(serv3S), DELTA);
-		assertEquals(8.0, serverZonesCalculator.getResponses4xxRate().get(serv3S), DELTA);
-		assertEquals(8.0, serverZonesCalculator.getResponses5xxRate().get(serv3S), DELTA);
-		assertEquals(8.0, serverZonesCalculator.getDiscardedRate().get(serv3S), DELTA);
-		assertEquals(8.0, serverZonesCalculator.getTrafficSentRate().get(serv3S), DELTA);
-		assertEquals(8.0, serverZonesCalculator.getTrafficRecvRate().get(serv3S), DELTA);
+		assertEquals(Double.NaN, serverZonesCalculator.getRequestsRate().get(serv3S), DELTA);
+		assertEquals(Double.NaN, serverZonesCalculator.getResponses1xxRate().get(serv3S), DELTA);
+		assertEquals(Double.NaN, serverZonesCalculator.getResponses2xxRate().get(serv3S), DELTA);
+		assertEquals(Double.NaN, serverZonesCalculator.getResponses3xxRate().get(serv3S), DELTA);
+		assertEquals(Double.NaN, serverZonesCalculator.getResponses4xxRate().get(serv3S), DELTA);
+		assertEquals(Double.NaN, serverZonesCalculator.getResponses5xxRate().get(serv3S), DELTA);
+		assertEquals(Double.NaN, serverZonesCalculator.getDiscardedRate().get(serv3S), DELTA);
+		assertEquals(Double.NaN, serverZonesCalculator.getTrafficSentRate().get(serv3S), DELTA);
+		assertEquals(Double.NaN, serverZonesCalculator.getTrafficRecvRate().get(serv3S), DELTA);
 	}
 
 	@Test
@@ -336,47 +336,47 @@ public class CalculatorAcceptanceTest {
 			assertEquals(4.0, cachesCalculator.getBypassBytesWrittenRate().get(cacheName), DELTA);
 		}
 
-		assertEquals(8.0, cachesCalculator.getHitResponsesRate().get(cache3S), DELTA);
-		assertEquals(8.0, cachesCalculator.getHitBytesRate().get(cache3S), DELTA);
-		assertEquals(8.0, cachesCalculator.getStaleResponsesRate().get(cache3S), DELTA);
-		assertEquals(8.0, cachesCalculator.getStaleBytesRate().get(cache3S), DELTA);
-		assertEquals(8.0, cachesCalculator.getUpdatingResponsesRate().get(cache3S), DELTA);
-		assertEquals(8.0, cachesCalculator.getUpdatingBytesRate().get(cache3S), DELTA);
-		assertEquals(8.0, cachesCalculator.getRevalidatedResponsesRate().get(cache3S), DELTA);
-		assertEquals(8.0, cachesCalculator.getRevalidatedBytesRate().get(cache3S), DELTA);
-		assertEquals(8.0, cachesCalculator.getMissResponsesRate().get(cache3S), DELTA);
-		assertEquals(8.0, cachesCalculator.getMissBytesRate().get(cache3S), DELTA);
-		assertEquals(8.0, cachesCalculator.getMissResponsesWrittenRate().get(cache3S), DELTA);
-		assertEquals(8.0, cachesCalculator.getMissBytesWrittenRate().get(cache3S), DELTA);
-		assertEquals(8.0, cachesCalculator.getExpiredResponsesRate().get(cache3S), DELTA);
-		assertEquals(8.0, cachesCalculator.getExpiredBytesRate().get(cache3S), DELTA);
-		assertEquals(8.0, cachesCalculator.getExpiredResponsesWrittenRate().get(cache3S), DELTA);
-		assertEquals(8.0, cachesCalculator.getExpiredBytesWrittenRate().get(cache3S), DELTA);
-		assertEquals(8.0, cachesCalculator.getBypassResponsesRate().get(cache3S), DELTA);
-		assertEquals(8.0, cachesCalculator.getBypassBytesRate().get(cache3S), DELTA);
-		assertEquals(8.0, cachesCalculator.getBypassResponsesWrittenRate().get(cache3S), DELTA);
-		assertEquals(8.0, cachesCalculator.getBypassBytesWrittenRate().get(cache3S), DELTA);
+		assertEquals(Double.NaN, cachesCalculator.getHitResponsesRate().get(cache3S), DELTA);
+		assertEquals(Double.NaN, cachesCalculator.getHitBytesRate().get(cache3S), DELTA);
+		assertEquals(Double.NaN, cachesCalculator.getStaleResponsesRate().get(cache3S), DELTA);
+		assertEquals(Double.NaN, cachesCalculator.getStaleBytesRate().get(cache3S), DELTA);
+		assertEquals(Double.NaN, cachesCalculator.getUpdatingResponsesRate().get(cache3S), DELTA);
+		assertEquals(Double.NaN, cachesCalculator.getUpdatingBytesRate().get(cache3S), DELTA);
+		assertEquals(Double.NaN, cachesCalculator.getRevalidatedResponsesRate().get(cache3S), DELTA);
+		assertEquals(Double.NaN, cachesCalculator.getRevalidatedBytesRate().get(cache3S), DELTA);
+		assertEquals(Double.NaN, cachesCalculator.getMissResponsesRate().get(cache3S), DELTA);
+		assertEquals(Double.NaN, cachesCalculator.getMissBytesRate().get(cache3S), DELTA);
+		assertEquals(Double.NaN, cachesCalculator.getMissResponsesWrittenRate().get(cache3S), DELTA);
+		assertEquals(Double.NaN, cachesCalculator.getMissBytesWrittenRate().get(cache3S), DELTA);
+		assertEquals(Double.NaN, cachesCalculator.getExpiredResponsesRate().get(cache3S), DELTA);
+		assertEquals(Double.NaN, cachesCalculator.getExpiredBytesRate().get(cache3S), DELTA);
+		assertEquals(Double.NaN, cachesCalculator.getExpiredResponsesWrittenRate().get(cache3S), DELTA);
+		assertEquals(Double.NaN, cachesCalculator.getExpiredBytesWrittenRate().get(cache3S), DELTA);
+		assertEquals(Double.NaN, cachesCalculator.getBypassResponsesRate().get(cache3S), DELTA);
+		assertEquals(Double.NaN, cachesCalculator.getBypassBytesRate().get(cache3S), DELTA);
+		assertEquals(Double.NaN, cachesCalculator.getBypassResponsesWrittenRate().get(cache3S), DELTA);
+		assertEquals(Double.NaN, cachesCalculator.getBypassBytesWrittenRate().get(cache3S), DELTA);
 
-		assertEquals(16.0, cachesCalculator.getTotalHitResponsesRate(), DELTA);
-		assertEquals(16.0, cachesCalculator.getTotalHitBytesRate(), DELTA);
-		assertEquals(16.0, cachesCalculator.getTotalStaleResponsesRate(), DELTA);
-		assertEquals(16.0, cachesCalculator.getTotalStaleBytesRate(), DELTA);
-		assertEquals(16.0, cachesCalculator.getTotalUpdatingResponsesRate(), DELTA);
-		assertEquals(16.0, cachesCalculator.getTotalUpdatingBytesRate(), DELTA);
-		assertEquals(16.0, cachesCalculator.getTotalRevalidatedResponsesRate(), DELTA);
-		assertEquals(16.0, cachesCalculator.getTotalRevalidatedBytesRate(), DELTA);
-		assertEquals(16.0, cachesCalculator.getTotalMissResponsesRate(), DELTA);
-		assertEquals(16.0, cachesCalculator.getTotalMissBytesRate(), DELTA);
-		assertEquals(16.0, cachesCalculator.getTotalMissResponsesWrittenRate(), DELTA);
-		assertEquals(16.0, cachesCalculator.getTotalMissBytesWrittenRate(), DELTA);
-		assertEquals(16.0, cachesCalculator.getTotalExpiredResponsesRate(), DELTA);
-		assertEquals(16.0, cachesCalculator.getTotalExpiredBytesRate(), DELTA);
-		assertEquals(16.0, cachesCalculator.getTotalExpiredResponsesWrittenRate(), DELTA);
-		assertEquals(16.0, cachesCalculator.getTotalExpiredBytesWrittenRate(), DELTA);
-		assertEquals(16.0, cachesCalculator.getTotalBypassResponsesRate(), DELTA);
-		assertEquals(16.0, cachesCalculator.getTotalBypassBytesRate(), DELTA);
-		assertEquals(16.0, cachesCalculator.getTotalBypassResponsesWrittenRate(), DELTA);
-		assertEquals(16.0, cachesCalculator.getTotalBypassBytesWrittenRate(), DELTA);
+		assertEquals(Double.NaN, cachesCalculator.getTotalHitResponsesRate(), DELTA);
+		assertEquals(Double.NaN, cachesCalculator.getTotalHitBytesRate(), DELTA);
+		assertEquals(Double.NaN, cachesCalculator.getTotalStaleResponsesRate(), DELTA);
+		assertEquals(Double.NaN, cachesCalculator.getTotalStaleBytesRate(), DELTA);
+		assertEquals(Double.NaN, cachesCalculator.getTotalUpdatingResponsesRate(), DELTA);
+		assertEquals(Double.NaN, cachesCalculator.getTotalUpdatingBytesRate(), DELTA);
+		assertEquals(Double.NaN, cachesCalculator.getTotalRevalidatedResponsesRate(), DELTA);
+		assertEquals(Double.NaN, cachesCalculator.getTotalRevalidatedBytesRate(), DELTA);
+		assertEquals(Double.NaN, cachesCalculator.getTotalMissResponsesRate(), DELTA);
+		assertEquals(Double.NaN, cachesCalculator.getTotalMissBytesRate(), DELTA);
+		assertEquals(Double.NaN, cachesCalculator.getTotalMissResponsesWrittenRate(), DELTA);
+		assertEquals(Double.NaN, cachesCalculator.getTotalMissBytesWrittenRate(), DELTA);
+		assertEquals(Double.NaN, cachesCalculator.getTotalExpiredResponsesRate(), DELTA);
+		assertEquals(Double.NaN, cachesCalculator.getTotalExpiredBytesRate(), DELTA);
+		assertEquals(Double.NaN, cachesCalculator.getTotalExpiredResponsesWrittenRate(), DELTA);
+		assertEquals(Double.NaN, cachesCalculator.getTotalExpiredBytesWrittenRate(), DELTA);
+		assertEquals(Double.NaN, cachesCalculator.getTotalBypassResponsesRate(), DELTA);
+		assertEquals(Double.NaN, cachesCalculator.getTotalBypassBytesRate(), DELTA);
+		assertEquals(Double.NaN, cachesCalculator.getTotalBypassResponsesWrittenRate(), DELTA);
+		assertEquals(Double.NaN, cachesCalculator.getTotalBypassBytesWrittenRate(), DELTA);
 	}
 
 	@Test
