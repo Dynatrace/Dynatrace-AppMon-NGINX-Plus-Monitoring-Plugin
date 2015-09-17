@@ -1,7 +1,6 @@
 package com.dynatrace.plugin.nginx.bookers;
 
 import java.util.Collection;
-import java.util.logging.Logger;
 
 import com.dynatrace.diagnostics.pdk.MonitorEnvironment;
 import com.dynatrace.diagnostics.pdk.MonitorMeasure;
@@ -20,21 +19,13 @@ public class SSLBooker {
 		Collection<MonitorMeasure> handshakesFailedM = env.getMonitorMeasures(SSLParser.GROUP, MSR_HANDSHAKES_FAILED);
 		Collection<MonitorMeasure> sessionReusesM = env.getMonitorMeasures(SSLParser.GROUP, MSR_SESSION_REUSES);
 
-		Logger log = Logger.getLogger(SSLBooker.class.getName());
-
-		log.info("[KD] RAZ");
 		for (MonitorMeasure m : handshakesM) {
-			log.info("[KD] DWA");
 			m.setValue(sslDTO.getHandshakes());
 		}
-		log.info("[KD] RAZ");
 		for (MonitorMeasure m : handshakesFailedM) {
-			log.info("[KD] DWA");
 			m.setValue(sslDTO.getHandshakes_failed());
 		}
-		log.info("[KD] RAZ");
 		for (MonitorMeasure m : sessionReusesM) {
-			log.info("[KD] DWA");
 			m.setValue(sslDTO.getSession_reuses());
 		}
 	}
