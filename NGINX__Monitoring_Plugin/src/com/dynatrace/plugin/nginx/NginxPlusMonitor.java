@@ -8,7 +8,6 @@ package com.dynatrace.plugin.nginx;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.util.logging.Logger;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,20 +27,17 @@ import com.dynatrace.plugin.nginx.utils.Storage;
 
 public class NginxPlusMonitor implements com.dynatrace.diagnostics.pdk.Monitor {
 
-	private static final Logger log = Logger.getLogger(NginxPlusMonitor.class.getName());
 	private final Storage<NginxStatus> nginxStatusStorage = new Storage<NginxStatus>();
 	private CalculatorImpl calculator;
 
 
 	@Override
 	public Status setup(MonitorEnvironment env) throws Exception {
-		log.info("Setup called");
 		return new Status();
 	}
 
 	@Override
 	public Status execute(MonitorEnvironment env) throws Exception {
-		log.info("Execute called");
 		NginxPlusMonitoringConnection connection;
 		JSONObject jsonObject;
 		try {
@@ -92,8 +88,6 @@ public class NginxPlusMonitor implements com.dynatrace.diagnostics.pdk.Monitor {
 			return status;
 		}
 
-		log.info(jsonObject.toString());
-
 		NginxStatus nginxStatusDTO;
 
 		try {
@@ -131,6 +125,5 @@ public class NginxPlusMonitor implements com.dynatrace.diagnostics.pdk.Monitor {
 
 	@Override
 	public void teardown(MonitorEnvironment env) throws Exception {
-		log.info("Teardown called");
 	}
 }
