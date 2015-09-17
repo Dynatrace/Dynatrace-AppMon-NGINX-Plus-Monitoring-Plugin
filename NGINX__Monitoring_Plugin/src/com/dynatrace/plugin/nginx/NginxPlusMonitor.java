@@ -41,7 +41,7 @@ public class NginxPlusMonitor implements com.dynatrace.diagnostics.pdk.Monitor {
 		NginxPlusMonitoringConnection connection;
 		JSONObject jsonObject;
 		try {
-			connection = new NginxPlusMonitoringConnection("http", env.getHost().getAddress(), "/status");
+			connection = new NginxPlusMonitoringConnection("http", env.getHost().getAddress(), env.getConfigString("StatusDataEndpoint"));
 		} catch(MalformedURLException e) {
 			e.printStackTrace();
 			Status status = new Status();
