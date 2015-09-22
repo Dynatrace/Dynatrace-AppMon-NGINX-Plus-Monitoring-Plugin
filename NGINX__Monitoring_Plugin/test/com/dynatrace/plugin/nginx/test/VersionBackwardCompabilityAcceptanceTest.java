@@ -16,7 +16,7 @@ import com.dynatrace.plugin.utils.SimpleHttpServer;
 import com.sun.net.httpserver.HttpHandler;
 
 
-public class SimpleWebServerTest {
+public class VersionBackwardCompabilityAcceptanceTest {
 
 	private SimpleHttpServer server;
 	private Map<String, HttpHandler> contextMap = new HashMap<String, HttpHandler>();
