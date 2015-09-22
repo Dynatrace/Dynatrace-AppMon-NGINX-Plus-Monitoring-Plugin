@@ -6,8 +6,10 @@ import org.json.JSONObject;
 import com.dynatrace.plugin.nginx.dto.MetaDTO;
 
 
-public class MetaParser {
-	public static MetaDTO parse(JSONObject jsonObject) throws JSONException {
+public class MetaParser implements ParserInterface {
+
+	@Override
+	public Object parse(JSONObject jsonObject) throws JSONException {
 		MetaDTO metaDTO = new MetaDTO();
 		metaDTO.setVersion(jsonObject.getDouble("version"));
 		metaDTO.setNginx_version(jsonObject.getString("nginx_version"));
@@ -15,7 +17,9 @@ public class MetaParser {
 		metaDTO.setGeneration(jsonObject.getDouble("generation"));
 		metaDTO.setLoad_timestamp(jsonObject.getDouble("load_timestamp"));
 		metaDTO.setTimestamp(jsonObject.getDouble("timestamp") / 1000);
-		metaDTO.setPid(jsonObject.getDouble("pid"));
+		if (jsonObject.has("pid")) {
+			metaDTO.setPid(jsonObject.getDouble("pid"));
+		}
 		return metaDTO;
 	}
 }

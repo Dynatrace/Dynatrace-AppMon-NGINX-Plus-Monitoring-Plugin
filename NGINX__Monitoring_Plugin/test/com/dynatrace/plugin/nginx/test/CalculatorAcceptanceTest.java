@@ -1,4 +1,4 @@
-package com.dynatrace.plugin.nginx;
+package com.dynatrace.plugin.nginx.test;
 
 import static org.junit.Assert.assertEquals;
 
@@ -15,11 +15,11 @@ import com.dynatrace.plugin.nginx.calculator.StreamCalculator;
 import com.dynatrace.plugin.nginx.calculator.UpstreamsCalculator;
 import com.dynatrace.plugin.nginx.dto.CacheDTO;
 import com.dynatrace.plugin.nginx.dto.NginxStatus;
-import com.dynatrace.plugin.nginx.dto.ServerDTO;
-import com.dynatrace.plugin.nginx.dto.ServerZoneDTO;
 import com.dynatrace.plugin.nginx.dto.StateT;
-import com.dynatrace.plugin.nginx.dto.StreamServerDTO;
-import com.dynatrace.plugin.nginx.dto.StreamServerZoneDTO;
+import com.dynatrace.plugin.nginx.dto.serverzone.ServerZoneDTO;
+import com.dynatrace.plugin.nginx.dto.stream.StreamServerDTO;
+import com.dynatrace.plugin.nginx.dto.stream.StreamServerZoneDTO;
+import com.dynatrace.plugin.nginx.dto.upstreams.ServerDTO;
 
 public class CalculatorAcceptanceTest {
 	CalculatorImpl calculator;

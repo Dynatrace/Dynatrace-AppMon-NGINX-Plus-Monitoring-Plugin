@@ -19,9 +19,9 @@ public class NginxPlusMonitoringConnection {
 	private URLConnection connection;
 	private final String charset = "UTF-8";
 
-	public NginxPlusMonitoringConnection(String protocol, String host, String file) throws MalformedURLException, IOException {
+	public NginxPlusMonitoringConnection(String protocol, String host, int port, String file) throws MalformedURLException, IOException {
 		try {
-			URL url = new URL(protocol, host, file);
+			URL url = new URL(protocol, host, port, file);
 			this.connection = url.openConnection();
 			this.connection.setConnectTimeout((int)TimeUnit.SECONDS.toMillis(5));
 		} catch(MalformedURLException e) {

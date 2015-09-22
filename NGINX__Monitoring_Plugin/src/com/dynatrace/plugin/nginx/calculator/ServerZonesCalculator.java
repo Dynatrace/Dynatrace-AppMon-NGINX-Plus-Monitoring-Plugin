@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 import com.dynatrace.plugin.nginx.dto.NginxStatus;
-import com.dynatrace.plugin.nginx.dto.ServerZoneDTO;
+import com.dynatrace.plugin.nginx.dto.serverzone.ServerZoneDTO;
 
 public class ServerZonesCalculator extends TimeFrameCalculator implements Calculator {
 	private Map<String, Double> requestsRate = new HashMap<String, Double>();

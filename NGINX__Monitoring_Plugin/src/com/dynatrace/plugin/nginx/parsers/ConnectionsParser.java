@@ -5,11 +5,12 @@ import org.json.JSONObject;
 
 import com.dynatrace.plugin.nginx.dto.ConnectionsDTO;
 
-public class ConnectionsParser {
+public class ConnectionsParser implements ParserInterface {
 
 	public static String GROUP = "NGINX Plus Monitor Connections";
 
-	public static ConnectionsDTO parse(JSONObject jsonObject) throws JSONException {
+	@Override
+	public Object parse(JSONObject jsonObject) throws JSONException {
 		JSONObject connections = jsonObject.getJSONObject("connections");
 		ConnectionsDTO connectionsDTO = new ConnectionsDTO();
 		connectionsDTO.setAccepted(connections.getDouble("accepted"));

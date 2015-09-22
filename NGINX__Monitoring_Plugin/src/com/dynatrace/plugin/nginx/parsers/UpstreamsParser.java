@@ -6,23 +6,25 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.dynatrace.plugin.nginx.dto.ServerDTO;
-import com.dynatrace.plugin.nginx.dto.ServerGroups;
 import com.dynatrace.plugin.nginx.dto.StateT;
+import com.dynatrace.plugin.nginx.dto.upstreams.ServerDTO;
+import com.dynatrace.plugin.nginx.dto.upstreams.ServerGroups;
 
-public class UpstreamsParser {
+public class UpstreamsParser implements ParserInterface {
 
 	public static String GROUP = "NGINX Plus Monitor Upstreams";
 
-	public static ServerGroups parse(JSONObject jsonObject) throws JSONException {
-		JSONObject upStreams = jsonObject.getJSONObject("upstreams");
+	@Override
+	public Object parse(JSONObject jsonObject) throws JSONException {
+		JSONObject upstreams = jsonObject.getJSONObject("upstreams");
+
 		ServerGroups serverGroups = new ServerGroups();
 
-		Iterator<?> upStreamNames = upStreams.keys();
+		Iterator<?> upStreamNames = upstreams.keys();
 		while (upStreamNames.hasNext()) {
 			String upStreamName = (String)upStreamNames.next();
 			serverGroups.createNewServerGroup(upStreamName);
-			JSONArray upStream = upStreams.getJSONObject(upStreamName).getJSONArray("peers");
+			JSONArray upStream = upstreams.getJSONObject(upStreamName).getJSONArray("peers");
 
 			for (int i = 0; i < upStream.length(); i++) {
 				JSONObject server = upStream.getJSONObject(i);

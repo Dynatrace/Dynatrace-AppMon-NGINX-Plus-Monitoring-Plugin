@@ -7,15 +7,17 @@ import java.util.Iterator;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.dynatrace.plugin.nginx.dto.ServerZoneDTO;
+import com.dynatrace.plugin.nginx.dto.serverzone.ServerZoneDTO;
 
-public class ServerZonesParser {
+public class ServerZonesParser implements ParserInterface {
 
 	public static String GROUP = "NGINX Plus Monitor Server Zones";
 
-	public static Collection<ServerZoneDTO> parse(JSONObject jsonObject) throws JSONException {
-		Collection<ServerZoneDTO> serverZones_ = new ArrayList<>();
+	@Override
+	public Object parse(JSONObject jsonObject) throws JSONException {
 		JSONObject serverZones = jsonObject.getJSONObject("server_zones");
+
+		Collection<ServerZoneDTO> serverZones_ = new ArrayList<ServerZoneDTO>();
 		Iterator<?> serverZoneNames = serverZones.keys();
 		while (serverZoneNames.hasNext()) {
 			String serverZoneName = (String)serverZoneNames.next();
@@ -33,7 +35,9 @@ public class ServerZonesParser {
 				serverZoneDTO.setResponses5xx(responses.getDouble("5xx"));
 				serverZoneDTO.setTotalResponses(responses.getDouble("total"));
 			}
-			serverZoneDTO.setDiscarded(serverZone.getDouble("discarded"));
+			if (serverZone.has("discarded")) {
+				serverZoneDTO.setDiscarded(serverZone.getDouble("discarded"));
+			}
 			serverZoneDTO.setReceived(serverZone.getDouble("received"));
 			serverZoneDTO.setSent(serverZone.getDouble("sent"));
 			serverZones_.add(serverZoneDTO);

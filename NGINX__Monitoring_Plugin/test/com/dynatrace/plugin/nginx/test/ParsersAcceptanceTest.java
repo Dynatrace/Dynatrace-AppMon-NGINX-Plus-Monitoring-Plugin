@@ -1,4 +1,4 @@
-package com.dynatrace.plugin.nginx;
+package com.dynatrace.plugin.nginx.test;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -11,25 +11,34 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import com.dynatrace.plugin.nginx.dto.*;
-import com.dynatrace.plugin.nginx.parsers.CachesParser;
-import com.dynatrace.plugin.nginx.parsers.ConnectionsParser;
-import com.dynatrace.plugin.nginx.parsers.MetaParser;
-import com.dynatrace.plugin.nginx.parsers.RequestsParser;
-import com.dynatrace.plugin.nginx.parsers.SSLParser;
-import com.dynatrace.plugin.nginx.parsers.ServerZonesParser;
-import com.dynatrace.plugin.nginx.parsers.StreamParser;
-import com.dynatrace.plugin.nginx.parsers.UpstreamsParser;
+import com.dynatrace.plugin.nginx.NginxPlusMonitoringConnection;
+import com.dynatrace.plugin.nginx.dto.CacheDTO;
+import com.dynatrace.plugin.nginx.dto.ConnectionsDTO;
+import com.dynatrace.plugin.nginx.dto.MetaDTO;
+import com.dynatrace.plugin.nginx.dto.RequestsDTO;
+import com.dynatrace.plugin.nginx.dto.SSLDTO;
+import com.dynatrace.plugin.nginx.dto.serverzone.ServerZoneDTO;
+import com.dynatrace.plugin.nginx.dto.stream.Stream;
+import com.dynatrace.plugin.nginx.dto.stream.StreamServerDTO;
+import com.dynatrace.plugin.nginx.dto.stream.StreamServerZoneDTO;
+import com.dynatrace.plugin.nginx.dto.upstreams.ServerDTO;
+import com.dynatrace.plugin.nginx.dto.upstreams.ServerGroups;
+import com.dynatrace.plugin.nginx.parsers.ParserCollection;
+import com.dynatrace.plugin.nginx.parsers.ParserFactory;
 
 public class ParsersAcceptanceTest {
-	private NginxPlusMonitoringConnection connection_;
+
+	private ParserCollection parserCollection;
+	private JSONObject statusJSON;
 
 	@Before
 	public void setUp() throws Exception {
 		String protocol = "http";
 		String host = "demo.nginx.com";
 		String file = "/status";
-		connection_ = new NginxPlusMonitoringConnection(protocol, host, file);
+		NginxPlusMonitoringConnection connection_ = new NginxPlusMonitoringConnection(protocol, host, 80, file);
+		statusJSON = connection_.getStatusJson();
+		parserCollection = new ParserFactory().getParserCollection(statusJSON.getInt("version"));
 	}
 
 	@After
@@ -41,9 +50,7 @@ public class ParsersAcceptanceTest {
 
 	@Test
 	public void TestMetaParser() throws Exception {
-		JSONObject jsonObject = connection_.getStatusJson();
-
-		MetaDTO metaDTO = MetaParser.parse(jsonObject);
+		MetaDTO metaDTO = (MetaDTO) parserCollection.getMetaParser().parse(statusJSON);
 		assertNotNull(metaDTO.getVersion());
 		assertNotNull(metaDTO.getNginx_version());
 		assertNotNull(metaDTO.getAddress());
@@ -55,16 +62,14 @@ public class ParsersAcceptanceTest {
 
 	@Test
 	public void TestRequestsParser() throws Exception {
-		JSONObject jsonObject = connection_.getStatusJson();
-		RequestsDTO requestsDTO = RequestsParser.parse(jsonObject);
+		RequestsDTO requestsDTO = (RequestsDTO) parserCollection.getRequestsParser().parse(statusJSON);
 		assertNotNull(requestsDTO.getCurrent());
 		assertNotNull(requestsDTO.getTotal());
 	}
 
 	@Test
 	public void TestSSLParser() throws Exception {
-		JSONObject jsonObject = connection_.getStatusJson();
-		SSLDTO sslDTO = SSLParser.parse(jsonObject);
+		SSLDTO sslDTO = (SSLDTO) parserCollection.getSslParser().parse(statusJSON);
 		assertNotNull(sslDTO.getHandshakes());
 		assertNotNull(sslDTO.getHandshakes_failed());
 		assertNotNull(sslDTO.getSession_reuses());
@@ -72,18 +77,17 @@ public class ParsersAcceptanceTest {
 
 	@Test
 	public void TestConnectionsParser() throws Exception {
-		JSONObject jsonObject = connection_.getStatusJson();
-		ConnectionsDTO connectionsParser = ConnectionsParser.parse(jsonObject);
-		assertNotNull(connectionsParser.getAccepted());
-		assertNotNull(connectionsParser.getActive());
-		assertNotNull(connectionsParser.getDropped());
-		assertNotNull(connectionsParser.getIdle());
+		ConnectionsDTO connectionsDTO = (ConnectionsDTO) parserCollection.getConnectionsParser().parse(statusJSON);
+		assertNotNull(connectionsDTO.getAccepted());
+		assertNotNull(connectionsDTO.getActive());
+		assertNotNull(connectionsDTO.getDropped());
+		assertNotNull(connectionsDTO.getIdle());
 	}
 
 	@Test
 	public void TestCachesParser() throws Exception {
-		JSONObject jsonObject = connection_.getStatusJson();
-		Collection<CacheDTO> caches = CachesParser.parse(jsonObject);
+		@SuppressWarnings("unchecked")
+		Collection<CacheDTO> caches = (Collection<CacheDTO>) parserCollection.getCachesParser().parse(statusJSON);
 		for (CacheDTO c : caches) {
 			assertNotNull(c.getCacheName());
 			assertNotNull(c.getSize());
@@ -114,8 +118,8 @@ public class ParsersAcceptanceTest {
 
 	@Test
 	public void TestServerZonesParser() throws Exception {
-		JSONObject jsonObject = connection_.getStatusJson();
-		Collection<ServerZoneDTO> serverZones = ServerZonesParser.parse(jsonObject);
+		@SuppressWarnings("unchecked")
+		Collection<ServerZoneDTO> serverZones = (Collection<ServerZoneDTO>) parserCollection.getServerZonesParser().parse(statusJSON);
 		for (ServerZoneDTO s : serverZones) {
 			assertNotNull(s.getProcessing());
 			assertNotNull(s.getRequests());
@@ -133,8 +137,7 @@ public class ParsersAcceptanceTest {
 
 	@Test
 	public void TestUpstreamsParser() throws Exception {
-		JSONObject jsonObject = connection_.getStatusJson();
-		ServerGroups serverGroups = UpstreamsParser.parse(jsonObject);
+		ServerGroups serverGroups = (ServerGroups) parserCollection.getUpstreamsParser().parse(statusJSON);
 		for (String serverGroupName: serverGroups.get().keySet()) {
 			for (ServerDTO s : serverGroups.get().get(serverGroupName)) {
 				assertNotNull(s.getId());
@@ -167,8 +170,7 @@ public class ParsersAcceptanceTest {
 
 	@Test
 	public void TestStreamParser() throws Exception {
-		JSONObject jsonObject = connection_.getStatusJson();
-		Stream streamDTO = StreamParser.parse(jsonObject);
+		Stream streamDTO = (Stream) parserCollection.getStreamParser().parse(statusJSON);
 		for (StreamServerZoneDTO s : streamDTO.getServerZones()) {
 			assertNotNull(s.getServerZoneName());
 			assertNotNull(s.getProcessing());

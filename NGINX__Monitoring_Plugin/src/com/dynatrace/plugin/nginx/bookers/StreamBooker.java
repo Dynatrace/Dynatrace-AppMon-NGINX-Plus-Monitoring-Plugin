@@ -7,10 +7,10 @@ import org.json.JSONException;
 import com.dynatrace.diagnostics.pdk.MonitorEnvironment;
 import com.dynatrace.diagnostics.pdk.MonitorMeasure;
 import com.dynatrace.plugin.nginx.calculator.StreamCalculator;
-import com.dynatrace.plugin.nginx.dto.Stream;
-import com.dynatrace.plugin.nginx.dto.StreamServerDTO;
-import com.dynatrace.plugin.nginx.dto.StreamServerZoneDTO;
-import com.dynatrace.plugin.nginx.parsers.StreamParser;
+import com.dynatrace.plugin.nginx.dto.stream.Stream;
+import com.dynatrace.plugin.nginx.dto.stream.StreamServerDTO;
+import com.dynatrace.plugin.nginx.dto.stream.StreamServerZoneDTO;
+import com.dynatrace.plugin.nginx.parsers.stream.StreamParser;
 import com.dynatrace.plugin.nginx.utils.ServerMatcher;
 
 public class StreamBooker extends Booker {

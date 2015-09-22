@@ -6,8 +6,8 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 import com.dynatrace.plugin.nginx.dto.NginxStatus;
-import com.dynatrace.plugin.nginx.dto.StreamServerDTO;
-import com.dynatrace.plugin.nginx.dto.StreamServerZoneDTO;
+import com.dynatrace.plugin.nginx.dto.stream.StreamServerDTO;
+import com.dynatrace.plugin.nginx.dto.stream.StreamServerZoneDTO;
 import com.google.common.collect.HashBasedTable;
 
 public class StreamCalculator extends TimeFrameCalculator implements Calculator {
