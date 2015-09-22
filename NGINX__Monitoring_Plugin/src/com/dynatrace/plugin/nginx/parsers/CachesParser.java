@@ -9,13 +9,15 @@ import org.json.JSONObject;
 
 import com.dynatrace.plugin.nginx.dto.CacheDTO;
 
-public class CachesParser {
+public class CachesParser implements ParserInterface {
 
 	public static String GROUP = "NGINX Plus Monitor Caches";
 
-	public static Collection<CacheDTO> parse(JSONObject jsonObject) throws JSONException {
+	@Override
+	public Object parse(JSONObject jsonObject) throws JSONException {
 		JSONObject caches = jsonObject.getJSONObject("caches");
-		Collection<CacheDTO> caches_ = new ArrayList<>();
+
+		Collection<CacheDTO> caches_ = new ArrayList<CacheDTO>();
 
 		final String responses = "responses";
 		final String bytes = "bytes";

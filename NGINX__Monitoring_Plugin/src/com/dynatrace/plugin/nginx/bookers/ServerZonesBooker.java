@@ -5,7 +5,7 @@ import java.util.Collection;
 import com.dynatrace.diagnostics.pdk.MonitorEnvironment;
 import com.dynatrace.diagnostics.pdk.MonitorMeasure;
 import com.dynatrace.plugin.nginx.calculator.ServerZonesCalculator;
-import com.dynatrace.plugin.nginx.dto.ServerZoneDTO;
+import com.dynatrace.plugin.nginx.dto.serverzone.ServerZoneDTO;
 import com.dynatrace.plugin.nginx.parsers.ServerZonesParser;
 
 

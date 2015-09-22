@@ -5,11 +5,12 @@ import org.json.JSONObject;
 
 import com.dynatrace.plugin.nginx.dto.SSLDTO;
 
-public class SSLParser {
+public class SSLParser implements ParserInterface {
 
 	public static String GROUP = "NGINX Plus Monitor SSL";
 
-	public static SSLDTO parse(JSONObject jsonObject) throws JSONException {
+	@Override
+	public Object parse(JSONObject jsonObject) throws JSONException {
 		JSONObject ssl = jsonObject.getJSONObject("ssl");
 		SSLDTO sslDTO = new SSLDTO();
 		sslDTO.setHandshakes(ssl.getDouble("handshakes"));

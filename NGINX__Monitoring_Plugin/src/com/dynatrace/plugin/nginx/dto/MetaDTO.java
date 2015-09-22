@@ -1,7 +1,8 @@
 package com.dynatrace.plugin.nginx.dto;
 
 public class MetaDTO {
-	private double version;
+
+	private Double version;
 	private String nginxVersion;
 	private String address;
 	private Double generation;
@@ -9,7 +10,7 @@ public class MetaDTO {
 	private Double timestamp;
 	private Double pid;
 
-	public double getVersion() {
+	public Double getVersion() {
 		return version;
 	}
 

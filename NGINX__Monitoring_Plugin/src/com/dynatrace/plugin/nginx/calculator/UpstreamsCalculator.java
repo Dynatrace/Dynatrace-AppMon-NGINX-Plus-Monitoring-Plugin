@@ -3,8 +3,8 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import com.dynatrace.plugin.nginx.dto.NginxStatus;
-import com.dynatrace.plugin.nginx.dto.ServerDTO;
 import com.dynatrace.plugin.nginx.dto.StateT;
+import com.dynatrace.plugin.nginx.dto.upstreams.ServerDTO;
 import com.google.common.collect.HashBasedTable;
 
 public class UpstreamsCalculator extends TimeFrameCalculator implements Calculator {

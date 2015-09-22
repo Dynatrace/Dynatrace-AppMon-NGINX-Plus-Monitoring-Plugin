@@ -7,8 +7,8 @@ import org.json.JSONException;
 import com.dynatrace.diagnostics.pdk.MonitorEnvironment;
 import com.dynatrace.diagnostics.pdk.MonitorMeasure;
 import com.dynatrace.plugin.nginx.calculator.UpstreamsCalculator;
-import com.dynatrace.plugin.nginx.dto.ServerDTO;
-import com.dynatrace.plugin.nginx.dto.ServerGroups;
+import com.dynatrace.plugin.nginx.dto.upstreams.ServerDTO;
+import com.dynatrace.plugin.nginx.dto.upstreams.ServerGroups;
 import com.dynatrace.plugin.nginx.parsers.UpstreamsParser;
 import com.dynatrace.plugin.nginx.utils.ServerMatcher;
 

@@ -1,4 +1,4 @@
-package com.dynatrace.plugin.nginx.dto;
+package com.dynatrace.plugin.nginx.dto.upstreams;
 
 import java.util.ArrayList;
 import java.util.HashMap;

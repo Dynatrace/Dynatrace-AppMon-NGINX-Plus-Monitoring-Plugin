@@ -1,8 +1,9 @@
-package com.dynatrace.plugin.nginx.dto;
+package com.dynatrace.plugin.nginx.dto.stream;
+
+import com.dynatrace.plugin.nginx.dto.StateT;
 
 
-public class ServerDTO {
-
+public class StreamServerDTO {
 	private Double id;
 	private String server;
 	private Boolean backup;
@@ -10,13 +11,10 @@ public class ServerDTO {
 	private StateT state;
 	private Double active;
 	private Double maxConns;
-	private Double requests;
-	private Double responses1xx;
-	private Double responses2xx;
-	private Double responses3xx;
-	private Double responses4xx;
-	private Double responses5xx;
-	private Double totalResponses;
+	private Double connections;
+	private Double connectTime;  //least_time
+	private Double firstByteTime;//least_time
+	private Double responseTime; //least_time
 	private Double sent;
 	private Double received;
 	private Double fails;
@@ -83,62 +81,6 @@ public class ServerDTO {
 
 	public void setMaxConns(Double maxConns) {
 		this.maxConns = maxConns;
-	}
-
-	public Double getRequests() {
-		return requests;
-	}
-
-	public void setRequests(Double requests) {
-		this.requests = requests;
-	}
-
-	public Double getResponses1xx() {
-		return responses1xx;
-	}
-
-	public void setResponses1xx(Double responses1xx) {
-		this.responses1xx = responses1xx;
-	}
-
-	public Double getResponses2xx() {
-		return responses2xx;
-	}
-
-	public void setResponses2xx(Double responses2xx) {
-		this.responses2xx = responses2xx;
-	}
-
-	public Double getResponses3xx() {
-		return responses3xx;
-	}
-
-	public void setResponses3xx(Double responses3xx) {
-		this.responses3xx = responses3xx;
-	}
-
-	public Double getResponses4xx() {
-		return responses4xx;
-	}
-
-	public void setResponses4xx(Double responses4xx) {
-		this.responses4xx = responses4xx;
-	}
-
-	public Double getResponses5xx() {
-		return responses5xx;
-	}
-
-	public void setResponses5xx(Double responses5xx) {
-		this.responses5xx = responses5xx;
-	}
-
-	public Double getTotalResponses() {
-		return totalResponses;
-	}
-
-	public void setTotalResponses(Double totalResponses) {
-		this.totalResponses = totalResponses;
 	}
 
 	public Double getSent() {
@@ -227,5 +169,37 @@ public class ServerDTO {
 
 	public void setSelected(Double selected) {
 		this.selected = selected;
+	}
+
+	public Double getConnections() {
+		return connections;
+	}
+
+	public void setConnections(Double connections) {
+		this.connections = connections;
+	}
+
+	public Double getFirstByteTime() {
+		return firstByteTime;
+	}
+
+	public void setFirstByteTime(Double firstByteTime) {
+		this.firstByteTime = firstByteTime;
+	}
+
+	public Double getConnectTime() {
+		return connectTime;
+	}
+
+	public void setConnectTime(Double connectTime) {
+		this.connectTime = connectTime;
+	}
+
+	public Double getResponseTime() {
+		return responseTime;
+	}
+
+	public void setResponseTime(Double responseTime) {
+		this.responseTime = responseTime;
 	}
 }

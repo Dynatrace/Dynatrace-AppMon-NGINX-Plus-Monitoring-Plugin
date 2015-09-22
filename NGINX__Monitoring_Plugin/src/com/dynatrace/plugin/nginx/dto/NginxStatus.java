@@ -6,16 +6,14 @@ import java.util.Collection;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.dynatrace.plugin.nginx.parsers.CachesParser;
-import com.dynatrace.plugin.nginx.parsers.ConnectionsParser;
-import com.dynatrace.plugin.nginx.parsers.MetaParser;
-import com.dynatrace.plugin.nginx.parsers.RequestsParser;
-import com.dynatrace.plugin.nginx.parsers.SSLParser;
-import com.dynatrace.plugin.nginx.parsers.ServerZonesParser;
-import com.dynatrace.plugin.nginx.parsers.StreamParser;
-import com.dynatrace.plugin.nginx.parsers.UpstreamsParser;
+import com.dynatrace.plugin.nginx.dto.serverzone.ServerZoneDTO;
+import com.dynatrace.plugin.nginx.dto.stream.Stream;
+import com.dynatrace.plugin.nginx.dto.upstreams.ServerGroups;
+import com.dynatrace.plugin.nginx.parsers.ParserCollection;
+import com.dynatrace.plugin.nginx.parsers.ParserFactory;
 
 public class NginxStatus {
+
 	private MetaDTO meta;
 	private ConnectionsDTO connections;
 	private SSLDTO ssl;
@@ -25,15 +23,18 @@ public class NginxStatus {
 	private Collection<CacheDTO> caches;
 	private Stream stream;
 
+	@SuppressWarnings("unchecked")
 	public NginxStatus(JSONObject jsonObject) throws JSONException {
-		meta = MetaParser.parse(jsonObject);
-		connections = ConnectionsParser.parse(jsonObject);
-		ssl = SSLParser.parse(jsonObject);
-		requests = RequestsParser.parse(jsonObject);
-		serverZones = ServerZonesParser.parse(jsonObject);
-		upstreams = UpstreamsParser.parse(jsonObject);
-		caches = CachesParser.parse(jsonObject);
-		stream = StreamParser.parse(jsonObject);
+		int version = jsonObject.getInt("version");
+		ParserCollection parserCollection = new ParserFactory().getParserCollection(version);
+		meta = (MetaDTO) parserCollection.getMetaParser().parse(jsonObject);
+		connections = (ConnectionsDTO) parserCollection.getConnectionsParser().parse(jsonObject);
+		ssl = (SSLDTO) parserCollection.getSslParser().parse(jsonObject);
+		requests = (RequestsDTO) parserCollection.getRequestsParser().parse(jsonObject);
+		serverZones = (Collection<ServerZoneDTO>) parserCollection.getServerZonesParser().parse(jsonObject);
+		upstreams = (ServerGroups) parserCollection.getUpstreamsParser().parse(jsonObject);
+		caches = (Collection<CacheDTO>) parserCollection.getCachesParser().parse(jsonObject);
+		stream = (Stream) parserCollection.getStreamParser().parse(jsonObject);
 	}
 
 	public NginxStatus() {

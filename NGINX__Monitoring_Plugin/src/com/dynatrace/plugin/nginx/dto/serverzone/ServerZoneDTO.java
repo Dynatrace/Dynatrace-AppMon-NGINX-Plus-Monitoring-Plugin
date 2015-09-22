@@ -1,4 +1,4 @@
-package com.dynatrace.plugin.nginx.dto;
+package com.dynatrace.plugin.nginx.dto.serverzone;
 
 public class ServerZoneDTO {
 	private String serverZoneName;
