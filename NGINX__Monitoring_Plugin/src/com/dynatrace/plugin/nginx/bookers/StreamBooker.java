@@ -49,8 +49,6 @@ public class StreamBooker extends Booker {
 	public static final String MSR_US_DOWNTIME = "Upstreams Downtime";
 	public static final String MSR_US_SELECTED = "Upstreams Selected";
 
-	public static final String DYNAMIC_KEY = "Stream";
-
 	public static void book(Stream stream, MonitorEnvironment env, StreamCalculator calculator) throws JSONException {
 		Collection<MonitorMeasure> sZProcessingM = env.getMonitorMeasures(StreamParser.GROUP, MSR_SZ_PROCESSING);
 		Collection<MonitorMeasure> sZConnectionsM = env.getMonitorMeasures(StreamParser.GROUP, MSR_SZ_CONNECTIONS);
@@ -87,18 +85,23 @@ public class StreamBooker extends Booker {
 		Collection<MonitorMeasure> uSSelectedM = env.getMonitorMeasures(StreamParser.GROUP, MSR_US_SELECTED);
 
 		for (StreamServerZoneDTO s : stream.getServerZones()) {
-			setDynamicMeasure(env, sZProcessingM, DYNAMIC_KEY, s.getServerZoneName(), s.getProcessing());
-			setDynamicMeasure(env, sZConnectionsM, DYNAMIC_KEY, s.getServerZoneName(), s.getConnections());
-			setDynamicMeasure(env, sZConnectionsRateM, DYNAMIC_KEY, s.getServerZoneName(), calculator.getServerZoneConnectionsRate().get(s.getServerZoneName()));
-			setDynamicMeasure(env, sZReceivedM, DYNAMIC_KEY, s.getServerZoneName(), s.getReceived());
-			setDynamicMeasure(env, sZReceivedRateM, DYNAMIC_KEY, s.getServerZoneName(), calculator.getServerZoneReceivedRate().get(s.getServerZoneName()));
-			setDynamicMeasure(env, sZSentM, DYNAMIC_KEY, s.getServerZoneName(), s.getSent());
-			setDynamicMeasure(env, sZSentRateM, DYNAMIC_KEY, s.getServerZoneName(), calculator.getServerZoneSentRate().get(s.getServerZoneName()));
+			String dynamicKey = "Server Zone";
+			String dynamicValue = StreamCalculator.StreamOther;
+			setDynamicMeasure(env, sZProcessingM, dynamicKey, s.getServerZoneName(), s.getProcessing());
+			setDynamicMeasure(env, sZConnectionsM, dynamicKey, s.getServerZoneName(), s.getConnections());
+			setDynamicMeasure(env, sZConnectionsRateM, dynamicKey, s.getServerZoneName(), calculator.getServerZoneConnectionsRate().get(s.getServerZoneName(), StreamCalculator.Stream));
+			setDynamicMeasure(env, sZConnectionsRateM, dynamicKey, dynamicValue, calculator.getServerZoneConnectionsRate().get(s.getServerZoneName(), dynamicValue));
+			setDynamicMeasure(env, sZReceivedM, dynamicKey, s.getServerZoneName(), s.getReceived());
+			setDynamicMeasure(env, sZReceivedRateM, dynamicKey, s.getServerZoneName(), calculator.getServerZoneReceivedRate().get(s.getServerZoneName(), StreamCalculator.Stream));
+			setDynamicMeasure(env, sZReceivedRateM, dynamicKey, dynamicValue, calculator.getServerZoneReceivedRate().get(s.getServerZoneName(), dynamicValue));
+			setDynamicMeasure(env, sZSentM, dynamicKey, s.getServerZoneName(), s.getSent());
+			setDynamicMeasure(env, sZSentRateM, dynamicKey, s.getServerZoneName(), calculator.getServerZoneSentRate().get(s.getServerZoneName(), StreamCalculator.Stream));
+			setDynamicMeasure(env, sZSentRateM, dynamicKey, dynamicValue, calculator.getServerZoneSentRate().get(s.getServerZoneName(), dynamicValue));
 		}
 
 		for(String serverGroupName : stream.getUpstreams().get().keySet()) {
 			for (StreamServerDTO s : stream.getUpstreams().get().get(serverGroupName)) {
-				String dynamicValue = calculator.generateKey(serverGroupName, s.getServer());
+				String dynamicValue = s.getServer();
 
 				Double StateTmp = s.getState().toDouble();
 				Double ActiveTmp = s.getActive();
@@ -117,7 +120,6 @@ public class StreamBooker extends Booker {
 				Double DowntimeTmp = s.getDowntime();
 				Double DownstartTmp = s.getDownstart();
 				Double SelectedTmp = s.getSelected();
-
 
 				if (ServerMatcher.Match(s.getServer(), env.getConfigString("StreamFilter"))) {
 
@@ -157,6 +159,22 @@ public class StreamBooker extends Booker {
 					setDynamicMeasure(env, uSSelectedM, serverGroupName, dynamicValue, SelectedTmp);
 				}
 			}
+			Double ConnectionsRateOtherTmp = calculator.getUpstreamsConnectionsRate().get(serverGroupName, StreamCalculator.StreamOther);
+			Double SentRateTmp = calculator.getUpstreamsSentRate().get(serverGroupName, StreamCalculator.StreamOther);
+			Double ReceivedRateTmp = calculator.getUpstreamsReceivedRate().get(serverGroupName, StreamCalculator.StreamOther);
+			Double FailsRateTmp = calculator.getUpstreamsFailsRate().get(serverGroupName, StreamCalculator.StreamOther);
+
+			String dynamicValue = StreamCalculator.StreamOther;
+			setDynamicMeasure(env, uSConnectionsRateM, serverGroupName, dynamicValue, ConnectionsRateOtherTmp);
+			setDynamicMeasure(env, uSSentRateM, serverGroupName, dynamicValue, SentRateTmp);
+			setDynamicMeasure(env, uSReceivedRateM, serverGroupName, dynamicValue, ReceivedRateTmp);
+			setDynamicMeasure(env, uSFailsRateM, serverGroupName, dynamicValue, FailsRateTmp);
+
+			String dynamicKey = "Upstream name";
+			setDynamicMeasure(env, uSConnectionsRateM, dynamicKey, serverGroupName, calculator.getConnectionsRatePerUpstream().get(serverGroupName));
+			setDynamicMeasure(env, uSSentRateM, dynamicKey, serverGroupName, calculator.getSentRatePerUpstream().get(serverGroupName));
+			setDynamicMeasure(env, uSReceivedRateM, dynamicKey, serverGroupName, calculator.getReceivedRatePerUpstream().get(serverGroupName));
+			setDynamicMeasure(env, uSFailsRateM, dynamicKey, serverGroupName, calculator.getFailsRatePerUpstream().get(serverGroupName));
 		}
 
 		for (MonitorMeasure m : uSTotalActiveM) {
