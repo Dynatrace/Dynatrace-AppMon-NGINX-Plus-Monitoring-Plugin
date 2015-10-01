@@ -125,7 +125,8 @@ public class UpstreamsBooker extends Booker {
 				Double ReceivedRateTmp = calculator.getTrafficRecvRate().get(serverGroupName, s.getServer());
 
 				if (ServerMatcher.Match(s.getServer(), env.getConfigString("UpstreamsServerFilter"))) {
-					String dynamicValue = generateDynamicValueForServerSplitting(s.getServer(), serverGroupName);
+//					String dynamicValue = generateDynamicValueForServerSplitting(s.getServer(), serverGroupName);
+					String dynamicValue = s.getServer();
 					setDynamicMeasure(env, backupM, serverGroupName, dynamicValue, (double) (s.getBackup() ? 1 : 0));
 					setDynamicMeasure(env, weightM, serverGroupName, dynamicValue, s.getWeight());
 					setDynamicMeasure(env, stateM, serverGroupName, dynamicValue, s.getState().toDouble());
@@ -160,6 +161,29 @@ public class UpstreamsBooker extends Booker {
 					setDynamicMeasure(env, downstartM, serverGroupName, dynamicValue, s.getDownstart());
 				}
 			}
+			String dynamicValue = UpstreamsCalculator.UpstreamOther;
+
+			setDynamicMeasure(env, requestsRateM, serverGroupName, dynamicValue, calculator.getRequestsRate().get(serverGroupName, dynamicValue));
+			setDynamicMeasure(env, responsesRateM, serverGroupName, dynamicValue, calculator.getResponsesRate().get(serverGroupName, dynamicValue));
+			setDynamicMeasure(env, responses1xxRateM, serverGroupName, dynamicValue, calculator.getResponses1xxRate().get(serverGroupName, dynamicValue));
+			setDynamicMeasure(env, responses2xxRateM, serverGroupName, dynamicValue, calculator.getResponses2xxRate().get(serverGroupName, dynamicValue));
+			setDynamicMeasure(env, responses3xxRateM, serverGroupName, dynamicValue, calculator.getResponses3xxRate().get(serverGroupName, dynamicValue));
+			setDynamicMeasure(env, responses4xxRateM, serverGroupName, dynamicValue, calculator.getResponses4xxRate().get(serverGroupName, dynamicValue));
+			setDynamicMeasure(env, responses5xxRateM, serverGroupName, dynamicValue, calculator.getResponses5xxRate().get(serverGroupName, dynamicValue));
+			setDynamicMeasure(env, sentRateM, serverGroupName, dynamicValue, calculator.getTrafficSentRate().get(serverGroupName, dynamicValue));
+			setDynamicMeasure(env, receivedRateM, serverGroupName, dynamicValue, calculator.getTrafficRecvRate().get(serverGroupName, dynamicValue));
+
+			String dynamicKey = "Upstream Name";
+
+			setDynamicMeasure(env, requestsRateM, dynamicKey, serverGroupName, calculator.getRequestsRatePerUpstreamMap().get(serverGroupName));
+			setDynamicMeasure(env, responsesRateM, dynamicKey, serverGroupName, calculator.getResponsesRatePerUpstreamMap().get(serverGroupName));
+			setDynamicMeasure(env, responses1xxRateM, dynamicKey, serverGroupName, calculator.getResponses1xxRatePerUpstreamMap().get(serverGroupName));
+			setDynamicMeasure(env, responses2xxRateM, dynamicKey, serverGroupName, calculator.getResponses2xxRatePerUpstreamMap().get(serverGroupName));
+			setDynamicMeasure(env, responses3xxRateM, dynamicKey, serverGroupName, calculator.getResponses3xxRatePerUpstreamMap().get(serverGroupName));
+			setDynamicMeasure(env, responses4xxRateM, dynamicKey, serverGroupName, calculator.getResponses4xxRatePerUpstreamMap().get(serverGroupName));
+			setDynamicMeasure(env, responses5xxRateM, dynamicKey, serverGroupName, calculator.getResponses5xxRatePerUpstreamMap().get(serverGroupName));
+			setDynamicMeasure(env, sentRateM, dynamicKey, serverGroupName, calculator.getTrafficSentRatePerUpstreamMap().get(serverGroupName));
+			setDynamicMeasure(env, receivedRateM, dynamicKey, serverGroupName, calculator.getTrafficRecvRatePerUpstreamMap().get(serverGroupName));
 		}
 
 		for (MonitorMeasure m : totalStateUpM) {
@@ -187,6 +211,7 @@ public class UpstreamsBooker extends Booker {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private static String generateDynamicValueForServerSplitting(String server, String upstream) {
 		return server + "(" + upstream + ")";
 	}
