@@ -8,6 +8,7 @@ package com.dynatrace.plugin.nginx;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.logging.Logger;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,6 +23,7 @@ import com.dynatrace.plugin.nginx.bookers.ServerZonesBooker;
 import com.dynatrace.plugin.nginx.bookers.StreamBooker;
 import com.dynatrace.plugin.nginx.bookers.UpstreamsBooker;
 import com.dynatrace.plugin.nginx.calculator.CalculatorImpl;
+import com.dynatrace.plugin.nginx.calculator.TimeFrameCalculator;
 import com.dynatrace.plugin.nginx.dto.NginxStatus;
 import com.dynatrace.plugin.nginx.utils.Storage;
 
@@ -30,6 +32,7 @@ public class NginxPlusMonitor implements com.dynatrace.diagnostics.pdk.Monitor {
 	private final Storage<NginxStatus> nginxStatusStorage = new Storage<NginxStatus>();
 	private CalculatorImpl calculator;
 
+	private final static Logger log = Logger.getLogger(NginxPlusMonitor.class.getName());
 
 	@Override
 	public Status setup(MonitorEnvironment env) throws Exception {
@@ -100,6 +103,19 @@ public class NginxPlusMonitor implements com.dynatrace.diagnostics.pdk.Monitor {
 			status.setMessage("JSONException");
 			status.setException(e);
 			return status;
+		}
+
+		// This is a temporary fix to scheduler logic
+		try {
+			if (!nginxStatusStorage.isEmpty()) {
+				TimeFrameCalculator timeFrameCalculator = new TimeFrameCalculator();
+				if (timeFrameCalculator.calculateTimeFrame(nginxStatusStorage.get(), nginxStatusDTO) < 1.0) {
+					nginxStatusStorage.put(nginxStatusDTO);
+					return new Status();
+				}
+			}
+		} catch (Exception e) {
+			log.info(e.toString());
 		}
 
 		calculator = new CalculatorImpl();
