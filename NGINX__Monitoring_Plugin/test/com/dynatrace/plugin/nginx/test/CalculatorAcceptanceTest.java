@@ -97,6 +97,11 @@ public class CalculatorAcceptanceTest {
 		serv.setResponses3xx(100.0);
 		serv.setResponses4xx(100.0);
 		serv.setResponses5xx(100.0);
+		serv.setFails(100.0);
+		serv.setUnavail(100.0);
+		serv.setHealthChecksTotal(100.0);
+		serv.setHealthChecksFails(100.0);
+		serv.setHealthCheckUnhealthy(100.0);
 		request1.getUpstreams().createNewServerGroup(group1S).add(serv);
 
 		serv2 = new ServerDTO();
@@ -112,6 +117,11 @@ public class CalculatorAcceptanceTest {
 		serv2.setResponses3xx(100.0);
 		serv2.setResponses4xx(100.0);
 		serv2.setResponses5xx(100.0);
+		serv2.setFails(100.0);
+		serv2.setUnavail(100.0);
+		serv2.setHealthChecksTotal(100.0);
+		serv2.setHealthChecksFails(100.0);
+		serv2.setHealthCheckUnhealthy(100.0);
 		request1.getUpstreams().createNewServerGroup(group2S).add(serv2);
 
 
@@ -128,6 +138,11 @@ public class CalculatorAcceptanceTest {
 		serv.setResponses3xx(200.0);
 		serv.setResponses4xx(200.0);
 		serv.setResponses5xx(200.0);
+		serv.setFails(200.0);
+		serv.setUnavail(200.0);
+		serv.setHealthChecksTotal(200.0);
+		serv.setHealthChecksFails(200.0);
+		serv.setHealthCheckUnhealthy(200.0);
 		request2.getUpstreams().createNewServerGroup(group1S).add(serv);
 
 		serv2 = new ServerDTO();
@@ -143,55 +158,54 @@ public class CalculatorAcceptanceTest {
 		serv2.setResponses3xx(400.0);
 		serv2.setResponses4xx(400.0);
 		serv2.setResponses5xx(400.0);
+		serv2.setFails(400.0);
+		serv2.setUnavail(400.0);
+		serv2.setHealthChecksTotal(400.0);
+		serv2.setHealthChecksFails(400.0);
+		serv2.setHealthCheckUnhealthy(400.0);
 		request2.getUpstreams().createNewServerGroup(group2S).add(serv2);
 
 		UpstreamsCalculator upstreamsCalculator = calculator.getUpstreamsCalculator();
 		upstreamsCalculator.calculateUpstreams(request1, request2, 25.0);
 
-		assertEquals(4.0, upstreamsCalculator.getTrafficSentRate().get(group1S, serv1S), DELTA);
-		assertEquals(12.0, upstreamsCalculator.getTrafficSentRate().get(group1S, UpstreamsCalculator.UpstreamOther), DELTA);
-		assertEquals(12.0, upstreamsCalculator.getTrafficSentRate().get(group2S, serv2S), DELTA);
-		assertEquals(4.0, upstreamsCalculator.getTrafficSentRate().get(group2S, UpstreamsCalculator.UpstreamOther), DELTA);
+		assertEquals(4.0, upstreamsCalculator.getSentRate().get(group1S, serv1S), DELTA);
+		assertEquals(12.0, upstreamsCalculator.getSentRate().get(group2S, serv2S), DELTA);
 
-		assertEquals(4.0, upstreamsCalculator.getTrafficRecvRate().get(group1S, serv1S), DELTA);
-		assertEquals(12.0, upstreamsCalculator.getTrafficRecvRate().get(group1S, UpstreamsCalculator.UpstreamOther), DELTA);
-		assertEquals(12.0, upstreamsCalculator.getTrafficRecvRate().get(group2S, serv2S), DELTA);
-		assertEquals(4.0, upstreamsCalculator.getTrafficRecvRate().get(group2S, UpstreamsCalculator.UpstreamOther), DELTA);
+		assertEquals(4.0, upstreamsCalculator.getReceivedRate().get(group1S, serv1S), DELTA);
+		assertEquals(12.0, upstreamsCalculator.getReceivedRate().get(group2S, serv2S), DELTA);
 
 		assertEquals(4.0, upstreamsCalculator.getRequestsRate().get(group1S, serv1S), DELTA);
-		assertEquals(12.0, upstreamsCalculator.getRequestsRate().get(group1S, UpstreamsCalculator.UpstreamOther), DELTA);
 		assertEquals(12.0, upstreamsCalculator.getRequestsRate().get(group2S, serv2S), DELTA);
-		assertEquals(4.0, upstreamsCalculator.getRequestsRate().get(group2S, UpstreamsCalculator.UpstreamOther), DELTA);
 
 		assertEquals(4.0, upstreamsCalculator.getResponsesRate().get(group1S, serv1S), DELTA);
-		assertEquals(12.0, upstreamsCalculator.getResponsesRate().get(group1S, UpstreamsCalculator.UpstreamOther), DELTA);
 		assertEquals(12.0, upstreamsCalculator.getResponsesRate().get(group2S, serv2S), DELTA);
-		assertEquals(4.0, upstreamsCalculator.getResponsesRate().get(group2S, UpstreamsCalculator.UpstreamOther), DELTA);
 
 		assertEquals(4.0, upstreamsCalculator.getResponses1xxRate().get(group1S, serv1S), DELTA);
-		assertEquals(12.0, upstreamsCalculator.getResponses1xxRate().get(group1S, UpstreamsCalculator.UpstreamOther), DELTA);
 		assertEquals(12.0, upstreamsCalculator.getResponses1xxRate().get(group2S, serv2S), DELTA);
-		assertEquals(4.0, upstreamsCalculator.getResponses1xxRate().get(group2S, UpstreamsCalculator.UpstreamOther), DELTA);
 
 		assertEquals(4.0, upstreamsCalculator.getResponses2xxRate().get(group1S, serv1S), DELTA);
-		assertEquals(12.0, upstreamsCalculator.getResponses2xxRate().get(group1S, UpstreamsCalculator.UpstreamOther), DELTA);
 		assertEquals(12.0, upstreamsCalculator.getResponses2xxRate().get(group2S, serv2S), DELTA);
-		assertEquals(4.0, upstreamsCalculator.getResponses2xxRate().get(group2S, UpstreamsCalculator.UpstreamOther), DELTA);
 
 		assertEquals(4.0, upstreamsCalculator.getResponses3xxRate().get(group1S, serv1S), DELTA);
-		assertEquals(12.0, upstreamsCalculator.getResponses3xxRate().get(group1S, UpstreamsCalculator.UpstreamOther), DELTA);
 		assertEquals(12.0, upstreamsCalculator.getResponses3xxRate().get(group2S, serv2S), DELTA);
-		assertEquals(4.0, upstreamsCalculator.getResponses3xxRate().get(group2S, UpstreamsCalculator.UpstreamOther), DELTA);
 
 		assertEquals(4.0, upstreamsCalculator.getResponses4xxRate().get(group1S, serv1S), DELTA);
-		assertEquals(12.0, upstreamsCalculator.getResponses4xxRate().get(group1S, UpstreamsCalculator.UpstreamOther), DELTA);
 		assertEquals(12.0, upstreamsCalculator.getResponses4xxRate().get(group2S, serv2S), DELTA);
-		assertEquals(4.0, upstreamsCalculator.getResponses4xxRate().get(group2S, UpstreamsCalculator.UpstreamOther), DELTA);
 
 		assertEquals(4.0, upstreamsCalculator.getResponses5xxRate().get(group1S, serv1S), DELTA);
-		assertEquals(12.0, upstreamsCalculator.getResponses5xxRate().get(group1S, UpstreamsCalculator.UpstreamOther), DELTA);
 		assertEquals(12.0, upstreamsCalculator.getResponses5xxRate().get(group2S, serv2S), DELTA);
-		assertEquals(4.0, upstreamsCalculator.getResponses5xxRate().get(group2S, UpstreamsCalculator.UpstreamOther), DELTA);
+
+		assertEquals(4.0, upstreamsCalculator.getFailsRate().get(group1S, serv1S), DELTA);
+		assertEquals(12.0, upstreamsCalculator.getFailsRate().get(group2S, serv2S), DELTA);
+
+		assertEquals(4.0, upstreamsCalculator.getHealthChecksRate().get(group1S, serv1S), DELTA);
+		assertEquals(12.0, upstreamsCalculator.getHealthChecksRate().get(group2S, serv2S), DELTA);
+
+		assertEquals(4.0, upstreamsCalculator.getHealthChecksFailedRate().get(group1S, serv1S), DELTA);
+		assertEquals(12.0, upstreamsCalculator.getHealthChecksFailedRate().get(group2S, serv2S), DELTA);
+
+		assertEquals(4.0, upstreamsCalculator.getHealthChecksUnhealthyRate().get(group1S, serv1S), DELTA);
+		assertEquals(12.0, upstreamsCalculator.getHealthChecksUnhealthyRate().get(group2S, serv2S), DELTA);
 
 		assertEquals(10.0, upstreamsCalculator.getTotalActive(), DELTA);
 
@@ -200,24 +214,86 @@ public class CalculatorAcceptanceTest {
 		assertEquals(0.0, upstreamsCalculator.getTotalStateDraining(), DELTA);
 		assertEquals(0.0, upstreamsCalculator.getTotalStateUnavail(), DELTA);
 
-		assertEquals(4.0, upstreamsCalculator.getRequestsRatePerUpstreamMap().get(group1S), DELTA);
-		assertEquals(12.0, upstreamsCalculator.getRequestsRatePerUpstreamMap().get(group2S), DELTA);
-		assertEquals(4.0, upstreamsCalculator.getResponsesRatePerUpstreamMap().get(group1S), DELTA);
-		assertEquals(12.0, upstreamsCalculator.getResponsesRatePerUpstreamMap().get(group2S), DELTA);
-		assertEquals(4.0, upstreamsCalculator.getResponses1xxRatePerUpstreamMap().get(group1S), DELTA);
-		assertEquals(12.0, upstreamsCalculator.getResponses1xxRatePerUpstreamMap().get(group2S), DELTA);
-		assertEquals(4.0, upstreamsCalculator.getResponses2xxRatePerUpstreamMap().get(group1S), DELTA);
-		assertEquals(12.0, upstreamsCalculator.getResponses2xxRatePerUpstreamMap().get(group2S), DELTA);
-		assertEquals(4.0, upstreamsCalculator.getResponses3xxRatePerUpstreamMap().get(group1S), DELTA);
-		assertEquals(12.0, upstreamsCalculator.getResponses3xxRatePerUpstreamMap().get(group2S), DELTA);
-		assertEquals(4.0, upstreamsCalculator.getResponses4xxRatePerUpstreamMap().get(group1S), DELTA);
-		assertEquals(12.0, upstreamsCalculator.getResponses4xxRatePerUpstreamMap().get(group2S), DELTA);
-		assertEquals(4.0, upstreamsCalculator.getResponses5xxRatePerUpstreamMap().get(group1S), DELTA);
-		assertEquals(12.0, upstreamsCalculator.getResponses5xxRatePerUpstreamMap().get(group2S), DELTA);
-		assertEquals(4.0, upstreamsCalculator.getTrafficSentRatePerUpstreamMap().get(group1S), DELTA);
-		assertEquals(12.0, upstreamsCalculator.getTrafficSentRatePerUpstreamMap().get(group2S), DELTA);
-		assertEquals(4.0, upstreamsCalculator.getTrafficRecvRatePerUpstreamMap().get(group1S), DELTA);
-		assertEquals(12.0, upstreamsCalculator.getTrafficRecvRatePerUpstreamMap().get(group2S), DELTA);
+		assertEquals(4.0, upstreamsCalculator.getRequestsRatePerUpstream().get(group1S), DELTA);
+		assertEquals(200.0, upstreamsCalculator.getRequestsPerUpstream().get(group1S), DELTA);
+
+		assertEquals(12.0, upstreamsCalculator.getRequestsRatePerUpstream().get(group2S), DELTA);
+		assertEquals(400.0, upstreamsCalculator.getRequestsPerUpstream().get(group2S), DELTA);
+
+		assertEquals(4.0, upstreamsCalculator.getResponsesRatePerUpstream().get(group1S), DELTA);
+		assertEquals(200.0, upstreamsCalculator.getResponsesPerUpstream().get(group1S), DELTA);
+
+		assertEquals(12.0, upstreamsCalculator.getResponsesRatePerUpstream().get(group2S), DELTA);
+		assertEquals(400.0, upstreamsCalculator.getResponsesPerUpstream().get(group2S), DELTA);
+
+		assertEquals(4.0, upstreamsCalculator.getResponses1xxRatePerUpstream().get(group1S), DELTA);
+		assertEquals(200.0, upstreamsCalculator.getResponses1xxPerUpstream().get(group1S), DELTA);
+
+		assertEquals(12.0, upstreamsCalculator.getResponses1xxRatePerUpstream().get(group2S), DELTA);
+		assertEquals(400.0, upstreamsCalculator.getResponses1xxPerUpstream().get(group2S), DELTA);
+
+		assertEquals(4.0, upstreamsCalculator.getResponses2xxRatePerUpstream().get(group1S), DELTA);
+		assertEquals(200.0, upstreamsCalculator.getResponses2xxPerUpstream().get(group1S), DELTA);
+
+		assertEquals(12.0, upstreamsCalculator.getResponses2xxRatePerUpstream().get(group2S), DELTA);
+		assertEquals(400.0, upstreamsCalculator.getResponses2xxPerUpstream().get(group2S), DELTA);
+
+		assertEquals(4.0, upstreamsCalculator.getResponses3xxRatePerUpstream().get(group1S), DELTA);
+		assertEquals(200.0, upstreamsCalculator.getResponses3xxPerUpstream().get(group1S), DELTA);
+
+		assertEquals(12.0, upstreamsCalculator.getResponses3xxRatePerUpstream().get(group2S), DELTA);
+		assertEquals(400.0, upstreamsCalculator.getResponses3xxPerUpstream().get(group2S), DELTA);
+
+		assertEquals(4.0, upstreamsCalculator.getResponses4xxRatePerUpstream().get(group1S), DELTA);
+		assertEquals(200.0, upstreamsCalculator.getResponses4xxPerUpstream().get(group1S), DELTA);
+
+		assertEquals(12.0, upstreamsCalculator.getResponses4xxRatePerUpstream().get(group2S), DELTA);
+		assertEquals(400.0, upstreamsCalculator.getResponses4xxPerUpstream().get(group2S), DELTA);
+
+		assertEquals(4.0, upstreamsCalculator.getResponses5xxRatePerUpstream().get(group1S), DELTA);
+		assertEquals(200.0, upstreamsCalculator.getResponses5xxPerUpstream().get(group1S), DELTA);
+
+		assertEquals(12.0, upstreamsCalculator.getResponses5xxRatePerUpstream().get(group2S), DELTA);
+		assertEquals(400.0, upstreamsCalculator.getResponses5xxPerUpstream().get(group2S), DELTA);
+
+		assertEquals(4.0, upstreamsCalculator.getSentRatePerUpstream().get(group1S), DELTA);
+		assertEquals(200.0, upstreamsCalculator.getSentPerUpstream().get(group1S), DELTA);
+
+		assertEquals(12.0, upstreamsCalculator.getSentRatePerUpstream().get(group2S), DELTA);
+		assertEquals(400.0, upstreamsCalculator.getSentPerUpstream().get(group2S), DELTA);
+
+		assertEquals(4.0, upstreamsCalculator.getReceivedRatePerUpstream().get(group1S), DELTA);
+		assertEquals(200.0, upstreamsCalculator.getReceivedPerUpstream().get(group1S), DELTA);
+
+		assertEquals(12.0, upstreamsCalculator.getReceivedRatePerUpstream().get(group2S), DELTA);
+		assertEquals(400.0, upstreamsCalculator.getReceivedPerUpstream().get(group2S), DELTA);
+
+		assertEquals(4.0, upstreamsCalculator.getFailsRatePerUpstream().get(group1S), DELTA);
+		assertEquals(200.0, upstreamsCalculator.getFailsPerUpstream().get(group1S), DELTA);
+
+		assertEquals(12.0, upstreamsCalculator.getFailsRatePerUpstream().get(group2S), DELTA);
+		assertEquals(400.0, upstreamsCalculator.getFailsPerUpstream().get(group2S), DELTA);
+
+		assertEquals(4.0, upstreamsCalculator.getUnavailRatePerUpstream().get(group1S), DELTA);
+		assertEquals(200.0, upstreamsCalculator.getUnavailPerUpstream().get(group1S), DELTA);
+
+		assertEquals(12.0, upstreamsCalculator.getUnavailRatePerUpstream().get(group2S), DELTA);
+		assertEquals(400.0, upstreamsCalculator.getUnavailPerUpstream().get(group2S), DELTA);
+
+		assertEquals(4.0, upstreamsCalculator.getHealthChecksTotalRatePerUpstream().get(group1S), DELTA);
+		assertEquals(200.0, upstreamsCalculator.getHealthChecksTotalPerUpstream().get(group1S), DELTA);
+		assertEquals(12.0, upstreamsCalculator.getHealthChecksTotalRatePerUpstream().get(group2S), DELTA);
+		assertEquals(400.0, upstreamsCalculator.getHealthChecksTotalPerUpstream().get(group2S), DELTA);
+
+		assertEquals(4.0, upstreamsCalculator.getHealthChecksFailedRatePerUpstream().get(group1S), DELTA);
+		assertEquals(200.0, upstreamsCalculator.getHealthChecksFailedPerUpstream().get(group1S), DELTA);
+		assertEquals(12.0, upstreamsCalculator.getHealthChecksFailedRatePerUpstream().get(group2S), DELTA);
+		assertEquals(400.0, upstreamsCalculator.getHealthChecksFailedPerUpstream().get(group2S), DELTA);
+
+		assertEquals(4.0, upstreamsCalculator.getHealthChecksUnhealthyRatePerUpstream().get(group1S), DELTA);
+		assertEquals(200.0, upstreamsCalculator.getHealthChecksUnhealthyPerUpstream().get(group1S), DELTA);
+		assertEquals(12.0, upstreamsCalculator.getHealthChecksUnhealthyRatePerUpstream().get(group2S), DELTA);
+		assertEquals(400.0, upstreamsCalculator.getHealthChecksUnhealthyPerUpstream().get(group2S), DELTA);
 	}
 
 	@Test
@@ -472,6 +548,10 @@ public class CalculatorAcceptanceTest {
 			serv.setSent(100.0);
 			serv.setReceived(100.0);
 			serv.setFails(100.0);
+			serv.setUnavail(100.0);
+			serv.setHealthChecksTotal(100.0);
+			serv.setHealthChecksFails(100.0);
+			serv.setHealthCheckUnhealthy(100.0);
 			request1.getStream().getUpstreams().addServerByGroup(group1S, serv);
 			serv = new StreamServerDTO();
 			serv.setActive(100.0);
@@ -480,6 +560,10 @@ public class CalculatorAcceptanceTest {
 			serv.setSent(200.0);
 			serv.setReceived(200.0);
 			serv.setFails(200.0);
+			serv.setUnavail(200.0);
+			serv.setHealthChecksTotal(200.0);
+			serv.setHealthChecksFails(200.0);
+			serv.setHealthCheckUnhealthy(200.0);
 			request2.getStream().getUpstreams().addServerByGroup(group1S, serv);
 		}
 
@@ -491,6 +575,10 @@ public class CalculatorAcceptanceTest {
 			serv.setSent(100.0);
 			serv.setReceived(100.0);
 			serv.setFails(100.0);
+			serv.setUnavail(100.0);
+			serv.setHealthChecksTotal(100.0);
+			serv.setHealthChecksFails(100.0);
+			serv.setHealthCheckUnhealthy(100.0);
 			request1.getStream().getUpstreams().addServerByGroup(group2S, serv);
 			serv = new StreamServerDTO();
 			serv.setActive(100.0);
@@ -499,61 +587,74 @@ public class CalculatorAcceptanceTest {
 			serv.setSent(300.0);
 			serv.setReceived(300.0);
 			serv.setFails(300.0);
+			serv.setUnavail(300.0);
+			serv.setHealthChecksTotal(300.0);
+			serv.setHealthChecksFails(300.0);
+			serv.setHealthCheckUnhealthy(300.0);
 			request2.getStream().getUpstreams().addServerByGroup(group2S, serv);
 		}
 
 		StreamCalculator streamCalculator = calculator.getStreamCalculator();
 		streamCalculator.calculateStream(request1, request2, 25.0);
 
-		assertEquals(4.0, streamCalculator.getServerZoneConnectionsRate().get("frontend", StreamCalculator.Stream), DELTA);
-		assertEquals(4.0, streamCalculator.getServerZoneConnectionsRate().get("frontend", StreamCalculator.StreamOther), DELTA);
+		assertEquals(4.0, streamCalculator.getServerZoneConnectionsRate().get("frontend"), DELTA);
 
-		assertEquals(4.0, streamCalculator.getServerZoneConnectionsRate().get("backend", StreamCalculator.Stream), DELTA);
-		assertEquals(4.0, streamCalculator.getServerZoneConnectionsRate().get("backend", StreamCalculator.StreamOther), DELTA);
+		assertEquals(4.0, streamCalculator.getServerZoneConnectionsRate().get("backend"), DELTA);
 
-		assertEquals(4.0, streamCalculator.getServerZoneReceivedRate().get("frontend", StreamCalculator.Stream), DELTA);
-		assertEquals(4.0, streamCalculator.getServerZoneReceivedRate().get("frontend", StreamCalculator.StreamOther), DELTA);
+		assertEquals(4.0, streamCalculator.getServerZoneReceivedRate().get("frontend"), DELTA);
 
-		assertEquals(4.0, streamCalculator.getServerZoneReceivedRate().get("backend", StreamCalculator.Stream), DELTA);
-		assertEquals(4.0, streamCalculator.getServerZoneReceivedRate().get("backend", StreamCalculator.StreamOther), DELTA);
+		assertEquals(4.0, streamCalculator.getServerZoneReceivedRate().get("backend"), DELTA);
 
-		assertEquals(4.0, streamCalculator.getServerZoneSentRate().get("frontend", StreamCalculator.Stream), DELTA);
-		assertEquals(4.0, streamCalculator.getServerZoneSentRate().get("frontend", StreamCalculator.StreamOther), DELTA);
+		assertEquals(4.0, streamCalculator.getServerZoneSentRate().get("frontend"), DELTA);
 
-		assertEquals(4.0, streamCalculator.getServerZoneSentRate().get("backend", StreamCalculator.Stream), DELTA);
-		assertEquals(4.0, streamCalculator.getServerZoneSentRate().get("backend", StreamCalculator.StreamOther), DELTA);
+		assertEquals(4.0, streamCalculator.getServerZoneSentRate().get("backend"), DELTA);
 
 		for (String s : new String[] {serv1S, serv2S, serv3S}) {
 			assertEquals(4.0, streamCalculator.getUpstreamsConnectionsRate().get(group1S, s), DELTA);
-			assertEquals(24.0, streamCalculator.getUpstreamsConnectionsRate().get(group1S, StreamCalculator.StreamOther), DELTA);
 			assertEquals(4.0, streamCalculator.getUpstreamsSentRate().get(group1S, s), DELTA);
-			assertEquals(24.0, streamCalculator.getUpstreamsSentRate().get(group1S, StreamCalculator.StreamOther), DELTA);
 			assertEquals(4.0, streamCalculator.getUpstreamsReceivedRate().get(group1S, s), DELTA);
-			assertEquals(24.0, streamCalculator.getUpstreamsReceivedRate().get(group1S, StreamCalculator.StreamOther), DELTA);
 			assertEquals(4.0, streamCalculator.getUpstreamsFailsRate().get(group1S, s), DELTA);
-			assertEquals(24.0, streamCalculator.getUpstreamsFailsRate().get(group1S, StreamCalculator.StreamOther), DELTA);
+			assertEquals(4.0, streamCalculator.getUpstreamsUnavailRate().get(group1S, s), DELTA);
+			assertEquals(4.0, streamCalculator.getUpstreamsHealthChecksRate().get(group1S, s), DELTA);
+			assertEquals(4.0, streamCalculator.getUpstreamsHealthChecksFailedRate().get(group1S, s), DELTA);
+			assertEquals(4.0, streamCalculator.getUpstreamsHealthChecksUnhealthyRate().get(group1S, s), DELTA);
 		}
 
 		for (String s : new String[] { serv1S, serv2S, serv3S }) {
 			assertEquals(8.0, streamCalculator.getUpstreamsConnectionsRate().get(group2S, s), DELTA);
-			assertEquals(12.0, streamCalculator.getUpstreamsConnectionsRate().get(group2S, StreamCalculator.StreamOther), DELTA);
 			assertEquals(8.0, streamCalculator.getUpstreamsSentRate().get(group2S, s), DELTA);
-			assertEquals(12.0, streamCalculator.getUpstreamsSentRate().get(group2S, StreamCalculator.StreamOther), DELTA);
 			assertEquals(8.0, streamCalculator.getUpstreamsReceivedRate().get(group2S, s), DELTA);
-			assertEquals(12.0, streamCalculator.getUpstreamsReceivedRate().get(group2S, StreamCalculator.StreamOther), DELTA);
 			assertEquals(8.0, streamCalculator.getUpstreamsFailsRate().get(group2S, s), DELTA);
-			assertEquals(12.0, streamCalculator.getUpstreamsFailsRate().get(group2S, StreamCalculator.StreamOther), DELTA);
+			assertEquals(8.0, streamCalculator.getUpstreamsUnavailRate().get(group2S, s), DELTA);
+			assertEquals(8.0, streamCalculator.getUpstreamsHealthChecksRate().get(group2S, s), DELTA);
+			assertEquals(8.0, streamCalculator.getUpstreamsHealthChecksFailedRate().get(group2S, s), DELTA);
+			assertEquals(8.0, streamCalculator.getUpstreamsHealthChecksUnhealthyRate().get(group2S, s), DELTA);
+
 		}
 
+		assertEquals(600.0, streamCalculator.getConnectionsPerUpstream().get(group1S), DELTA);
 		assertEquals(12.0, streamCalculator.getConnectionsRatePerUpstream().get(group1S), DELTA);
+
+		assertEquals(600.0, streamCalculator.getSentPerUpstream().get(group1S), DELTA);
 		assertEquals(12.0, streamCalculator.getSentRatePerUpstream().get(group1S), DELTA);
+
+		assertEquals(600.0, streamCalculator.getReceivedPerUpstream().get(group1S), DELTA);
 		assertEquals(12.0, streamCalculator.getReceivedRatePerUpstream().get(group1S), DELTA);
+
+		assertEquals(600.0, streamCalculator.getFailsPerUpstream().get(group1S), DELTA);
 		assertEquals(12.0, streamCalculator.getFailsRatePerUpstream().get(group1S), DELTA);
 
-		assertEquals(24.0, streamCalculator.getConnectionsRatePerUpstream().get(group2S), DELTA);
-		assertEquals(24.0, streamCalculator.getSentRatePerUpstream().get(group2S), DELTA);
-		assertEquals(24.0, streamCalculator.getReceivedRatePerUpstream().get(group2S), DELTA);
-		assertEquals(24.0, streamCalculator.getFailsRatePerUpstream().get(group2S), DELTA);
 
+		assertEquals(900.0, streamCalculator.getConnectionsPerUpstream().get(group2S), DELTA);
+		assertEquals(24.0, streamCalculator.getConnectionsRatePerUpstream().get(group2S), DELTA);
+
+		assertEquals(900.0, streamCalculator.getSentPerUpstream().get(group2S), DELTA);
+		assertEquals(24.0, streamCalculator.getSentRatePerUpstream().get(group2S), DELTA);
+
+		assertEquals(900.0, streamCalculator.getReceivedPerUpstream().get(group2S), DELTA);
+		assertEquals(24.0, streamCalculator.getReceivedRatePerUpstream().get(group2S), DELTA);
+
+		assertEquals(900.0, streamCalculator.getFailsPerUpstream().get(group2S), DELTA);
+		assertEquals(24.0, streamCalculator.getFailsRatePerUpstream().get(group2S), DELTA);
 	}
 }

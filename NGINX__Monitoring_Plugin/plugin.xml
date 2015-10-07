@@ -64,6 +64,7 @@
       <metric defaultrate="purepath" name="Downstart" unit="ms" description="The time (in milliseconds since Epoch) when the server became “unavail” or “unhealthy”" />
       <metric defaultrate="purepath" name="Downtime" unit="ms" description="Total time the server was in the “unavail” and “unhealthy” states" />
       <metric defaultrate="purepath" name="Fails" unit="number" description="The total number of unsuccessful attempts to communicate with the server" />
+      <metric defaultrate="purepath" name="Fails Rate" unit="number" description="The current rate of unsuccessful attempts to communicate with the server" />
       <metric defaultrate="purepath" name="Received" unit="number" description="The total number of bytes received from this server" />
       <metric defaultrate="purepath" name="Received Rate" unit="number" description="The current rate of bytes received from all servers by upstream"/>
       <metric defaultrate="purepath" name="Requests" unit="number" description="The total number of client requests forwarded to this server" />
@@ -77,6 +78,7 @@
       <metric defaultrate="purepath" name="Total State Unavailable" unit="number" description="Amount of upstreams with state Unavailable" />
       <metric defaultrate="purepath" name="Total State Unhealthy" unit="number" description="Amount of upstreams with state Unhealthy" />
       <metric defaultrate="purepath" name="Unavailable" unit="number" description="Times the server became unavailable" />
+      <metric defaultrate="purepath" name="Unavailable Rate" unit="number" description="Times the server that became unavailable, since last plugin execution" />
       <metric defaultrate="purepath" name="Weight" unit="number" description="Weight of the server" />
       <metric defaultrate="purepath" name="Responses" unit="number" description="The total number of responses obtained from this server" />
       <metric defaultrate="purepath" name="Responses Rate" unit="number" description="The current rate of responses obtained from all servers" />
@@ -91,8 +93,11 @@
 	  <metric defaultrate="purepath" name="4xx Responses Rate" unit="number" description="The current rate of responses with status codes 4xx from all servers" />
 	  <metric defaultrate="purepath" name="5xx Responses Rate" unit="number" description="The current rate of responses with status codes 5xx from all servers" />
       <metric defaultrate="purepath" name="Total Health Checks" unit="number" description="The total number of health check requests made" />
+      <metric defaultrate="purepath" name="Total Health Checks Rate" unit="number" description="The current rate of health check requests made" />
       <metric defaultrate="purepath" name="Failed Health Checks" unit="number" description="The number of failed health checks" />
+      <metric defaultrate="purepath" name="Failed Health Checks Rate" unit="number" description="The current rate of failed health checks" />
       <metric defaultrate="purepath" name="Unhealthy Health Checks" unit="number" description="How many times the server became unhealthy (state “unhealthy”)" />
+      <metric defaultrate="purepath" name="Unhealthy Health Checks Rate" unit="number" description="How many times the server became unhealthy (state “unhealthy”), since last plugin execution" />
       <metric defaultrate="purepath" name="Last Health Check Passed" unit="number" description="Boolean indicating if the last health check request was successful and passed tests" />
     </metricgroup>
   </extension>
@@ -178,9 +183,13 @@
 		<metric defaultrate="purepath" name="Upstreams Fails" unit="number" description="The total number of unsuccessful attempts to communicate with the server" />
 		<metric defaultrate="purepath" name="Upstreams Fails Rate" unit="number" description="The current rate of unsuccessful attempts to communicate with the server" />
 		<metric defaultrate="purepath" name="Upstreams Unavailable" unit="number" description="How many times the server became unavailable for client connections (state “unavail”) due to the number of unsuccessful attempts reaching the max_fails threshold" />
+		<metric defaultrate="purepath" name="Upstreams Unavailable Rate" unit="number" description="The current rate of the server became unavailable for client connections (state “unavail”) due to the number of unsuccessful attempts reaching the max_fails threshold" />
 		<metric defaultrate="purepath" name="Upstreams Total Health Checks" unit="number" description="The total number of health check requests made" />
+		<metric defaultrate="purepath" name="Upstreams Total Health Checks Rate" unit="number" description="The current rate of health check requests made" />
 		<metric defaultrate="purepath" name="Upstreams Failed Health Checks" unit="number" description="The number of failed health checks" />
+		<metric defaultrate="purepath" name="Upstreams Failed Health Checks Rate" unit="number" description="The current rate of failed health checks" />
 		<metric defaultrate="purepath" name="Upstreams Unhealthy Health Checks" unit="number" description="How many times the server became unhealthy (state “unhealthy”)" />
+		<metric defaultrate="purepath" name="Upstreams Unhealthy Health Checks Rate" unit="number" description="How many times the server became unhealthy (state “unhealthy”), since last plugin execution" />
 		<metric defaultrate="purepath" name="Upstreams Last Health Check Passed" unit="number" description="Boolean indicating if the last health check request was successful and passed tests" />
 		<metric defaultrate="purepath" name="Upstreams Downstart" unit="number" description="The time (in milliseconds since Epoch) when the server became “unavail” or “unhealthy”" />
 		<metric defaultrate="purepath" name="Upstreams Downtime" unit="number" description="Total time the server was in the “unavail” and “unhealthy” states" />

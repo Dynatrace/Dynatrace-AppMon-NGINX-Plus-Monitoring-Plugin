@@ -41,9 +41,13 @@ public class StreamBooker extends Booker {
 	public static final String MSR_US_FAILS = "Upstreams Fails";
 	public static final String MSR_US_FAILS_RATE = "Upstreams Fails Rate";
 	public static final String MSR_US_UNAVAILABLE = "Upstreams Unavailable";
+	public static final String MSR_US_UNAVAILABLE_RATE = "Upstreams Unavailable Rate";
 	public static final String MSR_US_TOTAL_HEALTH_CHECKS = "Upstreams Total Health Checks";
+	public static final String MSR_US_TOTAL_HEALTH_CHECKS_RATE = "Upstreams Total Health Checks Rate";
 	public static final String MSR_US_FAILED_HEALTH_CHECKS = "Upstreams Failed Health Checks";
+	public static final String MSR_US_FAILED_HEALTH_CHECKS_RATE = "Upstreams Failed Health Checks Rate";
 	public static final String MSR_US_UNHEALTHY_HEALTH_CHECKS = "Upstreams Unhealthy Health Checks";
+	public static final String MSR_US_UNHEALTHY_HEALTH_CHECKS_RATE = "Upstreams Unhealthy Health Checks Rate";
 	public static final String MSR_US_LAST_HEALTH_CHECK_PASSED = "Upstreams Last Health Check Passed";
 	public static final String MSR_US_DOWNSTART = "Upstreams Downstart";
 	public static final String MSR_US_DOWNTIME = "Upstreams Downtime";
@@ -76,9 +80,13 @@ public class StreamBooker extends Booker {
 		Collection<MonitorMeasure> uSFailsM = env.getMonitorMeasures(StreamParser.GROUP, MSR_US_FAILS);
 		Collection<MonitorMeasure> uSFailsRateM = env.getMonitorMeasures(StreamParser.GROUP, MSR_US_FAILS_RATE);
 		Collection<MonitorMeasure> uSUnavailableM = env.getMonitorMeasures(StreamParser.GROUP, MSR_US_UNAVAILABLE);
-		Collection<MonitorMeasure> uSTotalHeathChecksM = env.getMonitorMeasures(StreamParser.GROUP, MSR_US_TOTAL_HEALTH_CHECKS);
-		Collection<MonitorMeasure> uSFailedHeathChecksM = env.getMonitorMeasures(StreamParser.GROUP, MSR_US_FAILED_HEALTH_CHECKS);
+		Collection<MonitorMeasure> uSUnavailableRateM = env.getMonitorMeasures(StreamParser.GROUP, MSR_US_UNAVAILABLE_RATE);
+		Collection<MonitorMeasure> uSTotalHealthChecksM = env.getMonitorMeasures(StreamParser.GROUP, MSR_US_TOTAL_HEALTH_CHECKS);
+		Collection<MonitorMeasure> uSTotalHealthChecksRateM = env.getMonitorMeasures(StreamParser.GROUP, MSR_US_TOTAL_HEALTH_CHECKS_RATE);
+		Collection<MonitorMeasure> uSFailedHealthChecksM = env.getMonitorMeasures(StreamParser.GROUP, MSR_US_FAILED_HEALTH_CHECKS);
+		Collection<MonitorMeasure> uSFailedHealthChecksRateM = env.getMonitorMeasures(StreamParser.GROUP, MSR_US_FAILED_HEALTH_CHECKS_RATE);
 		Collection<MonitorMeasure> uSUnhealthyHealthChecksM = env.getMonitorMeasures(StreamParser.GROUP, MSR_US_UNHEALTHY_HEALTH_CHECKS);
+		Collection<MonitorMeasure> uSUnhealthyHealthChecksRateM = env.getMonitorMeasures(StreamParser.GROUP, MSR_US_UNHEALTHY_HEALTH_CHECKS_RATE);
 		Collection<MonitorMeasure> uSLastHealthCheckPassedM = env.getMonitorMeasures(StreamParser.GROUP, MSR_US_LAST_HEALTH_CHECK_PASSED);
 		Collection<MonitorMeasure> uSDownstartM = env.getMonitorMeasures(StreamParser.GROUP, MSR_US_DOWNSTART);
 		Collection<MonitorMeasure> uSDowntimeM = env.getMonitorMeasures(StreamParser.GROUP, MSR_US_DOWNTIME);
@@ -86,17 +94,14 @@ public class StreamBooker extends Booker {
 
 		for (StreamServerZoneDTO s : stream.getServerZones()) {
 			String dynamicKey = "Server Zone";
-			String dynamicValue = StreamCalculator.StreamOther;
+
 			setDynamicMeasure(env, sZProcessingM, dynamicKey, s.getServerZoneName(), s.getProcessing());
 			setDynamicMeasure(env, sZConnectionsM, dynamicKey, s.getServerZoneName(), s.getConnections());
-			setDynamicMeasure(env, sZConnectionsRateM, dynamicKey, s.getServerZoneName(), calculator.getServerZoneConnectionsRate().get(s.getServerZoneName(), StreamCalculator.Stream));
-			setDynamicMeasure(env, sZConnectionsRateM, dynamicKey, dynamicValue, calculator.getServerZoneConnectionsRate().get(s.getServerZoneName(), dynamicValue));
+			setDynamicMeasure(env, sZConnectionsRateM, dynamicKey, s.getServerZoneName(), calculator.getServerZoneConnectionsRate().get(s.getServerZoneName()));
 			setDynamicMeasure(env, sZReceivedM, dynamicKey, s.getServerZoneName(), s.getReceived());
-			setDynamicMeasure(env, sZReceivedRateM, dynamicKey, s.getServerZoneName(), calculator.getServerZoneReceivedRate().get(s.getServerZoneName(), StreamCalculator.Stream));
-			setDynamicMeasure(env, sZReceivedRateM, dynamicKey, dynamicValue, calculator.getServerZoneReceivedRate().get(s.getServerZoneName(), dynamicValue));
+			setDynamicMeasure(env, sZReceivedRateM, dynamicKey, s.getServerZoneName(), calculator.getServerZoneReceivedRate().get(s.getServerZoneName()));
 			setDynamicMeasure(env, sZSentM, dynamicKey, s.getServerZoneName(), s.getSent());
-			setDynamicMeasure(env, sZSentRateM, dynamicKey, s.getServerZoneName(), calculator.getServerZoneSentRate().get(s.getServerZoneName(), StreamCalculator.Stream));
-			setDynamicMeasure(env, sZSentRateM, dynamicKey, dynamicValue, calculator.getServerZoneSentRate().get(s.getServerZoneName(), dynamicValue));
+			setDynamicMeasure(env, sZSentRateM, dynamicKey, s.getServerZoneName(), calculator.getServerZoneSentRate().get(s.getServerZoneName()));
 		}
 
 		for(String serverGroupName : stream.getUpstreams().get().keySet()) {
@@ -114,9 +119,13 @@ public class StreamBooker extends Booker {
 				Double FailsTmp = s.getFails();
 				Double FailsRateTmp = calculator.getUpstreamsFailsRate().get(serverGroupName, s.getServer());
 				Double UnavailTmp = s.getUnavail();
+				Double UnavailRateTmp = calculator.getUpstreamsUnavailRate().get(serverGroupName, s.getServer());
 				Double HealthChecksTotalTmp = s.getHealthChecksTotal();
+				Double HealthChecksTotalRateTmp = calculator.getUpstreamsHealthChecksRate().get(serverGroupName, s.getServer());
 				Double HealthChecksFailsTmp = s.getHealthChecksFails();
+				Double HealthChecksFailsRateTmp = calculator.getUpstreamsHealthChecksFailedRate().get(serverGroupName, s.getServer());
 				Double HealthChecksUnhealthyTmp = s.getHealthChecksUnhealthy();
+				Double HealthChecksUnhealthyRateTmp = calculator.getUpstreamsHealthChecksUnhealthyRate().get(serverGroupName, s.getServer());
 				Double DowntimeTmp = s.getDowntime();
 				Double DownstartTmp = s.getDownstart();
 				Double SelectedTmp = s.getSelected();
@@ -148,9 +157,13 @@ public class StreamBooker extends Booker {
 					setDynamicMeasure(env, uSFailsM, serverGroupName, dynamicValue, FailsTmp);
 					setDynamicMeasure(env, uSFailsRateM, serverGroupName, dynamicValue, FailsRateTmp);
 					setDynamicMeasure(env, uSUnavailableM, serverGroupName, dynamicValue, UnavailTmp);
-					setDynamicMeasure(env, uSTotalHeathChecksM, serverGroupName, dynamicValue, HealthChecksTotalTmp);
-					setDynamicMeasure(env, uSFailedHeathChecksM, serverGroupName, dynamicValue, HealthChecksFailsTmp);
+					setDynamicMeasure(env, uSUnavailableRateM, serverGroupName, dynamicValue, UnavailRateTmp);
+					setDynamicMeasure(env, uSTotalHealthChecksM, serverGroupName, dynamicValue, HealthChecksTotalTmp);
+					setDynamicMeasure(env, uSTotalHealthChecksRateM, serverGroupName, dynamicValue, HealthChecksTotalRateTmp);
+					setDynamicMeasure(env, uSFailedHealthChecksM, serverGroupName, dynamicValue, HealthChecksFailsTmp);
+					setDynamicMeasure(env, uSFailedHealthChecksRateM, serverGroupName, dynamicValue, HealthChecksFailsRateTmp);
 					setDynamicMeasure(env, uSUnhealthyHealthChecksM, serverGroupName, dynamicValue, HealthChecksUnhealthyTmp);
+					setDynamicMeasure(env, uSUnhealthyHealthChecksRateM, serverGroupName, dynamicValue, HealthChecksUnhealthyRateTmp);
 					if (s.getHealthChecksLastPassed() != null) {
 						setDynamicMeasure(env, uSLastHealthCheckPassedM, serverGroupName, dynamicValue, (double) (s.getHealthChecksLastPassed() ? 1 : 0));
 					}
@@ -159,22 +172,25 @@ public class StreamBooker extends Booker {
 					setDynamicMeasure(env, uSSelectedM, serverGroupName, dynamicValue, SelectedTmp);
 				}
 			}
-			Double ConnectionsRateOtherTmp = calculator.getUpstreamsConnectionsRate().get(serverGroupName, StreamCalculator.StreamOther);
-			Double SentRateTmp = calculator.getUpstreamsSentRate().get(serverGroupName, StreamCalculator.StreamOther);
-			Double ReceivedRateTmp = calculator.getUpstreamsReceivedRate().get(serverGroupName, StreamCalculator.StreamOther);
-			Double FailsRateTmp = calculator.getUpstreamsFailsRate().get(serverGroupName, StreamCalculator.StreamOther);
-
-			String dynamicValue = StreamCalculator.StreamOther;
-			setDynamicMeasure(env, uSConnectionsRateM, serverGroupName, dynamicValue, ConnectionsRateOtherTmp);
-			setDynamicMeasure(env, uSSentRateM, serverGroupName, dynamicValue, SentRateTmp);
-			setDynamicMeasure(env, uSReceivedRateM, serverGroupName, dynamicValue, ReceivedRateTmp);
-			setDynamicMeasure(env, uSFailsRateM, serverGroupName, dynamicValue, FailsRateTmp);
 
 			String dynamicKey = "Upstream name";
+
+			setDynamicMeasure(env, uSConnectionsM, dynamicKey, serverGroupName, calculator.getConnectionsPerUpstream().get(serverGroupName));
 			setDynamicMeasure(env, uSConnectionsRateM, dynamicKey, serverGroupName, calculator.getConnectionsRatePerUpstream().get(serverGroupName));
+			setDynamicMeasure(env, uSSentM, dynamicKey, serverGroupName, calculator.getSentPerUpstream().get(serverGroupName));
 			setDynamicMeasure(env, uSSentRateM, dynamicKey, serverGroupName, calculator.getSentRatePerUpstream().get(serverGroupName));
+			setDynamicMeasure(env, uSReceivedM, dynamicKey, serverGroupName, calculator.getReceivedPerUpstream().get(serverGroupName));
 			setDynamicMeasure(env, uSReceivedRateM, dynamicKey, serverGroupName, calculator.getReceivedRatePerUpstream().get(serverGroupName));
+			setDynamicMeasure(env, uSFailsM, dynamicKey, serverGroupName, calculator.getFailsPerUpstream().get(serverGroupName));
 			setDynamicMeasure(env, uSFailsRateM, dynamicKey, serverGroupName, calculator.getFailsRatePerUpstream().get(serverGroupName));
+			setDynamicMeasure(env, uSUnavailableM, dynamicKey, serverGroupName, calculator.getUnavailPerUpstream().get(serverGroupName));
+			setDynamicMeasure(env, uSUnavailableRateM, dynamicKey, serverGroupName, calculator.getUnavailRatePerUpstream().get(serverGroupName));
+			setDynamicMeasure(env, uSTotalHealthChecksM, dynamicKey, serverGroupName, calculator.getHealthChecksTotalPerUpstream().get(serverGroupName));
+			setDynamicMeasure(env, uSTotalHealthChecksRateM, dynamicKey, serverGroupName, calculator.getHealthChecksTotalRatePerUpstream().get(serverGroupName));
+			setDynamicMeasure(env, uSFailedHealthChecksM, dynamicKey, serverGroupName, calculator.getHealthChecksFailedPerUpstream().get(serverGroupName));
+			setDynamicMeasure(env, uSFailedHealthChecksRateM, dynamicKey, serverGroupName, calculator.getHealthChecksFailedRatePerUpstream().get(serverGroupName));
+			setDynamicMeasure(env, uSUnhealthyHealthChecksM, dynamicKey, serverGroupName, calculator.getHealthChecksUnhealthyPerUpstream().get(serverGroupName));
+			setDynamicMeasure(env, uSUnhealthyHealthChecksRateM, dynamicKey, serverGroupName, calculator.getHealthChecksUnhealthyRatePerUpstream().get(serverGroupName));
 		}
 
 		for (MonitorMeasure m : uSTotalActiveM) {
