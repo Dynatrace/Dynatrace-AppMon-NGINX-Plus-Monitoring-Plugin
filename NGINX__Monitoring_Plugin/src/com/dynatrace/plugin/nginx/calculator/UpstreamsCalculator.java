@@ -181,7 +181,7 @@ public class UpstreamsCalculator extends TimeFrameCalculator implements Calculat
 				this.sentRate.put(serverGroupName, cur_.getServer(), SentRate);
 				this.receivedRate.put(serverGroupName, cur_.getServer(), ReceivedRate);
 				this.failsRate.put(serverGroupName, cur_.getServer(), FailsRate);
-				this.unavailRate.put(serverGroupName, serverGroupName, UnavailRate);
+				this.unavailRate.put(serverGroupName, cur_.getServer(), UnavailRate);
 				this.healthChecksRate.put(serverGroupName, cur_.getServer(), HealthChecksRate);
 				this.healthChecksFailedRate.put(serverGroupName, cur_.getServer(), HealthChecksFailedRate);
 				this.healthChecksUnhealthyRate.put(serverGroupName, cur_.getServer(), HealthChecksUnhealthyRate);

@@ -198,6 +198,9 @@ public class CalculatorAcceptanceTest {
 		assertEquals(4.0, upstreamsCalculator.getFailsRate().get(group1S, serv1S), DELTA);
 		assertEquals(12.0, upstreamsCalculator.getFailsRate().get(group2S, serv2S), DELTA);
 
+		assertEquals(4.0, upstreamsCalculator.getUnavailRate().get(group1S, serv1S), DELTA);
+		assertEquals(12.0, upstreamsCalculator.getUnavailRate().get(group2S, serv2S), DELTA);
+
 		assertEquals(4.0, upstreamsCalculator.getHealthChecksRate().get(group1S, serv1S), DELTA);
 		assertEquals(12.0, upstreamsCalculator.getHealthChecksRate().get(group2S, serv2S), DELTA);
 
