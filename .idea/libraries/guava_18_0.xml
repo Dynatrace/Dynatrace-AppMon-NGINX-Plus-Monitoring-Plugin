@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="guava-18.0">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/NGINX__Monitoring_Plugin/lib/guava-18.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/NGINX__Monitoring_Plugin/lib/javax.ws.rs-api-2.0-m02.jar!/" />
+      <root url="jar://$PROJECT_DIR$/NGINX__Monitoring_Plugin/lib/junit-4.12.jar!/" />
+      <root url="jar://$PROJECT_DIR$/NGINX__Monitoring_Plugin/lib/org.json.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

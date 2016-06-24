@@ -19,7 +19,7 @@ import com.sun.net.httpserver.HttpHandler;
 public class VersionBackwardCompabilityAcceptanceTest {
 
 	private SimpleHttpServer server;
-	private Map<String, HttpHandler> contextMap = new HashMap<String, HttpHandler>();
+	private Map<String, HttpHandler> contextMap = new HashMap<>();
 
 	@Before
 	public void setUp() throws Exception {
@@ -42,10 +42,10 @@ public class VersionBackwardCompabilityAcceptanceTest {
 		String currentEndpoint = "";
 		try {
 			for (String endpoint : contextMap.keySet()) {
+				System.out.println("Running test case : " + endpoint);
 				currentEndpoint = endpoint;
 				NginxPlusMonitoringConnection connection = new NginxPlusMonitoringConnection("http", "localhost", server.getPort(), endpoint);
-				@SuppressWarnings("unused")
-				NginxStatus status = new NginxStatus(connection.getStatusJson());
+				new NginxStatus(connection.getStatusJson());
 			}
 		} catch (UnsupportedOperationException exception) {
 			throw new Exception("[Endpoint : " + currentEndpoint + "] FAILED");

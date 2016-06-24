@@ -29,8 +29,7 @@ import com.dynatrace.plugin.nginx.utils.Storage;
 
 public class NginxPlusMonitor implements com.dynatrace.diagnostics.pdk.Monitor {
 
-	private final Storage<NginxStatus> nginxStatusStorage = new Storage<NginxStatus>();
-	private CalculatorImpl calculator;
+	private final Storage<NginxStatus> nginxStatusStorage = new Storage<>();
 
 	private final static Logger log = Logger.getLogger(NginxPlusMonitor.class.getName());
 
@@ -118,7 +117,7 @@ public class NginxPlusMonitor implements com.dynatrace.diagnostics.pdk.Monitor {
 			log.info(e.toString());
 		}
 
-		calculator = new CalculatorImpl();
+		CalculatorImpl calculator = new CalculatorImpl();
 		if (nginxStatusStorage.isEmpty()) {
 			calculator.calculate(nginxStatusDTO, nginxStatusDTO);
 			nginxStatusStorage.put(nginxStatusDTO);
@@ -135,8 +134,7 @@ public class NginxPlusMonitor implements com.dynatrace.diagnostics.pdk.Monitor {
 		UpstreamsBooker.book(nginxStatusDTO.getUpstreams(), env, calculator.getUpstreamsCalculator());
 		CachesBooker.book(nginxStatusDTO.getCaches(), env, calculator.getCachesCalculator());
 		StreamBooker.book(nginxStatusDTO.getStream(), env, calculator.getStreamCalculator());
-
-        return new Status();
+		return new Status();
 	}
 
 	@Override

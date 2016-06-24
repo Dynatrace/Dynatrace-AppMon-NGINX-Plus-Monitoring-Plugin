@@ -11,12 +11,15 @@ public class ConnectionsParser implements ParserInterface {
 
 	@Override
 	public Object parse(JSONObject jsonObject) throws JSONException {
-		JSONObject connections = jsonObject.getJSONObject("connections");
 		ConnectionsDTO connectionsDTO = new ConnectionsDTO();
-		connectionsDTO.setAccepted(connections.getDouble("accepted"));
-		connectionsDTO.setDropped(connections.getDouble("dropped"));
-		connectionsDTO.setActive(connections.getDouble("active"));
-		connectionsDTO.setIdle(connections.getDouble("idle"));
+		JSONObject connections = jsonObject.optJSONObject("connections");
+		if (connections == null) {
+			return connectionsDTO;
+		}
+		connectionsDTO.setAccepted(connections.optDouble("accepted", Double.NaN));
+		connectionsDTO.setDropped(connections.optDouble("dropped", Double.NaN));
+		connectionsDTO.setActive(connections.optDouble("active", Double.NaN));
+		connectionsDTO.setIdle(connections.optDouble("idle", Double.NaN));
 		return connectionsDTO;
 	}
 }

@@ -11,11 +11,16 @@ public class SSLParser implements ParserInterface {
 
 	@Override
 	public Object parse(JSONObject jsonObject) throws JSONException {
-		JSONObject ssl = jsonObject.getJSONObject("ssl");
 		SSLDTO sslDTO = new SSLDTO();
-		sslDTO.setHandshakes(ssl.getDouble("handshakes"));
-		sslDTO.setHandshakes_failed(ssl.getDouble("handshakes_failed"));
-		sslDTO.setSession_reuses(ssl.getDouble("session_reuses"));
-        return sslDTO;
+		JSONObject ssl = jsonObject.optJSONObject("ssl");
+
+		if (ssl == null) {
+			return sslDTO;
+		}
+
+		sslDTO.setHandshakes(ssl.optDouble("handshakes", Double.NaN));
+		sslDTO.setHandshakes_failed(ssl.optDouble("handshakes_failed", Double.NaN));
+		sslDTO.setSession_reuses(ssl.optDouble("session_reuses", Double.NaN));
+		return sslDTO;
 	}
 }

@@ -8,11 +8,11 @@ public class StreamServerGroups {
 	private Map<String, ArrayList<StreamServerDTO>> serverGroups;
 
 	public StreamServerGroups() {
-		this.serverGroups = new HashMap<String, ArrayList<StreamServerDTO>>();
+		this.serverGroups = new HashMap<>();
 	}
 
 	public ArrayList<StreamServerDTO> createNewServerGroup(String serverGroupName) {
-		ArrayList<StreamServerDTO> serverGroup = new ArrayList<StreamServerDTO>();
+		ArrayList<StreamServerDTO> serverGroup = new ArrayList<>();
 		this.serverGroups.put(serverGroupName, serverGroup);
 		return serverGroup;
 	}

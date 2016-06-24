@@ -9,4 +9,3 @@ Dynatrace-Plugin-Types: monitor, metric
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: com.dynatrace.plugin.nginx;singleton:=true
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-

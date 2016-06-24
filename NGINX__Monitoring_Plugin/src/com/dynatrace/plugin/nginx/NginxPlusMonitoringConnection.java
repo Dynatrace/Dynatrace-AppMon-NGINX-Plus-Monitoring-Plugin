@@ -17,18 +17,14 @@ import org.json.JSONObject;
 
 public class NginxPlusMonitoringConnection {
 	private URLConnection connection;
-	private final String charset = "UTF-8";
 
-
-	public NginxPlusMonitoringConnection(String protocol, String host, int port, String file) throws MalformedURLException, IOException {
+	public NginxPlusMonitoringConnection(String protocol, String host, int port, String file) throws IOException {
 		try {
 			URL url = new URL(protocol, host, port, file);
 			this.connection = url.openConnection();
 			this.connection.setConnectTimeout((int) TimeUnit.SECONDS.toMillis(10));
 			this.connection.setReadTimeout((int) TimeUnit.SECONDS.toMillis(10));
 		} catch(MalformedURLException e) {
-			throw e;
-		} catch(IOException e) {
 			throw e;
 		}
 	}
@@ -39,6 +35,7 @@ public class NginxPlusMonitoringConnection {
 			throw new IllegalArgumentException("Invalid response header, expected " + MediaType.APPLICATION_JSON + ", but got " + header);
 		}
 		InputStream inputStream = connection.getInputStream();
+		String charset = "UTF-8";
 		Scanner InputStreamScanner = new Scanner(inputStream, charset);
 		String jsonString = InputStreamScanner.useDelimiter("\\A").next();
 		InputStreamScanner.close();

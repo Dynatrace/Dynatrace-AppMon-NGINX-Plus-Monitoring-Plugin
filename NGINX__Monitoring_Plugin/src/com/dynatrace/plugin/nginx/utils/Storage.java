@@ -12,10 +12,6 @@ public class Storage<A> {
 	}
 
 	public boolean isEmpty() {
-		if (this.status != null) {
-			return false;
-		} else {
-			return true;
-		}
+		return this.status == null;
 	}
 }

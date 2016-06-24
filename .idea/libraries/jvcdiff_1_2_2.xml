@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="jvcdiff-1.2.2">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/repo/dynatrace/prod/java/com.dynatrace.diagnostics.sdk/lib/jvcdiff-1.2.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

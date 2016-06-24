@@ -8,11 +8,11 @@ public class ServerGroups {
 	private Map<String, ArrayList<ServerDTO>> serverGroups;
 
 	public ServerGroups() {
-		this.serverGroups = new HashMap<String, ArrayList<ServerDTO>>();
+		this.serverGroups = new HashMap<>();
 	}
 
 	public ArrayList<ServerDTO> createNewServerGroup(String serverGroupName) {
-		ArrayList<ServerDTO> serverGroup = new ArrayList<ServerDTO>();
+		ArrayList<ServerDTO> serverGroup = new ArrayList<>();
 		this.serverGroups.put(serverGroupName, serverGroup);
 		return serverGroup;
 	}

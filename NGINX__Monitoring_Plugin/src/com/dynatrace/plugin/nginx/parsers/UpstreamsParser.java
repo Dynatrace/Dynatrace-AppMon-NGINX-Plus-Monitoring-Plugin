@@ -16,13 +16,17 @@ public class UpstreamsParser implements ParserInterface {
 
 	@Override
 	public Object parse(JSONObject jsonObject) throws JSONException {
-		JSONObject upstreams = jsonObject.getJSONObject("upstreams");
-
 		ServerGroups serverGroups = new ServerGroups();
+
+		JSONObject upstreams = jsonObject.optJSONObject("upstreams");
+
+		if (upstreams == null) {
+			return serverGroups;
+		}
 
 		Iterator<?> upStreamNames = upstreams.keys();
 		while (upStreamNames.hasNext()) {
-			String upStreamName = (String)upStreamNames.next();
+			String upStreamName = (String) upStreamNames.next();
 			serverGroups.createNewServerGroup(upStreamName);
 			JSONArray upStream = upstreams.getJSONObject(upStreamName).getJSONArray("peers");
 
@@ -30,45 +34,45 @@ public class UpstreamsParser implements ParserInterface {
 				JSONObject server = upStream.getJSONObject(i);
 				ServerDTO serverDTO = new ServerDTO();
 
-				serverDTO.setId(server.getDouble("id"));
-				serverDTO.setServer(server.getString("server"));
-				serverDTO.setBackup(server.getBoolean("backup"));
-				serverDTO.setWeight(server.getDouble("weight"));
-				serverDTO.setState(new StateT(server.getString("state")));
-				serverDTO.setActive(server.getDouble("active"));
-				if (server.has("max_conns")) {
-					serverDTO.setMaxConns(server.getDouble("max_conns"));
-				}
-				serverDTO.setRequests(server.getDouble("requests"));
+				serverDTO.setId(server.optDouble("id", Double.NaN));
+				serverDTO.setServer(server.optString("server", ""));
+				serverDTO.setBackup(server.optBoolean("backup", false));
+				serverDTO.setWeight(server.optDouble("weight", Double.NaN));
+				serverDTO.setState(new StateT(server.optString("state", "")));
+				serverDTO.setActive(server.optDouble("active", Double.NaN));
+				serverDTO.setMaxConns(server.optDouble("max_conns", Double.NaN));
+				serverDTO.setRequests(server.optDouble("requests", Double.NaN));
 
 				{
-					JSONObject responses = server.getJSONObject("responses");
-					serverDTO.setResponses1xx(responses.getDouble("1xx"));
-					serverDTO.setResponses2xx(responses.getDouble("2xx"));
-					serverDTO.setResponses3xx(responses.getDouble("3xx"));
-					serverDTO.setResponses4xx(responses.getDouble("4xx"));
-					serverDTO.setResponses5xx(responses.getDouble("5xx"));
-					serverDTO.setTotalResponses(responses.getDouble("total"));
-				}
-
-				serverDTO.setSent(server.getDouble("sent"));
-				serverDTO.setReceived(server.getDouble("received"));
-				serverDTO.setFails(server.getDouble("fails"));
-				serverDTO.setUnavail(server.getDouble("unavail"));
-
-				{
-					JSONObject health_checks = server.getJSONObject("health_checks");
-					serverDTO.setHealthChecksTotal(health_checks.getDouble("checks"));
-					serverDTO.setHealthChecksFails(health_checks.getDouble("fails"));
-					serverDTO.setHealthCheckUnhealthy(health_checks.getDouble("unhealthy"));
-					if (health_checks.has("last_passed")) {
-						serverDTO.setHealthChecksLastPassed(health_checks.getBoolean("last_passed"));
+					JSONObject responses = server.optJSONObject("responses");
+					if (responses != null) {
+						serverDTO.setResponses1xx(responses.optDouble("1xx", Double.NaN));
+						serverDTO.setResponses2xx(responses.optDouble("2xx", Double.NaN));
+						serverDTO.setResponses3xx(responses.optDouble("3xx", Double.NaN));
+						serverDTO.setResponses4xx(responses.optDouble("4xx", Double.NaN));
+						serverDTO.setResponses5xx(responses.optDouble("5xx", Double.NaN));
+						serverDTO.setTotalResponses(responses.optDouble("total", Double.NaN));
 					}
 				}
 
-				serverDTO.setDowntime(server.getDouble("downtime"));
-				serverDTO.setDownstart(server.getDouble("downstart"));
-				serverDTO.setSelected(server.getDouble("selected"));
+				serverDTO.setSent(server.optDouble("sent", Double.NaN));
+				serverDTO.setReceived(server.optDouble("received", Double.NaN));
+				serverDTO.setFails(server.optDouble("fails", Double.NaN));
+				serverDTO.setUnavail(server.optDouble("unavail", Double.NaN));
+
+				{
+					JSONObject health_checks = server.optJSONObject("health_checks");
+					if (health_checks != null) {
+						serverDTO.setHealthChecksTotal(health_checks.optDouble("checks", Double.NaN));
+						serverDTO.setHealthChecksFails(health_checks.optDouble("fails", Double.NaN));
+						serverDTO.setHealthCheckUnhealthy(health_checks.optDouble("unhealthy", Double.NaN));
+						serverDTO.setHealthChecksLastPassed(health_checks.optBoolean("last_passed", true));
+					}
+				}
+
+				serverDTO.setDowntime(server.optDouble("downtime", Double.NaN));
+				serverDTO.setDownstart(server.optDouble("downstart", Double.NaN));
+				serverDTO.setSelected(server.optDouble("selected", Double.NaN));
 
 				serverGroups.addServerByGroup(upStreamName, serverDTO);
 			}

@@ -17,12 +17,12 @@ import com.sun.net.httpserver.HttpHandler;
 
 public class NginxHandler implements HttpHandler {
 
-	private static File jsonFile;
+	private File jsonFile;
 
 	public NginxHandler(String json_file_path) throws FileNotFoundException {
 		jsonFile = new File(json_file_path);
 		if (!jsonFile.exists() || jsonFile.isDirectory()) {
-			throw new FileNotFoundException("File not exists, or is a directory");
+			throw new FileNotFoundException("File not exists, or is a directory : " + jsonFile.getAbsolutePath());
 		}
 	}
 

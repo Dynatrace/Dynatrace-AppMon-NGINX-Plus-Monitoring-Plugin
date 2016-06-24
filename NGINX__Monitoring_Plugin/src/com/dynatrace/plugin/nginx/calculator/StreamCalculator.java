@@ -11,26 +11,26 @@ import com.google.common.collect.HashBasedTable;
 
 public class StreamCalculator extends TimeFrameCalculator implements Calculator {
 
-	private HashMap<String, Double> ConnectionsRatePerUpstream = new HashMap<String, Double>();
-	private HashMap<String, Double> ConnectionsPerUpstream = new HashMap<String, Double>();
-	private HashMap<String, Double> SentRatePerUpstream = new HashMap<String, Double>();
-	private HashMap<String, Double> SentPerUpstream = new HashMap<String, Double>();
-	private HashMap<String, Double> ReceivedRatePerUpstream = new HashMap<String, Double>();
-	private HashMap<String, Double> ReceivedPerUpstream = new HashMap<String, Double>();
-	private HashMap<String, Double> FailsRatePerUpstream = new HashMap<String, Double>();
-	private HashMap<String, Double> FailsPerUpstream = new HashMap<String, Double>();
-	private HashMap<String, Double> UnavailPerUpstream = new HashMap<String, Double>();
-	private HashMap<String, Double> UnavailRatePerUpstream = new HashMap<String, Double>();
-	private HashMap<String, Double> HealthChecksTotalPerUpstream = new HashMap<String, Double>();
-	private HashMap<String, Double> HealthChecksTotalRatePerUpstream = new HashMap<String, Double>();
-	private HashMap<String, Double> HealthChecksFailedPerUpstream = new HashMap<String, Double>();
-	private HashMap<String, Double> HealthChecksFailedRatePerUpstream = new HashMap<String, Double>();
-	private HashMap<String, Double> HealthChecksUnhealthyPerUpstream = new HashMap<String, Double>();
-	private HashMap<String, Double> HealthChecksUnhealthyRatePerUpstream = new HashMap<String, Double>();
+	private HashMap<String, Double> ConnectionsRatePerUpstream = new HashMap<>();
+	private HashMap<String, Double> ConnectionsPerUpstream = new HashMap<>();
+	private HashMap<String, Double> SentRatePerUpstream = new HashMap<>();
+	private HashMap<String, Double> SentPerUpstream = new HashMap<>();
+	private HashMap<String, Double> ReceivedRatePerUpstream = new HashMap<>();
+	private HashMap<String, Double> ReceivedPerUpstream = new HashMap<>();
+	private HashMap<String, Double> FailsRatePerUpstream = new HashMap<>();
+	private HashMap<String, Double> FailsPerUpstream = new HashMap<>();
+	private HashMap<String, Double> UnavailPerUpstream = new HashMap<>();
+	private HashMap<String, Double> UnavailRatePerUpstream = new HashMap<>();
+	private HashMap<String, Double> HealthChecksTotalPerUpstream = new HashMap<>();
+	private HashMap<String, Double> HealthChecksTotalRatePerUpstream = new HashMap<>();
+	private HashMap<String, Double> HealthChecksFailedPerUpstream = new HashMap<>();
+	private HashMap<String, Double> HealthChecksFailedRatePerUpstream = new HashMap<>();
+	private HashMap<String, Double> HealthChecksUnhealthyPerUpstream = new HashMap<>();
+	private HashMap<String, Double> HealthChecksUnhealthyRatePerUpstream = new HashMap<>();
 
-	private HashMap<String, Double> serverZoneConnectionsRate = new HashMap<String, Double>();
-	private HashMap<String, Double> serverZoneReceivedRate = new HashMap<String, Double>();
-	private HashMap<String, Double> serverZoneSentRate = new HashMap<String, Double>();
+	private HashMap<String, Double> serverZoneConnectionsRate = new HashMap<>();
+	private HashMap<String, Double> serverZoneReceivedRate = new HashMap<>();
+	private HashMap<String, Double> serverZoneSentRate = new HashMap<>();
 
 	private HashBasedTable<String, String, Double> upstreamsConnectionsRate = HashBasedTable.create();
 	private HashBasedTable<String, String, Double> upstreamsSentRate = HashBasedTable.create();
@@ -57,9 +57,9 @@ public class StreamCalculator extends TimeFrameCalculator implements Calculator 
 			while(curIter.hasNext()) {
 				StreamServerZoneDTO cur_ = curIter.next();
 				StreamServerZoneDTO prev_;
-				Double connectionsRate = 0.0;
-				Double receivedRate = 0.0;
-				Double sentRate = 0.0;
+				Double connectionsRate;
+				Double receivedRate;
+				Double sentRate;
 				try {
 					prev_ = prevIter.next();
 					connectionsRate = (cur_.getConnections() - prev_.getConnections()) / time_frame;
@@ -103,14 +103,14 @@ public class StreamCalculator extends TimeFrameCalculator implements Calculator 
 				StreamServerDTO cur_ = curIter.next();
 				StreamServerDTO prev_;
 
-				Double ConnectionsRate = 0.0;
-				Double SentRate = 0.0;
-				Double ReceivedRate = 0.0;
-				Double FailsRate = 0.0;
-				Double UnavailRate = 0.0;
-				Double HealthChecksRate = 0.0;
-				Double HealthChecksFailedRate = 0.0;
-				Double HealthChecksUnhealthyRate = 0.0;
+				Double ConnectionsRate;
+				Double SentRate;
+				Double ReceivedRate;
+				Double FailsRate;
+				Double UnavailRate;
+				Double HealthChecksRate;
+				Double HealthChecksFailedRate;
+				Double HealthChecksUnhealthyRate;
 
 				try {
 					prev_ = prevIter.next();

@@ -15,31 +15,36 @@ public class ServerZonesParser implements ParserInterface {
 
 	@Override
 	public Object parse(JSONObject jsonObject) throws JSONException {
-		JSONObject serverZones = jsonObject.getJSONObject("server_zones");
+		Collection<ServerZoneDTO> serverZones_ = new ArrayList<>();
 
-		Collection<ServerZoneDTO> serverZones_ = new ArrayList<ServerZoneDTO>();
+		JSONObject serverZones = jsonObject.optJSONObject("server_zones");
+
+		if (serverZones == null) {
+			return serverZones_;
+		}
+
 		Iterator<?> serverZoneNames = serverZones.keys();
 		while (serverZoneNames.hasNext()) {
-			String serverZoneName = (String)serverZoneNames.next();
+			String serverZoneName = (String) serverZoneNames.next();
 			ServerZoneDTO serverZoneDTO = new ServerZoneDTO(serverZoneName);
 			JSONObject serverZone = serverZones.getJSONObject(serverZoneName);
-			serverZoneDTO.setProcessing(serverZone.getDouble("processing"));
-			serverZoneDTO.setRequests(serverZone.getDouble("requests"));
+			serverZoneDTO.setProcessing(serverZone.optDouble("processing", Double.NaN));
+			serverZoneDTO.setRequests(serverZone.optDouble("requests", Double.NaN));
 
 			{
-				JSONObject responses = serverZone.getJSONObject("responses");
-				serverZoneDTO.setResponses1xx(responses.getDouble("1xx"));
-				serverZoneDTO.setResponses2xx(responses.getDouble("2xx"));
-				serverZoneDTO.setResponses3xx(responses.getDouble("3xx"));
-				serverZoneDTO.setResponses4xx(responses.getDouble("4xx"));
-				serverZoneDTO.setResponses5xx(responses.getDouble("5xx"));
-				serverZoneDTO.setTotalResponses(responses.getDouble("total"));
+				JSONObject responses = serverZone.optJSONObject("responses");
+				if (responses != null) {
+					serverZoneDTO.setResponses1xx(responses.optDouble("1xx", Double.NaN));
+					serverZoneDTO.setResponses2xx(responses.optDouble("2xx", Double.NaN));
+					serverZoneDTO.setResponses3xx(responses.optDouble("3xx", Double.NaN));
+					serverZoneDTO.setResponses4xx(responses.optDouble("4xx", Double.NaN));
+					serverZoneDTO.setResponses5xx(responses.optDouble("5xx", Double.NaN));
+					serverZoneDTO.setTotalResponses(responses.optDouble("total", Double.NaN));
+				}
 			}
-			if (serverZone.has("discarded")) {
-				serverZoneDTO.setDiscarded(serverZone.getDouble("discarded"));
-			}
-			serverZoneDTO.setReceived(serverZone.getDouble("received"));
-			serverZoneDTO.setSent(serverZone.getDouble("sent"));
+			serverZoneDTO.setDiscarded(serverZone.optDouble("discarded", Double.NaN));
+			serverZoneDTO.setReceived(serverZone.optDouble("received", Double.NaN));
+			serverZoneDTO.setSent(serverZone.optDouble("sent", Double.NaN));
 			serverZones_.add(serverZoneDTO);
 		}
 		return serverZones_;

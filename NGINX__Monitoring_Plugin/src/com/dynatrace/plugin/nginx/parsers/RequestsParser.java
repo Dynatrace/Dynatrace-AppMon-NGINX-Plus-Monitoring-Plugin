@@ -11,11 +11,13 @@ public class RequestsParser implements ParserInterface {
 
 	@Override
 	public Object parse(JSONObject jsonObject) throws JSONException {
-		JSONObject requests = jsonObject.getJSONObject("requests");
-
 		RequestsDTO requestDTO = new RequestsDTO();
-        requestDTO.setTotal(requests.getDouble("total"));
-        requestDTO.setCurrent(requests.getDouble("current"));
-        return requestDTO;
+		JSONObject requests = jsonObject.optJSONObject("requests");
+		if (requests == null) {
+			return requestDTO;
+		}
+		requestDTO.setTotal(requests.optDouble("total", Double.NaN));
+		requestDTO.setCurrent(requests.optDouble("current", Double.NaN));
+		return requestDTO;
 	}
 }

@@ -23,8 +23,7 @@ public class NginxStatus {
 	private Collection<CacheDTO> caches;
 	private Stream stream;
 
-	@SuppressWarnings("unchecked")
-	public NginxStatus(JSONObject jsonObject) throws JSONException {
+	public NginxStatus(JSONObject jsonObject) throws JSONException, UnsupportedOperationException {
 		int version = jsonObject.getInt("version");
 		ParserCollection parserCollection = new ParserFactory().getParserCollection(version);
 		meta = (MetaDTO) parserCollection.getMetaParser().parse(jsonObject);
@@ -42,9 +41,9 @@ public class NginxStatus {
 		connections = new ConnectionsDTO();
 		ssl = new SSLDTO();
 		requests = new RequestsDTO();
-		serverZones = new ArrayList<ServerZoneDTO>();
+		serverZones = new ArrayList<>();
 		upstreams = new ServerGroups();
-		caches = new ArrayList<CacheDTO>();
+		caches = new ArrayList<>();
 		stream = new Stream();
 	}
 

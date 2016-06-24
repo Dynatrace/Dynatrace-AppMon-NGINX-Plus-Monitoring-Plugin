@@ -6,5 +6,5 @@ import org.json.JSONObject;
 
 public interface ParserInterface {
 
-	public Object parse(JSONObject jsonObject) throws JSONException;
+	Object parse(JSONObject jsonObject) throws JSONException;
 }

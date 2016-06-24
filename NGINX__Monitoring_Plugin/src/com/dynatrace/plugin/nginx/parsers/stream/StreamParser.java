@@ -22,55 +22,43 @@ public class StreamParser implements ParserInterface {
 
 	public static StreamServerDTO createStreamServerDtoFromServer(JSONObject server) throws JSONException {
 		StreamServerDTO streamServerDTO = new StreamServerDTO();
-		streamServerDTO.setId(server.getDouble("id"));
-		streamServerDTO.setServer(server.getString("server"));
-		streamServerDTO.setBackup(server.getBoolean("backup"));
-		streamServerDTO.setWeight(server.getDouble("weight"));
-		streamServerDTO.setState(new StateT(server.getString("state")));
-		streamServerDTO.setActive(server.getDouble("active"));
-		if (server.has("max_conns")) {
-			streamServerDTO.setMaxConns(server.getDouble("max_conns"));
-		}
-		if (server.has("connections")) {
-			streamServerDTO.setConnections(server.getDouble("connections"));
-		}
-		if (server.has("connect_time")) {
-			streamServerDTO.setConnectTime(server.getDouble("connect_time"));
-		}
-		if (server.has("first_byte_time")) {
-			streamServerDTO.setFirstByteTime(server.getDouble("first_byte_time"));
-		}
-		if (server.has("response_time")) {
-			streamServerDTO.setResponseTime(server.getDouble("response_time"));
-		}
-		streamServerDTO.setSent(server.getDouble("sent"));
-		streamServerDTO.setReceived(server.getDouble("received"));
-		streamServerDTO.setFails(server.getDouble("fails"));
-		streamServerDTO.setUnavail(server.getDouble("unavail"));
+		streamServerDTO.setId(server.optDouble("id", Double.NaN));
+		streamServerDTO.setServer(server.optString("server", ""));
+		streamServerDTO.setBackup(server.optBoolean("backup", false));
+		streamServerDTO.setWeight(server.optDouble("weight", Double.NaN));
+		streamServerDTO.setState(new StateT(server.optString("state", "")));
+		streamServerDTO.setActive(server.optDouble("active", Double.NaN));
+		streamServerDTO.setMaxConns(server.optDouble("max_conns", Double.NaN));
+		streamServerDTO.setConnections(server.optDouble("connections", Double.NaN));
+		streamServerDTO.setConnectTime(server.optDouble("connect_time", Double.NaN));
+		streamServerDTO.setFirstByteTime(server.optDouble("first_byte_time", Double.NaN));
+		streamServerDTO.setResponseTime(server.optDouble("response_time", Double.NaN));
+		streamServerDTO.setSent(server.optDouble("sent", Double.NaN));
+		streamServerDTO.setReceived(server.optDouble("received", Double.NaN));
+		streamServerDTO.setFails(server.optDouble("fails", Double.NaN));
+		streamServerDTO.setUnavail(server.optDouble("unavail", Double.NaN));
 		{
-			JSONObject health_checks = server.getJSONObject("health_checks");
-			streamServerDTO.setHealthChecksTotal(health_checks.getDouble("checks"));
-			streamServerDTO.setHealthChecksFails(health_checks.getDouble("fails"));
-			streamServerDTO.setHealthCheckUnhealthy(health_checks.getDouble("unhealthy"));
-			if (health_checks.has("last_passed")) {
-				streamServerDTO.setHealthChecksLastPassed(health_checks.getBoolean("last_passed"));
+			JSONObject health_checks = server.optJSONObject("health_checks");
+			if (health_checks != null) {
+				streamServerDTO.setHealthChecksTotal(health_checks.optDouble("checks", Double.NaN));
+				streamServerDTO.setHealthChecksFails(health_checks.optDouble("fails", Double.NaN));
+				streamServerDTO.setHealthCheckUnhealthy(health_checks.optDouble("unhealthy", Double.NaN));
+				streamServerDTO.setHealthChecksLastPassed(health_checks.optBoolean("last_passed", false));
 			}
 		}
-		streamServerDTO.setDowntime(server.getDouble("downtime"));
-		streamServerDTO.setDownstart(server.getDouble("downstart"));
-		streamServerDTO.setSelected(server.getDouble("selected"));
-
-
+		streamServerDTO.setDowntime(server.optDouble("downtime", Double.NaN));
+		streamServerDTO.setDownstart(server.optDouble("downstart", Double.NaN));
+		streamServerDTO.setSelected(server.optDouble("selected", Double.NaN));
 
 		return streamServerDTO;
 	}
 
 	private StreamServerZoneDTO createStreamServerZoneDtoFromServer(String serverZoneName, JSONObject serverZone) throws JSONException {
 		StreamServerZoneDTO server = new StreamServerZoneDTO(serverZoneName);
-		server.setProcessing(serverZone.getDouble("processing"));
-		server.setConnections(serverZone.getDouble("connections"));
-		server.setReceived(serverZone.getDouble("received"));
-		server.setSent(serverZone.getDouble("sent"));
+		server.setProcessing(serverZone.optDouble("processing", Double.NaN));
+		server.setConnections(serverZone.optDouble("connections", Double.NaN));
+		server.setReceived(serverZone.optDouble("received", Double.NaN));
+		server.setSent(serverZone.optDouble("sent", Double.NaN));
 		return server;
 	}
 
@@ -86,16 +74,22 @@ public class StreamParser implements ParserInterface {
 
 	@Override
 	public Object parse(JSONObject jsonObject) throws JSONException {
-		JSONObject stream = jsonObject.getJSONObject("stream");
-
 		Stream streamDTO = new Stream();
+		JSONObject stream = jsonObject.optJSONObject("stream");
 
-		JSONObject serverZones = stream.getJSONObject("server_zones");
-		parseServerZones(streamDTO, serverZones);
+		if (stream == null) {
+			return streamDTO;
+		}
 
-		JSONObject upstreams = stream.getJSONObject("upstreams");
-		cmd.parse(streamDTO, upstreams);
+		JSONObject serverZones = stream.optJSONObject("server_zones");
+		if (serverZones != null) {
+			parseServerZones(streamDTO, serverZones);
+		}
 
+		JSONObject upstreams = stream.optJSONObject("upstreams");
+		if (upstreams != null) {
+			cmd.parse(streamDTO, upstreams);
+		}
 
 		return streamDTO;
 	}

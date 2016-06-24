@@ -9,16 +9,16 @@ import com.dynatrace.plugin.nginx.dto.NginxStatus;
 import com.dynatrace.plugin.nginx.dto.serverzone.ServerZoneDTO;
 
 public class ServerZonesCalculator extends TimeFrameCalculator implements Calculator {
-	private Map<String, Double> requestsRate = new HashMap<String, Double>();
-	private Map<String, Double> responsesRate = new HashMap<String, Double>();
-	private Map<String, Double> discarded = new HashMap<String, Double>();
-	private Map<String, Double> trafficSentRate = new HashMap<String, Double>();
-	private Map<String, Double> trafficRecvRate = new HashMap<String, Double>();
-	private Map<String, Double> responses1xxRate = new HashMap<String, Double>();
-	private Map<String, Double> responses2xxRate = new HashMap<String, Double>();
-	private Map<String, Double> responses3xxRate = new HashMap<String, Double>();
-	private Map<String, Double> responses4xxRate = new HashMap<String, Double>();
-	private Map<String, Double> responses5xxRate = new HashMap<String, Double>();
+	private Map<String, Double> requestsRate = new HashMap<>();
+	private Map<String, Double> responsesRate = new HashMap<>();
+	private Map<String, Double> discarded = new HashMap<>();
+	private Map<String, Double> trafficSentRate = new HashMap<>();
+	private Map<String, Double> trafficRecvRate = new HashMap<>();
+	private Map<String, Double> responses1xxRate = new HashMap<>();
+	private Map<String, Double> responses2xxRate = new HashMap<>();
+	private Map<String, Double> responses3xxRate = new HashMap<>();
+	private Map<String, Double> responses4xxRate = new HashMap<>();
+	private Map<String, Double> responses5xxRate = new HashMap<>();
 
 	@Override
 	public void calculate(NginxStatus prev, NginxStatus cur) {

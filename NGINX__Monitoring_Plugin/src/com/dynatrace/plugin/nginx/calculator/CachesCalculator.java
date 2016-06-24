@@ -9,51 +9,51 @@ import com.dynatrace.plugin.nginx.dto.CacheDTO;
 import com.dynatrace.plugin.nginx.dto.NginxStatus;
 
 public class CachesCalculator extends TimeFrameCalculator implements Calculator {
-	private Map<String, Double> hitResponsesRate = new HashMap<String, Double>();
+	private Map<String, Double> hitResponsesRate = new HashMap<>();
 	private Double totalHitResponsesRate = 0.0;
-	private Map<String, Double> hitBytesRate = new HashMap<String, Double>();
+	private Map<String, Double> hitBytesRate = new HashMap<>();
 	private Double totalHitBytesRate = 0.0;
 
-	private Map<String, Double> staleResponsesRate = new HashMap<String, Double>();
+	private Map<String, Double> staleResponsesRate = new HashMap<>();
 	private Double totalStaleResponsesRate = 0.0;
-	private Map<String, Double> staleBytesRate = new HashMap<String, Double>();
+	private Map<String, Double> staleBytesRate = new HashMap<>();
 	private Double totalStaleBytesRate = 0.0;
 
-	private Map<String, Double> updatingResponsesRate = new HashMap<String, Double>();
+	private Map<String, Double> updatingResponsesRate = new HashMap<>();
 	private Double totalUpdatingResponsesRate = 0.0;
-	private Map<String, Double> updatingBytesRate = new HashMap<String, Double>();
+	private Map<String, Double> updatingBytesRate = new HashMap<>();
 	private Double totalUpdatingBytesRate = 0.0;
 
-	private Map<String, Double> revalidatedResponsesRate = new HashMap<String, Double>();
+	private Map<String, Double> revalidatedResponsesRate = new HashMap<>();
 	private Double totalRevalidatedResponsesRate = 0.0;
-	private Map<String, Double> revalidatedBytesRate = new HashMap<String, Double>();
+	private Map<String, Double> revalidatedBytesRate = new HashMap<>();
 	private Double totalRevalidatedBytesRate = 0.0;
 
-	private Map<String, Double> missResponsesRate = new HashMap<String, Double>();
+	private Map<String, Double> missResponsesRate = new HashMap<>();
 	private Double totalMissResponsesRate = 0.0;
-	private Map<String, Double> missBytesRate = new HashMap<String, Double>();
+	private Map<String, Double> missBytesRate = new HashMap<>();
 	private Double totalMissBytesRate = 0.0;
-	private Map<String, Double> missResponsesWrittenRate = new HashMap<String, Double>();
+	private Map<String, Double> missResponsesWrittenRate = new HashMap<>();
 	private Double totalMissResponsesWrittenRate = 0.0;
-	private Map<String, Double> missBytesWrittenRate = new HashMap<String, Double>();
+	private Map<String, Double> missBytesWrittenRate = new HashMap<>();
 	private Double totalMissBytesWrittenRate = 0.0;
 
-	private Map<String, Double> expiredResponsesRate = new HashMap<String, Double>();
+	private Map<String, Double> expiredResponsesRate = new HashMap<>();
 	private Double totalExpiredResponsesRate = 0.0;
-	private Map<String, Double> expiredBytesRate = new HashMap<String, Double>();
+	private Map<String, Double> expiredBytesRate = new HashMap<>();
 	private Double totalExpiredBytesRate = 0.0;
-	private Map<String, Double> expiredResponsesWrittenRate = new HashMap<String, Double>();
+	private Map<String, Double> expiredResponsesWrittenRate = new HashMap<>();
 	private Double totalExpiredResponsesWrittenRate = 0.0;
-	private Map<String, Double> expiredBytesWrittenRate = new HashMap<String, Double>();
+	private Map<String, Double> expiredBytesWrittenRate = new HashMap<>();
 	private Double totalExpiredBytesWrittenRate = 0.0;
 
-	private Map<String, Double> bypassResponsesRate = new HashMap<String, Double>();
+	private Map<String, Double> bypassResponsesRate = new HashMap<>();
 	private Double totalBypassResponsesRate = 0.0;
-	private Map<String, Double> bypassBytesRate = new HashMap<String, Double>();
+	private Map<String, Double> bypassBytesRate = new HashMap<>();
 	private Double totalBypassBytesRate = 0.0;
-	private Map<String, Double> bypassResponsesWrittenRate = new HashMap<String, Double>();
+	private Map<String, Double> bypassResponsesWrittenRate = new HashMap<>();
 	private Double totalBypassResponsesWrittenRate = 0.0;
-	private Map<String, Double> bypassBytesWrittenRate = new HashMap<String, Double>();
+	private Map<String, Double> bypassBytesWrittenRate = new HashMap<>();
 	private Double totalBypassBytesWrittenRate = 0.0;
 
 	@Override
@@ -72,26 +72,26 @@ public class CachesCalculator extends TimeFrameCalculator implements Calculator 
 			CacheDTO prev_;
 			String cacheName = cur_.getCacheName();
 
-			Double HitResponsesRate = 0.0;
-			Double HitBytesRate = 0.0;
-			Double StaleResponsesRate = 0.0;
-			Double StaleBytesRate = 0.0;
-			Double UpdatingResponsesRate = 0.0;
-			Double UpdatingBytesRate = 0.0;
-			Double RevalidatedResponsesRate = 0.0;
-			Double RevalidatedBytesRate = 0.0;
-			Double MissResponsesRate = 0.0;
-			Double MissBytesRate = 0.0;
-			Double MissResponsesWrittenRate = 0.0;
-			Double MissBytesWrittenRate = 0.0;
-			Double ExpiredResponsesRate = 0.0;
-			Double ExpiredBytesRate = 0.0;
-			Double ExpiredResponsesWrittenRate = 0.0;
-			Double ExpiredBytesWrittenRate = 0.0;
-			Double BypassResponsesRate = 0.0;
-			Double BypassBytesRate = 0.0;
-			Double BypassResponsesWrittenRate = 0.0;
-			Double BypassBytesWrittenRate = 0.0;
+			Double HitResponsesRate;
+			Double HitBytesRate;
+			Double StaleResponsesRate;
+			Double StaleBytesRate;
+			Double UpdatingResponsesRate;
+			Double UpdatingBytesRate;
+			Double RevalidatedResponsesRate;
+			Double RevalidatedBytesRate;
+			Double MissResponsesRate;
+			Double MissBytesRate;
+			Double MissResponsesWrittenRate;
+			Double MissBytesWrittenRate;
+			Double ExpiredResponsesRate;
+			Double ExpiredBytesRate;
+			Double ExpiredResponsesWrittenRate;
+			Double ExpiredBytesWrittenRate;
+			Double BypassResponsesRate;
+			Double BypassBytesRate;
+			Double BypassResponsesWrittenRate;
+			Double BypassBytesWrittenRate;
 			try {
 				prev_ = prevIter.next();
 

@@ -15,11 +15,7 @@ public class StateT {
 	}
 
 	public Boolean equals(String state) {
-		if (this.state.equals(state)) {
-			return true;
-		} else {
-			return false;
-		}
+		return this.state.equals(state);
 	}
 
 	public Double toDouble() throws JSONException {

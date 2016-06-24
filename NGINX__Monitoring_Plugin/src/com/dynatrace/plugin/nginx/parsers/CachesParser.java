@@ -15,9 +15,11 @@ public class CachesParser implements ParserInterface {
 
 	@Override
 	public Object parse(JSONObject jsonObject) throws JSONException {
-		JSONObject caches = jsonObject.getJSONObject("caches");
-
-		Collection<CacheDTO> caches_ = new ArrayList<CacheDTO>();
+		Collection<CacheDTO> caches_ = new ArrayList<>();
+		JSONObject caches = jsonObject.optJSONObject("caches");
+		if (caches == null) {
+			return caches_;
+		}
 
 		final String responses = "responses";
 		final String bytes = "bytes";
@@ -30,43 +32,57 @@ public class CachesParser implements ParserInterface {
 			CacheDTO cacheDTO = new CacheDTO(cacheName);
 			JSONObject cache = caches.getJSONObject(cacheName);
 
-			cacheDTO.setSize(cache.getDouble("size"));
-			cacheDTO.setMaxSize(cache.getDouble("max_size"));
-			cacheDTO.setCold(cache.getBoolean("cold"));
+			cacheDTO.setSize(cache.optDouble("size", Double.NaN));
+			cacheDTO.setMaxSize(cache.optDouble("max_size", Double.NaN));
+			cacheDTO.setCold(cache.optBoolean("cold", true));
 
-			JSONObject hit = cache.getJSONObject("hit");
-			cacheDTO.setHitResponses(hit.getDouble(responses));
-			cacheDTO.setHitBytes(hit.getDouble(bytes));
+			JSONObject hit = cache.optJSONObject("hit");
+			if (hit != null) {
+				cacheDTO.setHitResponses(hit.optDouble(responses, Double.NaN));
+				cacheDTO.setHitBytes(hit.optDouble(bytes, Double.NaN));
+			}
 
-			JSONObject stale = cache.getJSONObject("stale");
-			cacheDTO.setStaleResponses(stale.getDouble(responses));
-			cacheDTO.setStaleBytes(stale.getDouble(bytes));
+			JSONObject stale = cache.optJSONObject("stale");
+			if (stale != null) {
+				cacheDTO.setStaleResponses(stale.optDouble(responses, Double.NaN));
+				cacheDTO.setStaleBytes(stale.optDouble(bytes, Double.NaN));
+			}
 
-			JSONObject updating = cache.getJSONObject("updating");
-			cacheDTO.setUpdatingResponses(updating.getDouble(responses));
-			cacheDTO.setUpdatingBytes(updating.getDouble(bytes));
+			JSONObject updating = cache.optJSONObject("updating");
+			if (updating != null) {
+				cacheDTO.setUpdatingResponses(updating.optDouble(responses, Double.NaN));
+				cacheDTO.setUpdatingBytes(updating.optDouble(bytes, Double.NaN));
+			}
 
-			JSONObject revalidated = cache.getJSONObject("revalidated");
-			cacheDTO.setRevalidatedResponses(revalidated.getDouble(responses));
-			cacheDTO.setRevalidatedBytes(revalidated.getDouble(bytes));
+			JSONObject revalidated = cache.optJSONObject("revalidated");
+			if (revalidated != null) {
+				cacheDTO.setRevalidatedResponses(revalidated.optDouble(responses, Double.NaN));
+				cacheDTO.setRevalidatedBytes(revalidated.optDouble(bytes, Double.NaN));
+			}
 
-			JSONObject miss = cache.getJSONObject("miss");
-			cacheDTO.setMissResponses(miss.getDouble(responses));
-			cacheDTO.setMissBytes(miss.getDouble(bytes));
-			cacheDTO.setMissResponsesWritten(miss.getDouble(responses_written));
-			cacheDTO.setMissBytesWritten(miss.getDouble(bytes_written));
+			JSONObject miss = cache.optJSONObject("miss");
+			if (miss != null) {
+				cacheDTO.setMissResponses(miss.optDouble(responses, Double.NaN));
+				cacheDTO.setMissBytes(miss.optDouble(bytes, Double.NaN));
+				cacheDTO.setMissResponsesWritten(miss.optDouble(responses_written, Double.NaN));
+				cacheDTO.setMissBytesWritten(miss.optDouble(bytes_written, Double.NaN));
+			}
 
-			JSONObject expired = cache.getJSONObject("expired");
-			cacheDTO.setExpiredResponses(expired.getDouble(responses));
-			cacheDTO.setExpiredBytes(expired.getDouble(bytes));
-			cacheDTO.setExpiredResponsesWritten(expired.getDouble(responses_written));
-			cacheDTO.setExpiredBytesWritten(expired.getDouble(bytes_written));
+			JSONObject expired = cache.optJSONObject("expired");
+			if (expired != null) {
+				cacheDTO.setExpiredResponses(expired.optDouble(responses, Double.NaN));
+				cacheDTO.setExpiredBytes(expired.optDouble(bytes, Double.NaN));
+				cacheDTO.setExpiredResponsesWritten(expired.optDouble(responses_written, Double.NaN));
+				cacheDTO.setExpiredBytesWritten(expired.optDouble(bytes_written, Double.NaN));
+			}
 
-			JSONObject bypass = cache.getJSONObject("bypass");
-			cacheDTO.setBypassResponses(bypass.getDouble(responses));
-			cacheDTO.setBypassBytes(bypass.getDouble(bytes));
-			cacheDTO.setBypassResponsesWritten(bypass.getDouble(responses_written));
-			cacheDTO.setBypassBytesWritten(bypass.getDouble(bytes_written));
+			JSONObject bypass = cache.optJSONObject("bypass");
+			if (bypass != null) {
+				cacheDTO.setBypassResponses(bypass.optDouble(responses, Double.NaN));
+				cacheDTO.setBypassBytes(bypass.optDouble(bytes, Double.NaN));
+				cacheDTO.setBypassResponsesWritten(bypass.optDouble(responses_written, Double.NaN));
+				cacheDTO.setBypassBytesWritten(bypass.optDouble(bytes_written, Double.NaN));
+			}
 
 			caches_.add(cacheDTO);
 		}

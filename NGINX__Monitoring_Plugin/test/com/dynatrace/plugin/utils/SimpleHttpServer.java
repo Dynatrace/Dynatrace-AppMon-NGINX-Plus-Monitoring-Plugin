@@ -18,6 +18,7 @@ public class SimpleHttpServer {
 		server = HttpServer.create(new InetSocketAddress(0), 0);
 		for (String endpoint : contextMap.keySet()) {
 			server.createContext(endpoint, contextMap.get(endpoint));
+			log.info("Creating endpoint : " + endpoint + " for : " + contextMap.get(endpoint));
 		}
 		server.setExecutor(null);
 	}

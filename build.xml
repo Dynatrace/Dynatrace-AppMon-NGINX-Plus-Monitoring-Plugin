@@ -2,10 +2,10 @@
 
 <project name="NGINX+ Monitoring Plugin" default="deploy" basedir=".">
 	<property name="bundle.name" value="NGINX+ Monitoring Plugin"/>
-	<property name="bundle.version" value="1.0.4"/>
+	<property name="bundle.version" value="1.0.5"/>
 
 	<property name="plugin.dir" value="NGINX__Monitoring_Plugin"/>
-	<property name="plugin.build.dir" value="${plugin.dir}/build"/>
+	<property name="plugin.build.dir" value="${plugin.dir}/bin"/>
 	<property name="plugin.lib.dir" value="${plugin.dir}/lib"/>
 	<property name="plugin.jar.dir" value=".plugin"/>
 	<property name="plugin.jar.name" value="com.dynatrace.plugin.nginx_${bundle.version}.jar"/>

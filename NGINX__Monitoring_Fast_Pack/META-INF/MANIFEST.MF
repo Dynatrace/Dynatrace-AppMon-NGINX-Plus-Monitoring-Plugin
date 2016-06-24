@@ -9,4 +9,5 @@ Bundle-Vendor: dynaTrace software GmbH
 Built-By: konrad.donaiski
 Implementation-Version: 4.5.0.2599
 Require-Bundle: com.dynatrace.diagnostics.sdk
+Import-Package: com.dynatrace.diagnostics.pdk
 
