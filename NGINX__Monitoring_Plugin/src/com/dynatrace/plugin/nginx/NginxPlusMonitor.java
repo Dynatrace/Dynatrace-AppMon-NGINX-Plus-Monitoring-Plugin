@@ -6,26 +6,20 @@
 
 package com.dynatrace.plugin.nginx;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.util.logging.Logger;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import com.dynatrace.diagnostics.pdk.MonitorEnvironment;
 import com.dynatrace.diagnostics.pdk.Status;
-import com.dynatrace.plugin.nginx.bookers.CachesBooker;
-import com.dynatrace.plugin.nginx.bookers.ConnectionsBooker;
-import com.dynatrace.plugin.nginx.bookers.RequestsBooker;
-import com.dynatrace.plugin.nginx.bookers.SSLBooker;
-import com.dynatrace.plugin.nginx.bookers.ServerZonesBooker;
-import com.dynatrace.plugin.nginx.bookers.StreamBooker;
-import com.dynatrace.plugin.nginx.bookers.UpstreamsBooker;
+import com.dynatrace.plugin.nginx.bookers.*;
 import com.dynatrace.plugin.nginx.calculator.CalculatorImpl;
 import com.dynatrace.plugin.nginx.calculator.TimeFrameCalculator;
 import com.dynatrace.plugin.nginx.dto.NginxStatus;
 import com.dynatrace.plugin.nginx.utils.Storage;
+import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.logging.Logger;
 
 public class NginxPlusMonitor implements com.dynatrace.diagnostics.pdk.Monitor {
 
@@ -40,100 +34,114 @@ public class NginxPlusMonitor implements com.dynatrace.diagnostics.pdk.Monitor {
 
 	@Override
 	public Status execute(MonitorEnvironment env) throws Exception {
-		NginxPlusMonitoringConnection connection;
-		JSONObject jsonObject;
+		String host = env.getHost().getAddress();
+		String statusdataendpoint = env.getConfigString("StatusDataEndpoint");
+		log.info("Executing Nginx Plus Monitor for host: " + host + " and statusdataendpoint: " + statusdataendpoint);
 		try {
-			connection = new NginxPlusMonitoringConnection("http", env.getHost().getAddress(), 80, env.getConfigString("StatusDataEndpoint"));
-		} catch(MalformedURLException e) {
-			e.printStackTrace();
-			Status status = new Status();
-			status.setStatusCode(Status.StatusCode.ErrorInternal);
-			status.setShortMessage("URL creation failed");
-			status.setMessage("MalformedURLException");
-			status.setException(e);
-			return status;
-		} catch(IOException e) {
-			e.printStackTrace();
-			Status status = new Status();
-			status.setStatusCode(Status.StatusCode.ErrorTargetService);
-			status.setShortMessage("Url connection failed");
-			status.setMessage("IOException");
-			status.setException(e);
-			return status;
-		}
-
-		try {
-			jsonObject = connection.getStatusJson();
-		} catch(IllegalArgumentException e) {
-			e.printStackTrace();
-			Status status = new Status();
-			status.setStatusCode(Status.StatusCode.ErrorTargetService);
-			status.setShortMessage("Invalid Content-type");
-			status.setMessage("IllegalArgumentException");
-			status.setException(e);
-			return status;
-		} catch(IOException e) {
-			e.printStackTrace();
-			Status status = new Status();
-			status.setStatusCode(Status.StatusCode.ErrorTargetService);
-			status.setShortMessage("Create input stream failed");
-			status.setMessage("IOException");
-			status.setException(e);
-			return status;
-		} catch(JSONException e) {
-			e.printStackTrace();
-			Status status = new Status();
-			status.setStatusCode(Status.StatusCode.ErrorInternal);
-			status.setShortMessage("URL creation failed");
-			status.setMessage("JSONException");
-			status.setException(e);
-			return status;
-		}
-
-		NginxStatus nginxStatusDTO;
-
-		try {
-			nginxStatusDTO = new NginxStatus(jsonObject);
-		} catch (JSONException e) {
-			e.printStackTrace();
-			Status status = new Status();
-			status.setStatusCode(Status.StatusCode.ErrorInternalException);
-			status.setShortMessage("Booker JSON exception");
-			status.setMessage("JSONException");
-			status.setException(e);
-			return status;
-		}
-
-		// This is a temporary fix to scheduler logic
-		try {
-			if (!nginxStatusStorage.isEmpty()) {
-				TimeFrameCalculator timeFrameCalculator = new TimeFrameCalculator();
-				if (timeFrameCalculator.calculateTimeFrame(nginxStatusStorage.get(), nginxStatusDTO) < 1.0) {
-					nginxStatusStorage.put(nginxStatusDTO);
-					return new Status();
-				}
+			NginxPlusMonitoringConnection connection;
+			JSONObject jsonObject;
+			try {
+				connection = new NginxPlusMonitoringConnection("http", host, 80, statusdataendpoint);
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+				Status status = new Status();
+				status.setStatusCode(Status.StatusCode.ErrorInternal);
+				status.setShortMessage("URL creation failed");
+				status.setMessage("MalformedURLException");
+				status.setException(e);
+				log.severe("URL creation failed");
+				return status;
+			} catch (IOException e) {
+				e.printStackTrace();
+				Status status = new Status();
+				status.setStatusCode(Status.StatusCode.ErrorTargetService);
+				status.setShortMessage("Url connection failed");
+				status.setMessage("IOException");
+				status.setException(e);
+				log.severe("URL connection failed");
+				return status;
 			}
-		} catch (Exception e) {
-			log.info(e.toString());
-		}
 
-		CalculatorImpl calculator = new CalculatorImpl();
-		if (nginxStatusStorage.isEmpty()) {
-			calculator.calculate(nginxStatusDTO, nginxStatusDTO);
-			nginxStatusStorage.put(nginxStatusDTO);
-		} else {
-			NginxStatus nginxStatusDTOPrev = nginxStatusStorage.get();
-			calculator.calculate(nginxStatusDTOPrev, nginxStatusDTO);
-			nginxStatusStorage.put(nginxStatusDTO);
-		}
+			try {
+				jsonObject = connection.getStatusJson();
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+				Status status = new Status();
+				status.setStatusCode(Status.StatusCode.ErrorTargetService);
+				status.setShortMessage("Invalid Content-type");
+				status.setMessage("IllegalArgumentException");
+				status.setException(e);
+				log.severe("Invalid Content-type");
+				return status;
+			} catch (IOException e) {
+				e.printStackTrace();
+				Status status = new Status();
+				status.setStatusCode(Status.StatusCode.ErrorTargetService);
+				status.setShortMessage("Create input stream failed");
+				status.setMessage("IOException");
+				status.setException(e);
+				log.severe("Create input stream failed");
+				return status;
+			} catch (JSONException e) {
+				e.printStackTrace();
+				Status status = new Status();
+				status.setStatusCode(Status.StatusCode.ErrorInternal);
+				status.setShortMessage("JSONObject on data failed");
+				status.setMessage("JSONException");
+				status.setException(e);
+				log.severe("JSONObject on data failed");
+				return status;
+			}
 
-		ConnectionsBooker.book(nginxStatusDTO.getConnections(), env, calculator);
-		SSLBooker.book(nginxStatusDTO.getSSL(), env, calculator);
-		RequestsBooker.book(nginxStatusDTO.getRequests(), env, calculator);
-		ServerZonesBooker.book(nginxStatusDTO.getServerZones(), env, calculator.getServerZonesCalculator());
-		UpstreamsBooker.book(nginxStatusDTO.getUpstreams(), env, calculator.getUpstreamsCalculator());
-		CachesBooker.book(nginxStatusDTO.getCaches(), env, calculator.getCachesCalculator());
-		StreamBooker.book(nginxStatusDTO.getStream(), env, calculator.getStreamCalculator());
+			NginxStatus nginxStatusDTO;
+
+			try {
+				nginxStatusDTO = new NginxStatus(jsonObject);
+			} catch (JSONException e) {
+				e.printStackTrace();
+				Status status = new Status();
+				status.setStatusCode(Status.StatusCode.ErrorInternalException);
+				status.setShortMessage("Booker JSON exception");
+				status.setMessage("JSONException");
+				status.setException(e);
+				log.severe("Booker JSON exception");
+				return status;
+			}
+
+			// This is a temporary fix to scheduler logic
+			try {
+				if (!nginxStatusStorage.isEmpty()) {
+					TimeFrameCalculator timeFrameCalculator = new TimeFrameCalculator();
+					if (timeFrameCalculator.calculateTimeFrame(nginxStatusStorage.get(), nginxStatusDTO) < 1.0) {
+						nginxStatusStorage.put(nginxStatusDTO);
+						return new Status();
+					}
+				}
+			} catch (Exception e) {
+				log.severe(e.toString());
+			}
+
+			CalculatorImpl calculator = new CalculatorImpl();
+			if (nginxStatusStorage.isEmpty()) {
+				calculator.calculate(nginxStatusDTO, nginxStatusDTO);
+				nginxStatusStorage.put(nginxStatusDTO);
+			} else {
+				NginxStatus nginxStatusDTOPrev = nginxStatusStorage.get();
+				calculator.calculate(nginxStatusDTOPrev, nginxStatusDTO);
+				nginxStatusStorage.put(nginxStatusDTO);
+			}
+
+			ConnectionsBooker.book(nginxStatusDTO.getConnections(), env, calculator);
+			SSLBooker.book(nginxStatusDTO.getSSL(), env, calculator);
+			RequestsBooker.book(nginxStatusDTO.getRequests(), env, calculator);
+			ServerZonesBooker.book(nginxStatusDTO.getServerZones(), env, calculator.getServerZonesCalculator());
+			UpstreamsBooker.book(nginxStatusDTO.getUpstreams(), env, calculator.getUpstreamsCalculator());
+			CachesBooker.book(nginxStatusDTO.getCaches(), env, calculator.getCachesCalculator());
+			StreamBooker.book(nginxStatusDTO.getStream(), env, calculator.getStreamCalculator());
+		} catch (Throwable e) {
+			log.severe("Had throwable while running Nginx Plus Monitor: " + ExceptionUtils.getStackTrace(e));
+			throw new Exception(e);
+		}
 		return new Status();
 	}
 

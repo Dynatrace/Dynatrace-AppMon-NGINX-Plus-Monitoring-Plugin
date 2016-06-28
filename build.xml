@@ -37,7 +37,7 @@
 				<attribute name="Manifest-Version" value="1.0"/>
 				<attribute name="Require-Bundle" value="com.dynatrace.diagnostics.sdk"/>
 				<attribute name="Bundle-Vendor" value="Dynatrace"/>
-                <attribute name="Bundle-ClassPath" value=".,lib/org.json.jar,lib/javax.ws.rs-api-2.0-m02.jar,lib/guava-18.0.jar"/>
+                <attribute name="Bundle-ClassPath" value=".,lib/org.json.jar,lib/javax.ws.rs-api-2.0-m02.jar,lib/guava-18.0.jar,lib/commons-lang3-3.1.jar"/>
 				<attribute name="Bundle-Version" value="${bundle.version}"/>
 				<attribute name="Bundle-Name" value="${bundle.name}"/>
 				<attribute name="Dynatrace-Plugin-Types" value="monitor, metric"/>
