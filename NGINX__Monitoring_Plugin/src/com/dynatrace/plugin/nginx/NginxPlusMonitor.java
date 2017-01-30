@@ -35,13 +35,15 @@ public class NginxPlusMonitor implements com.dynatrace.diagnostics.pdk.Monitor {
 	@Override
 	public Status execute(MonitorEnvironment env) throws Exception {
 		String host = env.getHost().getAddress();
+		String protocol = env.getConfigString("ConnectionProtocol");
+		String port = env.getConfigString("HostPort");
 		String statusdataendpoint = env.getConfigString("StatusDataEndpoint");
 		log.info("Executing Nginx Plus Monitor for host: " + host + " and statusdataendpoint: " + statusdataendpoint);
 		try {
 			NginxPlusMonitoringConnection connection;
 			JSONObject jsonObject;
 			try {
-				connection = new NginxPlusMonitoringConnection("http", host, 80, statusdataendpoint);
+				connection = new NginxPlusMonitoringConnection(protocol, host, port, statusdataendpoint);
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
 				Status status = new Status();

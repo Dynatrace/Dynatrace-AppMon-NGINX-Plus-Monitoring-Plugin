@@ -11,7 +11,9 @@
     </information>
     <configuration>
 		<property key="StatusDataEndpoint" label="Status Data Endpoint" type="string" description="This property sets custom endpoint, eg. setting this property to '/example' will change the request endpoint to hostname/example. By default the property is set to '/status'." default="/status" multiline="false"/>
-    	<property key="UpstreamsServerFilter" label="Upstreams Server Filter" type="string" description="If 'Upstream server' splitting is set, dynamic measures will be presented only for servers matching pattern, eg. '127.0.0.1:9309'. By default all servers will be listed." default="" multiline="false"/>
+    <property key="ConnectionProtocol" label="Connection Protocol" type="string" description="The protocol used to reach the status endpoint. By default the property is set to HTTP" default="http" multiline="false"/>
+    <property key="HostPort" label="Host Port" type="string" description="The port used to reach the status endpoint. By default the property is set to 80" default="80" multiline="false"/>
+      <property key="UpstreamsServerFilter" label="Upstreams Server Filter" type="string" description="If 'Upstream server' splitting is set, dynamic measures will be presented only for servers matching pattern, eg. '127.0.0.1:9309'. By default all servers will be listed." default="" multiline="false"/>
     	<property key="StreamFilter" label="Stream Filter" type="string" description="If 'Stream server' splitting is set, dynamic measures will be presented only for servers matching pattern, eg. '127.0.0.1:9309'. By default all servers will be listed." default="" multiline="false"/>
     </configuration>
   </extension>
