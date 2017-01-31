@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
+import java.net.ssl.HttpsURLConnection;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
@@ -16,12 +16,12 @@ import org.json.JSONObject;
 
 
 public class NginxPlusMonitoringConnection {
-	private URLConnection connection;
+	private HttpsURLConnection connection;
 
 	public NginxPlusMonitoringConnection(String protocol, String host, int port, String file) throws IOException {
 		try {
 			URL url = new URL(protocol, host, port, file);
-			this.connection = url.openConnection();
+			this.connection = (HttpsURLConnection)url.openConnection();
 			this.connection.setConnectTimeout((int) TimeUnit.SECONDS.toMillis(10));
 			this.connection.setReadTimeout((int) TimeUnit.SECONDS.toMillis(10));
 		} catch(MalformedURLException e) {

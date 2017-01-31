@@ -36,7 +36,7 @@ public class NginxPlusMonitor implements com.dynatrace.diagnostics.pdk.Monitor {
 	public Status execute(MonitorEnvironment env) throws Exception {
 		String host = env.getHost().getAddress();
 		String protocol = env.getConfigString("ConnectionProtocol");
-		int port = Integer.parseInt(env.getConfigInt("HostPort"));
+		int port = Integer.parseInt(env.getConfigString("HostPort"));
 		String statusdataendpoint = env.getConfigString("StatusDataEndpoint");
 		log.info("Executing Nginx Plus Monitor for host: " + host + "  with protocol " + protocol + " and statusdataendpoint: " + statusdataendpoint);
 		try {
