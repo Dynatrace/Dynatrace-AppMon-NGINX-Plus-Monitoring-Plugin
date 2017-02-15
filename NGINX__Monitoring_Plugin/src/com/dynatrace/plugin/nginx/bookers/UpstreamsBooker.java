@@ -16,6 +16,7 @@ public class UpstreamsBooker extends Booker {
 	public static final String MSR_BACKUP = "Backup";
 	public static final String MSR_WEIGHT = "Weight";
 	public static final String MSR_STATE = "State";
+	public static final String MSRS_STATES = "State By Upstream";
 
 	public static final String MSR_ACTIVE = "Active";
 
@@ -81,6 +82,7 @@ public class UpstreamsBooker extends Booker {
 		Collection<MonitorMeasure> weightM = env.getMonitorMeasures(UpstreamsParser.GROUP, MSR_WEIGHT);
 
 		Collection<MonitorMeasure> stateM = env.getMonitorMeasures(UpstreamsParser.GROUP, MSR_STATE);
+		Collection<MonitorMeasure> statesM = env.getMonitorMeasures(UpstreamsParser.GROUP, MSRS_STATES);
 		Collection<MonitorMeasure> activeM = env.getMonitorMeasures(UpstreamsParser.GROUP, MSR_ACTIVE);
 
 		Collection<MonitorMeasure> requestsM = env.getMonitorMeasures(UpstreamsParser.GROUP, MSR_REQUESTS);
@@ -192,6 +194,7 @@ public class UpstreamsBooker extends Booker {
 			setDynamicMeasure(env, requestsM, dynamicKey, serverGroupName, calculator.getRequestsPerUpstream().get(serverGroupName));
 			setDynamicMeasure(env, responsesRateM, dynamicKey, serverGroupName, calculator.getResponsesRatePerUpstream().get(serverGroupName));
 			setDynamicMeasure(env, responsesM, dynamicKey, serverGroupName, calculator.getResponsesPerUpstream().get(serverGroupName));
+			setDynamicMeasure(env, statesM, dynamicKey, serverGroupName, calculator.getStatePerUpstream().get(serverGroupName));
 			setDynamicMeasure(env, responses1xxRateM, dynamicKey, serverGroupName, calculator.getResponses1xxRatePerUpstream().get(serverGroupName));
 			setDynamicMeasure(env, responses1xxM, dynamicKey, serverGroupName, calculator.getResponses1xxPerUpstream().get(serverGroupName));
 			setDynamicMeasure(env, responses2xxRateM, dynamicKey, serverGroupName, calculator.getResponses2xxRatePerUpstream().get(serverGroupName));

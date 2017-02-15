@@ -74,6 +74,7 @@
       <metric defaultrate="purepath" name="Sent" unit="number" description="The total number of bytes sent to this server" />
       <metric defaultrate="purepath" name="Sent Rate" unit="number" description="The current rate of bytes sent to all servers by upstream" />
       <metric defaultrate="purepath" name="State" unit="number" description="Current state, which may be one of “up”, ”draining”, “down”, “unavail”, or “unhealthy”." />
+      <metric defaultrate="purepath" name="State By Upstream" unit="number" description="Current state, which may be one of “up”, ”draining”, “down”, “unavail”, or “unhealthy”, but split by upstream" />
       <metric defaultrate="purepath" name="Total State Up" unit="number" description="Amount of upstreams with state Up" />
       <metric defaultrate="purepath" name="Total State Draining" unit="number" description="Amount of upstreams with state Draining" />
       <metric defaultrate="purepath" name="Total State Down" unit="number" description="Amount of upstreams with state Down" />

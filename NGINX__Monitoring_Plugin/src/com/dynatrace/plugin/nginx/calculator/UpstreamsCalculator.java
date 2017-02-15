@@ -27,6 +27,7 @@ public class UpstreamsCalculator extends TimeFrameCalculator implements Calculat
 	private HashMap<String, Double> Responses5xxPerUpstream = new HashMap<>();
 	private HashMap<String, Double> SentRatePerUpstream = new HashMap<>();
 	private HashMap<String, Double> SentPerUpstream = new HashMap<>();
+	private HashMap<String, Double> StatePerUpstream = new HashMap<>();
 	private HashMap<String, Double> ReceivedRatePerUpstream = new HashMap<>();
 	private HashMap<String, Double> ReceivedPerUpstream = new HashMap<>();
 	private HashMap<String, Double> FailsPerUpstream = new HashMap<>();
@@ -92,6 +93,7 @@ public class UpstreamsCalculator extends TimeFrameCalculator implements Calculat
 			Double responses5xxRatePerUpstream = 0.0;
 			Double sentPerUpstream = 0.0;
 			Double sentRatePerUpstream = 0.0;
+			Double statePerUpstream = 0.0;
 			Double receivedPerUpstream = 0.0;
 			Double receivedRatePerUpstream = 0.0;
 			Double failsPerUpstream = 0.0;
@@ -214,6 +216,20 @@ public class UpstreamsCalculator extends TimeFrameCalculator implements Calculat
 				healthChecksFailedRatePerUpstream += HealthChecksFailedRate;
 				healthChecksUnhealthyPerUpstream += cur_.getHealthChecksUnhealthy();
 				healthChecksUnhealthyRatePerUpstream += HealthChecksUnhealthyRate;
+				if (cur_.getState().equals(StateT.UP)) {
+		          statePerUpstream = statePerUpstream + 0.0;
+		        } else if (cur_.getState().equals(StateT.DRAINING)) {
+		        	statePerUpstream = statePerUpstream + 1.0;
+		        } else if (cur_.getState().equals(StateT.DOWN)) {
+		          statePerUpstream = statePerUpstream + 2.0;
+		        } else if (cur_.getState().equals(StateT.UNAVAIL)) {
+		          statePerUpstream = statePerUpstream + 3.0;
+		        } else if (cur_.getState().equals(StateT.UNHEALTHY)) {
+		          statePerUpstream = statePerUpstream + 4.0;
+		        } else {
+		        	assert(false); //invalid state
+		        }
+
 			}
 			this.RequestsPerUpstream.put(serverGroupName, requestsPerUpstream);
 			this.RequestsRatePerUpstream.put(serverGroupName, requestsRatePerUpstream);
@@ -231,6 +247,7 @@ public class UpstreamsCalculator extends TimeFrameCalculator implements Calculat
 			this.Responses5xxRatePerUpstream.put(serverGroupName, responses5xxRatePerUpstream);
 			this.SentPerUpstream.put(serverGroupName, sentPerUpstream);
 			this.SentRatePerUpstream.put(serverGroupName, sentRatePerUpstream);
+			this.StatePerUpstream.put(serverGroupName, statePerUpstream);
 			this.ReceivedPerUpstream.put(serverGroupName, receivedPerUpstream);
 			this.ReceivedRatePerUpstream.put(serverGroupName, receivedRatePerUpstream);
 			this.FailsPerUpstream.put(serverGroupName, failsPerUpstream);
@@ -388,6 +405,10 @@ public class UpstreamsCalculator extends TimeFrameCalculator implements Calculat
 
 	public HashMap<String, Double> getSentPerUpstream() {
 		return SentPerUpstream;
+	}
+
+	public HashMap<String, Double> getStatePerUpstream() {
+		return StatePerUpstream;
 	}
 
 	public HashMap<String, Double> getReceivedPerUpstream() {
