@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.ssl.HttpsURLConnection;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
@@ -16,25 +17,44 @@ import org.json.JSONObject;
 
 
 public class NginxPlusMonitoringConnection {
-	private URLConnection connection;
+	private HttpsURLConnection connection;
+	private URLConnection plainconnection;
 
 	public NginxPlusMonitoringConnection(String protocol, String host, int port, String file) throws IOException {
-		try {
-			URL url = new URL(protocol, host, port, file);
-			this.connection = url.openConnection();
-			this.connection.setConnectTimeout((int) TimeUnit.SECONDS.toMillis(10));
-			this.connection.setReadTimeout((int) TimeUnit.SECONDS.toMillis(10));
-		} catch(MalformedURLException e) {
-			throw e;
+		URL url = new URL(protocol, host, port, file);
+		if (protocol=="https") {
+			try {
+				this.connection = (HttpsURLConnection)url.openConnection();
+				this.connection.setConnectTimeout((int) TimeUnit.SECONDS.toMillis(10));
+				this.connection.setReadTimeout((int) TimeUnit.SECONDS.toMillis(10));
+			} catch(MalformedURLException e) {
+					throw e;
+				}
+			} else {
+				URL url = new URL(protocol, host, port, file);
+				this.plainconnection = url.openConnection();
+				this.plainconnection.setConnectTimeout((int) TimeUnit.SECONDS.toMillis(10));
+				this.plainconnection.setReadTimeout((int) TimeUnit.SECONDS.toMillis(10));
 		}
 	}
 
 	public JSONObject getStatusJson() throws IllegalArgumentException, IOException, JSONException {
-		String header = connection.getHeaderField(HttpHeaders.CONTENT_TYPE);
-		if (!MediaType.APPLICATION_JSON.equals(header)) {
-			throw new IllegalArgumentException("Invalid response header, expected " + MediaType.APPLICATION_JSON + ", but got " + header);
+		String header ;
+		InputStream inputStream;
+		if (protocol=="https") {
+			header = connection.getHeaderField(HttpHeaders.CONTENT_TYPE);
+			if (!MediaType.APPLICATION_JSON.equals(header)) {
+				throw new IllegalArgumentException("Invalid response header, expected " + MediaType.APPLICATION_JSON + ", but got " + header);
+			}
+			inputStream = connection.getInputStream();
+		} else {
+			header = plainconnection.getHeaderField(HttpHeaders.CONTENT_TYPE);
+			if (!MediaType.APPLICATION_JSON.equals(header)) {
+				throw new IllegalArgumentException("Invalid response header, expected " + MediaType.APPLICATION_JSON + ", but got " + header);
+			}
+			inputStream = plainconnection.getInputStream();
 		}
-		InputStream inputStream = connection.getInputStream();
+
 		String charset = "UTF-8";
 		Scanner InputStreamScanner = new Scanner(inputStream, charset);
 		String jsonString = InputStreamScanner.useDelimiter("\\A").next();

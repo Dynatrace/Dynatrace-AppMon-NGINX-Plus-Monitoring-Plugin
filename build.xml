@@ -2,7 +2,7 @@
 
 <project name="NGINX+ Monitoring Plugin" default="deploy" basedir=".">
 	<property name="bundle.name" value="NGINX+ Monitoring Plugin"/>
-	<property name="bundle.version" value="1.0.5"/>
+	<property name="bundle.version" value="1.0.6"/>
 
 	<property name="plugin.dir" value="NGINX__Monitoring_Plugin"/>
 	<property name="plugin.build.dir" value="${plugin.dir}/bin"/>
