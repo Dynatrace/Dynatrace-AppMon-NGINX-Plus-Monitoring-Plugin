@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.net.ssl.HttpsURLConnection;
+import javax.net.ssl.HttpsURLConnection;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
@@ -31,7 +31,6 @@ public class NginxPlusMonitoringConnection {
 					throw e;
 				}
 			} else {
-				URL url = new URL(protocol, host, port, file);
 				this.plainconnection = url.openConnection();
 				this.plainconnection.setConnectTimeout((int) TimeUnit.SECONDS.toMillis(10));
 				this.plainconnection.setReadTimeout((int) TimeUnit.SECONDS.toMillis(10));
@@ -41,19 +40,11 @@ public class NginxPlusMonitoringConnection {
 	public JSONObject getStatusJson() throws IllegalArgumentException, IOException, JSONException {
 		String header ;
 		InputStream inputStream;
-		if (protocol=="https") {
-			header = connection.getHeaderField(HttpHeaders.CONTENT_TYPE);
-			if (!MediaType.APPLICATION_JSON.equals(header)) {
-				throw new IllegalArgumentException("Invalid response header, expected " + MediaType.APPLICATION_JSON + ", but got " + header);
-			}
-			inputStream = connection.getInputStream();
-		} else {
 			header = plainconnection.getHeaderField(HttpHeaders.CONTENT_TYPE);
 			if (!MediaType.APPLICATION_JSON.equals(header)) {
 				throw new IllegalArgumentException("Invalid response header, expected " + MediaType.APPLICATION_JSON + ", but got " + header);
 			}
 			inputStream = plainconnection.getInputStream();
-		}
 
 		String charset = "UTF-8";
 		Scanner InputStreamScanner = new Scanner(inputStream, charset);
